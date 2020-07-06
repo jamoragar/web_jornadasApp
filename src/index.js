@@ -2,16 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import firebase from './Config/Firebase';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const root = document.getElementById('root');
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+export const renderApp = (isAuthenticated, email, name, uid) => {
+  ReactDOM.render(
+      (<div className="App">
+          <App authenticated={isAuthenticated} email={email} name={name} uid={uid} />
+      </div>), root);
+};
+
+firebase.auth().onAuthStateChanged(userAuth => {
+    console.log(userAuth)
+  if (userAuth) {
+      const {email, displayName, uid } = userAuth;
+      renderApp(true, email, displayName, uid);
+  }else {
+      renderApp(false, null, null, null);
+  }
+});

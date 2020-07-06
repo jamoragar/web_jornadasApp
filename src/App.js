@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Routes from './Components/Routes/Routes';
+import { Spinner } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = (props) => {
+  if(props){
+    return (
+      <div className="App">
+        <Routes {...props} />
+      </div>
+    );
+  }else{
+    return(
+      <>
+        <Spinner animation="grow" variant="primary" />
+        <Spinner animation="grow" variant="secondary" />
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+        <Spinner animation="grow" variant="light" />
+        <Spinner animation="grow" variant="dark" />
+      </>
+    )
+  }
 }
 
 export default App;
