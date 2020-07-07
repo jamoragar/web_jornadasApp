@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import Logo from '../../imgs/logo.png'
-import {Navbar, Nav, DropdownButton, Dropdown, NavDropdown } from 'react-bootstrap';
+import {Navbar, Nav, DropdownButton, Dropdown } from 'react-bootstrap';
 import Login from '../Login/Login';
-import firebase from '../../Config/Firebase';
+import { handleLogOut } from '../../Config/Firebase';
 
 const Header = ({auth, name, uid}) => {
     const [showModal, setShowModal] = useState(false);
@@ -24,10 +23,10 @@ const Header = ({auth, name, uid}) => {
                         auth ? 
                         (
                             <DropdownButton title={`Bienvenido(a): ${name}`}>
-                                <Dropdown.Item href="#/action-1"><i className="fas fa-user-edit fa-fw" /> Perfil</Dropdown.Item>
-                                <Dropdown.Item href={"/Dashboard/" + uid}><i className="fas fa-tachometer-alt fa-fw" />Dashboard</Dropdown.Item>
+                                <Dropdown.Item href={`/Dashboard/${uid}/Perfil`}><i className="fas fa-user-edit fa-fw" /> Perfil</Dropdown.Item>
+                                <Dropdown.Item href={`/Dashboard/${uid}`}><i className="fas fa-tachometer-alt fa-fw" />Dashboard</Dropdown.Item>
                                 <Dropdown.Divider />
-                                <Dropdown.Item href='#' onClick={() => firebase.auth().signOut()}><i className="fas fa-door-open fa-fw" /> Salir</Dropdown.Item>
+                                <Dropdown.Item href='#' onClick={() => handleLogOut()}><i className="fas fa-door-open fa-fw" /> Salir</Dropdown.Item>
                             </DropdownButton>
                         )
                         :

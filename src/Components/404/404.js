@@ -1,8 +1,8 @@
 import React from 'react';
 
-const _404 = () => {
+const NotFound404 = () => {
     return (
         <h1>404 Not Found...</h1>
     )
 }
-export default _404;
+export default NotFound404;

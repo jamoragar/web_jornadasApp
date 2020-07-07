@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, Link, Redirect} from 'react-router-dom';
-import firebase from '../../Config/Firebase'
+import { useParams, Link, Redirect, BrowserRouter, Route, Switch } from 'react-router-dom';
+import CreateUsers from './Usuarios/Usuarios';
+import Alcancias from './Alcancias/Alcancias';
+import BonosRifa from './Bonos/Bonos';
+import Donaciones from './Donaciones/Donaciones';
+import Eventos from './Eventos/Eventos';
+import Perfil from './Perfil/Perfil';
+import firebase, {handleLogOut} from '../../Config/Firebase';
+import {Spinner} from 'react-bootstrap';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -10,14 +17,22 @@ const Dashboard = () => {
     useEffect(() => {
         firebase.database().ref(`/Users/${uid}`).once('value').then(snapshot => {
             snapshot.val() ?
-                setUserData(snapshot.val())
-            :
-                setUserData('Error')
+                setUserData(snapshot.val()) : setUserData('Error')
         });
-    }, []);
+    }, [uid]);
+    
     if(userData === 'Empty'){
         return (
-            <h1>Cargando Perfil...</h1>
+            <>
+            <Spinner animation="grow" variant="primary" />
+            <Spinner animation="grow" variant="secondary" />
+            <Spinner animation="grow" variant="success" />
+            <Spinner animation="grow" variant="danger" />
+            <Spinner animation="grow" variant="warning" />
+            <Spinner animation="grow" variant="info" />
+            <Spinner animation="grow" variant="light" />
+            <Spinner animation="grow" variant="dark" />
+            </>
         );
     }
     else if(userData === 'Error'){
@@ -26,48 +41,59 @@ const Dashboard = () => {
         );
     }else if(userData){
         return(
-            <div className='sideNav'>
-                <ul className='sideNav-nav'>
-                    <li className='sideNav-item'>
-                        <Link className='sideNav-link' to='#'>
-                            <i className="fas fa-users fa-fw fa-3x" />
-                            <span className='link-text'>Crear Usuarios</span>
-                        </Link>
-                    </li>
-                    <li className='sideNav-item'>
-                        <Link className='sideNav-link' to='#'>
-                            <i className="fas fa-donate fa-fw fa-3x" />
-                            <span className='link-text'>Alcancias</span>
-                        </Link>
-                    </li>
-                    <li className='sideNav-item'>
-                        <Link className='sideNav-link' to='#'>
-                            <i className="fas fa-receipt fa-fw fa-3x" />
-                            <span className='link-text'>Bonos de Rifa</span>
-                        </Link>
-                    </li>
-                    <li className='sideNav-item'>
-                        <Link className='sideNav-link' to='#'>
-                            <i className="fas fa-hand-holding-usd fa-fw fa-3x" />
-                            <span className='link-text'>Donaciones</span>
-                        </Link>
-                    </li>
-                    <li className='sideNav-item'>
-                        <Link className='sideNav-link' to='#'>
-                            <i className="far fa-calendar-alt fa-fw fa-3x" />
-                            <span className='link-text'>Eventos</span>
-                        </Link>
-                    </li>
-                    <li className='sideNav-item'>
-                        <Link className='sideNav-link' to='#'>
-                            <i className="fas fa-door-open fa-fw fa-3x" />
-                            <span className='link-text'>Salir</span>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+            <BrowserRouter>
+                <div className='sideNav'>
+                    <ul className='sideNav-nav'>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/createUsers`}>
+                                <i className="fas fa-users fa-fw fa-3x" />
+                                <span className='link-text'>Crear Usuarios</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Alcancias`}>
+                                <i className="fas fa-donate fa-fw fa-3x" />
+                                <span className='link-text'>Alcancias</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/bonosRifa`}>
+                                <i className="fas fa-receipt fa-fw fa-3x" />
+                                <span className='link-text'>Bonos de Rifa</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Donaciones`}>
+                                <i className="fas fa-hand-holding-usd fa-fw fa-3x" />
+                                <span className='link-text'>Donaciones</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Eventos`}>
+                                <i className="far fa-calendar-alt fa-fw fa-3x" />
+                                <span className='link-text'>Eventos</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item' onClick={handleLogOut}>
+                            <Link className='sideNav-link' to='#'>
+                                <i className="fas fa-door-open fa-fw fa-3x" />
+                                <span className='link-text'>Salir</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+                <Switch>
+                    <Route exact path='/Dashboard/:uid/' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <CreateUsers {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/createUsers' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <CreateUsers {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/Alcancias' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Alcancias {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/bonosRifa' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <BonosRifa {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/Donaciones' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Donaciones {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/Eventos' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Eventos {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/Perfil' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Perfil {...userData} />} />
+                </Switch>
+            </BrowserRouter>
         );
     }
-}
+};
  
 export default Dashboard;

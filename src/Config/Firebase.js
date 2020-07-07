@@ -18,6 +18,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+export const handleLogOut = () => {
+  firebase.auth().signOut();
+}
+
 export default firebase;
 
 
