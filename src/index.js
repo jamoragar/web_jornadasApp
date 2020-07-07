@@ -14,7 +14,6 @@ export const renderApp = (isAuthenticated, email, name, uid) => {
 };
 
 firebase.auth().onAuthStateChanged(userAuth => {
-    console.log(userAuth)
   if (userAuth) {
       const {email, displayName, uid } = userAuth;
       renderApp(true, email, displayName, uid);

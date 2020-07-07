@@ -4,7 +4,8 @@
     position:fixed;
     background-color: #0f63a8;
     transition: 200ms ease;
-    box-shadow: 10px 0px 8px -5px rgba(0,0,0,0.75)
+    box-shadow: 10px 0px 8px -5px rgba(0,0,0,0.75);
+    z-index: 999;
 }
 .sideNav a{
     text-decoration: none !important;
@@ -50,7 +51,7 @@
     background: #007bff;
 }
 .dash_content{
-    margin:2% 0 0 15vh;
+    margin:2% 10vh 0 15vh;
 }
 /* Pantallas pequeñas */
 @media only screen and (max-width: 600px){
