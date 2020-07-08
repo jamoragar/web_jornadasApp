@@ -60,6 +60,7 @@ const VerUsuarios = ({users}) => {
             paginationComponentOptions={{rowsPerPageText: 'Filas por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todo'}}
             subHeader
             persistTableHead
+            highlightOnHover
         />
     );
 }

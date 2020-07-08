@@ -59,7 +59,7 @@ const Dashboard = () => {
                         <li className='sideNav-item'>
                             <Link className='sideNav-link' to={`/Dashboard/${uid}/bonosRifa`}>
                                 <i className="fas fa-receipt fa-fw fa-3x" />
-                                <span className='link-text'>Bonos de Rifa</span>
+                                <span className='link-text'>Bonos Sorteo</span>
                             </Link>
                         </li>
                         <li className='sideNav-item'>
