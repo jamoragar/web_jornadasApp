@@ -1,34 +1,63 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import firebase from '../../../Config/Firebase';
+import DataTable from 'react-data-table-component';
 import {Row, Button} from 'react-bootstrap';
 
 const BonosRifa = ({type, uid}) => {
-    let bonoSorteo_generadas = [];
+    const columns = [
+        {
+            name: 'Número',
+            selector: 'bono_rifa',
+            sortable: true
+        },
+        {
+            name: 'ID',
+            selector: 'id',
+            sortable: false
+        },
+        {
+            name:'Disponibilidad',
+            selector: 'isAviable',
+            sortable: false,
+            cell: (data) => {
+                return `${data.isAviable ? 'Disponible ': 'Vendido'}`
+            }
+        }
+    ];
+    const [bonosSorteo, setBonosSorteo] = useState(null);
 
-    const generarBonoSorteo = (secuencia, cantidad) => {
-        let k = 0
-        for(let i = 1; i <= cantidad; i++){
-            bonoSorteo_generadas[bonoSorteo_generadas.length] = {
-                numero: i,
-                bono_rifa: 20001 + k,
-                nombre: '',
-                telefono: '',
-                direccion: '',
-                isAviable: true 
-            };
-            
-            k = k + secuencia;
-        };
-        console.log(bonoSorteo_generadas);
-    }
+    useEffect(() => {
+        firebase.database().ref('/Bonos_Sorteo').once('value')
+            .then(snapshot => {
+                snapshot.val() ? setBonosSorteo(snapshot.val()) : setBonosSorteo('ERROR');
+            });
+    }, [])
 
-    return (
-        <div className='dash_content'>
-            <Row>
-                <h1>Bonos de Sorteo:</h1>
-                <Button className='ml-auto' variant='danger' onClick={() => {generarBonoSorteo(1, 40001)}}>Generar Bono</Button>
-            </Row>
-        </div>
-    );
-}
+    if(bonosSorteo){
+        console.log(bonosSorteo)
+        return (
+            <div className='dash_content'>
+                <Row>
+                    <h1>Bonos de Sorteo:</h1>
+                </Row>
+                <DataTable
+                    columns={columns}
+                    data={bonosSorteo}
+                    fixedHeader
+                    pagination
+                    subHeader
+                    persistTableHead
+                    highlightOnHover
+                    paginationRowsPerPageOptions={[100, 250, 800, 2000]}
+                    paginationComponentOptions={{rowsPerPageText: 'Filas por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todo'}}
+                />
+            </div>
+        );
+    }else{
+        return(
+            <h2>Loading...</h2>
+        )
+    };
+};
  
 export default BonosRifa;

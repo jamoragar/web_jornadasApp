@@ -53,25 +53,31 @@ const Dashboard = () => {
                         <li className='sideNav-item'>
                             <Link className='sideNav-link' to={`/Dashboard/${uid}/Alcancias`}>
                                 <i className="fas fa-donate fa-fw fa-3x" />
-                                <span className='link-text'>Alcancias</span>
+                                <span className='link-text'>Alcancias Entregadas</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Eventos`}>
+                                <i className="far fa-clipboard fa-fw fa-3x" />
+                                <span className='link-text'>Talonarios Entregados</span>
                             </Link>
                         </li>
                         <li className='sideNav-item'>
                             <Link className='sideNav-link' to={`/Dashboard/${uid}/bonosRifa`}>
                                 <i className="fas fa-receipt fa-fw fa-3x" />
-                                <span className='link-text'>Bonos Sorteo</span>
+                                <span className='link-text'>Bonos Digitales Vendidos</span>
+                            </Link>
+                        </li>
+                        <li className='sideNav-item'>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Eventos`}>
+                                <i className="fab fa-delicious fa-fw fa-3x" />
+                                <span className='link-text'>Bingos Digitales Vendidos</span>
                             </Link>
                         </li>
                         <li className='sideNav-item'>
                             <Link className='sideNav-link' to={`/Dashboard/${uid}/Donaciones`}>
                                 <i className="fas fa-hand-holding-usd fa-fw fa-3x" />
-                                <span className='link-text'>Donaciones</span>
-                            </Link>
-                        </li>
-                        <li className='sideNav-item'>
-                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Eventos`}>
-                                <i className="far fa-calendar-alt fa-fw fa-3x" />
-                                <span className='link-text'>Eventos</span>
+                                <span className='link-text'>Donaciones Digitales</span>
                             </Link>
                         </li>
                         <li className='sideNav-item' onClick={handleLogOut}>
