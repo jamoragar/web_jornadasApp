@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import firebase from '../../../Config/Firebase';
-import { Form, Button, Modal, Col } from 'react-bootstrap';
+import { Form, Button, Modal, Col, Alert, Spinner } from 'react-bootstrap';
 
 const AgregarUsuarios = ({show, onHide}) => {
+    const [alertShow, setAlertShow] = useState(false);
+    const [buttonAceptarText, setButtonAceptarText] = useState(true);
+
+    const handleResetForm = () => {
+        document.getElementById('myForm').reset();
+    }
 
     const onFormSurmit = async e => {
         e.preventDefault();
@@ -12,44 +18,67 @@ const AgregarUsuarios = ({show, onHide}) => {
         
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
+        
         let urlencoded = new URLSearchParams();
         urlencoded.append("uid", key);
         urlencoded.append("email", email.value);
         urlencoded.append("password", password.value);
         urlencoded.append("displayName", nombre.value);
-
+        
         const requestOptions = {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: 'follow'
+            method: 'POST',
+            mode: 'no-cors',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
         };
-
-        const createUserWithFirebaseFunction = fetch("https://us-central1-jornadas2020.cloudfunctions.net/createUser", requestOptions);
-
+        
+        
         if(rol.value !== '0'){
-            await createUserWithFirebaseFunction
-            .then(response => {
-                firebase.database().ref(`/Users/${key}`).set({
-                    nombre: nombre.value,
-                    apellido: apellido.value,
-                    email: email.value,
-                    password: password.value,
-                    tipo: rol.value,
-                    uid: key
+            setButtonAceptarText(false);
+            firebase.database().ref(`/Users`)
+                .orderByChild('email')
+                .equalTo(email.value)
+                .once('value')
+                .then(
+                    snapshot => {
+                        if(snapshot.val()){
+                            alert('La cuenta de correo que intenta ingresar, ya pertenece a otro usuario.');
+                            handleResetForm();
+                        }else{
+                            console.log('Creando usuario...');
+                            const createUserWithFirebaseFunction = fetch("https://us-central1-jornadas2020.cloudfunctions.net/createUser", requestOptions);
+                            createUserWithFirebaseFunction
+                            .then(response => {
+                                firebase.database().ref(`/Users/${key}`).set({
+                                    nombre: nombre.value,
+                                    apellido: apellido.value,
+                                    email: email.value,
+                                    password: password.value,
+                                    tipo: rol.value,
+                                    uid: key
+                                })
+                            })
+                            .then(response => {
+                                setButtonAceptarText(true);
+                                setAlertShow(true)
+                                setTimeout(() => {
+                                    setAlertShow(false);
+                                    handleResetForm()
+                                }, 2173)
+                            })
+                            .catch(error => console.log('error', error));
+                        }
                 })
-            })
-            .catch(error => console.log('error', error));
+                .catch(something => console.log(something));
         }else{
-            alert('Debe completar todos los campos!');
+            alert('Debe completar todos los campos antes de continuar.');
         };
     };
 
     return (
         <Modal show={show} onHide={onHide}>
-            <Form onSubmit={onFormSurmit}>
+            <Form onSubmit={onFormSurmit} id='myForm'>
                 <Modal.Header closeButton>
                     <Modal.Title>Crear Nuevo Usuario</Modal.Title>
                 </Modal.Header>
@@ -85,9 +114,12 @@ const AgregarUsuarios = ({show, onHide}) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="success" type="submit" block>
-                        Aceptar
+                        {buttonAceptarText ? (<><i className="far fa-save fa-fw" />Aceptar</>) : (<Spinner animation="border" />)}
                     </Button>
                 </Modal.Footer>
+                    <Alert show={alertShow} variant={'success'} onClose={() => setAlertShow(false)} dismissible>
+                        Usuario creado con éxito!
+                    </Alert>
             </Form>
         </Modal>
     );
