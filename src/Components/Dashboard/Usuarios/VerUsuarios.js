@@ -1,5 +1,6 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const VerUsuarios = ({users}) => {
     let usersToArray = [];
@@ -36,9 +37,27 @@ const VerUsuarios = ({users}) => {
             cell: () => {
                 return (
                     <div style={{display: 'flex'}}>
-                        <div style={{ cursor: 'pointer' }} className="text-success"><i className="fas fa-fw fa-search fa-lg" style={{ width: '35px', height: '20px' }} /></div>
-                        <div style={{ cursor: 'pointer' }} className="text-success"><i className="fas fa-fw fa-search fa-lg" style={{ width: '35px', height: '20px' }} /></div>
-                        <div style={{ cursor: 'pointer' }} className="text-success"><i className="fas fa-fw fa-search fa-lg" style={{ width: '35px', height: '20px' }} /></div>
+                        <OverlayTrigger key={'alcancias'} placement={'left'} overlay={
+                            <Tooltip id={'tooltip-bottom'}><strong>Alcancias</strong></Tooltip>
+                        }>
+                            <div style={{ cursor: 'pointer' }} className="text-danger">
+                                <i className="fas fa-fw fa-donate fa-lg" style={{ width: '35px', height: '20px' }} />
+                            </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger key={'bonos'} placement={'left'} overlay={
+                            <Tooltip id={'tooltip-bottom'}><strong>Bonos Sorteo</strong></Tooltip>
+                        }>
+                            <div style={{ cursor: 'pointer' }} className="text-primary">
+                                <i className="fas fa-fw fa-receipt fa-lg" style={{ width: '35px', height: '20px' }} />
+                            </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger id={'ver'} placement={'left'} overlay={
+                            <Tooltip id={'tooltip-bottom'}><strong>Ver</strong></Tooltip>
+                        }>
+                            <div style={{ cursor: 'pointer' }} className="text-success">
+                                <i className="fas fa-fw fa-search fa-lg" style={{ width: '35px', height: '20px' }} />
+                            </div>
+                        </OverlayTrigger>
                     </div>
                 );
             }

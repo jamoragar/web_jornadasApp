@@ -43,6 +43,7 @@ const AgregarUsuarios = ({show, onHide}) => {
                 .then(
                     snapshot => {
                         if(snapshot.val()){
+                            setButtonAceptarText(true);
                             alert('La cuenta de correo que intenta ingresar, ya pertenece a otro usuario.');
                             handleResetForm();
                         }else{
