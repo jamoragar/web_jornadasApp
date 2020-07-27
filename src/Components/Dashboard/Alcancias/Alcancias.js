@@ -1,5 +1,4 @@
 import React from 'react';
-import * as Barcoder from 'barcoder';
 import { Row, Button } from 'react-bootstrap';
 
 const Alcancias = ({type, uid}) => {
