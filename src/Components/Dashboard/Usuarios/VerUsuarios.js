@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DataTable from 'react-data-table-component';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import EntregarAlcancias from '../Alcancias/EntregarAlcancias';
 
 const VerUsuarios = ({users}) => {
+    const [showEntregarAlcancias, setShowEntregarAlcancias] = useState(false);
+    const [userData, setUserData] = useState(null);
     let usersToArray = [];
+
+    const handleModalAlcancias = (data) => {
+
+    }
     //Declaramos las columnas que tendrá nuestra tabla
     const columns = [
         {
@@ -34,13 +41,18 @@ const VerUsuarios = ({users}) => {
             name: 'Control',
             button: true,
             width: '20%',
-            cell: () => {
+            cell: (data) => {
                 return (
                     <div style={{display: 'flex'}}>
                         <OverlayTrigger key={'alcancias'} placement={'left'} overlay={
                             <Tooltip id={'tooltip-bottom'}><strong>Alcancias</strong></Tooltip>
                         }>
-                            <div style={{ cursor: 'pointer' }} className="text-danger">
+                            <div style={{ cursor: 'pointer' }} className="text-danger"
+                                onClick={() => {
+                                    setShowEntregarAlcancias(true);
+                                    setUserData(data);
+                                    }
+                            }>
                                 <i className="fas fa-fw fa-donate fa-lg" style={{ width: '35px', height: '20px' }} />
                             </div>
                         </OverlayTrigger>
@@ -69,6 +81,7 @@ const VerUsuarios = ({users}) => {
     });
 
     return (
+        <>
         <DataTable
             columns={columns}
             data={usersToArray}
@@ -81,6 +94,13 @@ const VerUsuarios = ({users}) => {
             persistTableHead
             highlightOnHover
         />
+        {
+            userData && showEntregarAlcancias !== false ?
+                <EntregarAlcancias show={showEntregarAlcancias} onHide={() => setShowEntregarAlcancias(false)} data={userData} />
+            :
+                null
+        }
+        </>
     );
 }
  

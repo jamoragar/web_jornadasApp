@@ -2904,11 +2904,6 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-barcoder@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/barcoder/-/barcoder-2.0.1.tgz#48d336959f26a68b1e4eff59c70b93690e163e7c"
-  integrity sha1-SNM2lZ8mposeTv9ZxwuTaQ4WPnw=
-
 base64-js@^1.0.2, base64-js@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
