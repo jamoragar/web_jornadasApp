@@ -1,10 +1,10 @@
 import React from 'react';
 import { Row, Button } from 'react-bootstrap';
+import firebase from '../../../Config/Firebase';
 
 const Alcancias = ({type, uid}) => {
     var usedNums = new Array(76);
 
-    let ean1 = '980201100003'
     let alcancias_generadas = [];
 
     const eanCheckDigit = s => {
@@ -19,12 +19,20 @@ const Alcancias = ({type, uid}) => {
         let k = 1;
         const codBarra = '980201100000';
 
-        for(let i = 1; i <= cantidad; i++){
+        for(let i = 0; i < cantidad; i++){
+
             let genCodBarra = parseInt(codBarra) + k;
             alcancias_generadas[alcancias_generadas.length] = {
-                alcancia_numero: i,
-                codigo_barra: genCodBarra.toString() + eanCheckDigit(genCodBarra.toString())
+                alcancia_numero: i + 1,
+                codigo_barra: genCodBarra.toString() + eanCheckDigit(genCodBarra.toString()),
+                asignada_usuario: false,
+                asignada_externo: false,
+                asignada_tercero: false,
+                monto_recaudad: '',
+
             };
+
+            firebase.database().ref(`/Alcancias/${i}`).set(alcancias_generadas[i]);
             
             k = k + secuencia;
         };
@@ -67,7 +75,7 @@ const Alcancias = ({type, uid}) => {
         <div className='dash_content'>
             <Row>
                 <h1>Alcancias:</h1>
-                <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 6000)}}>Generar Alcancias</Button>
+                <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 60)}}>Generar Alcancias</Button>
             </Row>
         </div>
     );
