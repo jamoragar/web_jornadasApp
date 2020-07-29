@@ -1,23 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {Modal, Form, Button} from 'react-bootstrap';
 import firebase from '../../../Config/Firebase';
 
 const EntregarAlcancias = ({show, onHide, data}) => {
+    const inputEl = useRef([])
     const [cantAlcancias, setCantAlcancias] = useState(0);
     const [valueAlcancia, setValueAlcancia] = useState([]);
+    const [codigoInexistente, setCodigoInexistente] = useState([]);
+
+    const handleAlcancia = (value, input_position) => {
+        firebase.database().ref('/Alcancias').orderByChild('codigo_barra').equalTo(value.toString()).once('value')
+            .then(snapshot =>{
+                if(snapshot.val()){
+                    setValueAlcancia([...valueAlcancia, value])
+                    inputEl.current[input_position + 1].focus();
+                }else{
+                    setCodigoInexistente([...codigoInexistente, value])
+                    inputEl.current[input_position].focus();
+                    inputEl.current[input_position].classList.add('error_code')
+                }
+            })
+    }
 
     const asignarAlcancias = (e) => {
         e.preventDefault();
 
         const alcancias_firebase = [];
-
-        valueAlcancia.map(acodigo_barra => {
+        console.log('códigos existentes:', valueAlcancia)
+        console.log('códigos ERRONEOS:', codigoInexistente)
+        valueAlcancia.map(codigo_barra => {
             firebase.database().ref('/Alcancias').orderByChild('codigo_barra').equalTo(codigo_barra.toString()).once('value')
                 .then(snapshot =>{
                     alcancias_firebase.push(snapshot.val())
-                    firebase.database
                 })
-        })
+        });
 
         // firebase.database().ref('/Alcancias').orderByChild('asignada_usuario').equalTo(false).limitToFirst(parseInt(cant_alcancias.value))
         // .once("value").then(snapshot => {
@@ -42,7 +58,6 @@ const EntregarAlcancias = ({show, onHide, data}) => {
         //     })
         // })
     }
-    console.log(cantAlcancias)
     return (
         <Modal show={show} onHide={onHide}>
             <Form onSubmit={asignarAlcancias} id='formEntregarAlcancias'>
@@ -61,7 +76,12 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                                     inputs.push(
                                         <Form.Group key={i + 1}>
                                             <Form.Label>Alcancia Nro. {i + 1}:</Form.Label>
-                                            <Form.Control name={`alcancia_nro${i + 1}`} type='text' placeholder='Ingrese el código de barra de la alcancia a entregar.' onChange={(e) => setValueAlcancia([...valueAlcancia, e.target.value])} />
+                                            <Form.Control 
+                                                name={`alcancia_nro${i + 1}`}
+                                                ref={el => inputEl.current[i] = el}
+                                                type='text' 
+                                                placeholder='Ingrese el código de barra de la alcancia a entregar.'
+                                                onChange={(e) => handleAlcancia(e.target.value, i)} />
                                         </Form.Group>
                                     );
                             }

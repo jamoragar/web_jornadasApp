@@ -7,7 +7,7 @@ import { handleLogOut } from '../../Config/Firebase';
 const Header = ({auth, name, uid}) => {
     const [showModal, setShowModal] = useState(false);
     return(
-        <Navbar style={{backgroundColor:'#03255F'}} collapseOnSelect expand="lg">
+        <Navbar style={{backgroundColor:'#03255F'}} collapseOnSelect expand="lg" fixed='top'>
             <Navbar.Brand href="/">
                 <img src={Logo} width='300px' alt='Jornadas por la rehabilitación' />
             </Navbar.Brand>
