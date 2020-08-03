@@ -4,7 +4,7 @@ import CreateUsers from './Usuarios/Usuarios';
 import Alcancias from './Alcancias/Alcancias';
 import BonosRifa from './Bonos/Bonos';
 import Donaciones from './Donaciones/Donaciones';
-import Eventos from './Eventos/Eventos';
+import Talonarios from './Talonarios/Talonarios';
 import Perfil from './Perfil/Perfil';
 import firebase, {handleLogOut} from '../../Config/Firebase';
 import {Spinner} from 'react-bootstrap';
@@ -57,7 +57,7 @@ const Dashboard = () => {
                             </Link>
                         </li>
                         <li className='sideNav-item'>
-                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Eventos`}>
+                            <Link className='sideNav-link' to={`/Dashboard/${uid}/Talonarios`}>
                                 <i className="far fa-clipboard fa-fw fa-3x" />
                                 <span className='link-text'>Talonarios Entregados</span>
                             </Link>
@@ -94,7 +94,7 @@ const Dashboard = () => {
                     <Route exact path='/Dashboard/:uid/Alcancias' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Alcancias {...userData} />} />
                     <Route exact path='/Dashboard/:uid/bonosRifa' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <BonosRifa {...userData} />} />
                     <Route exact path='/Dashboard/:uid/Donaciones' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Donaciones {...userData} />} />
-                    <Route exact path='/Dashboard/:uid/Eventos' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Eventos {...userData} />} />
+                    <Route exact path='/Dashboard/:uid/Talonarios' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Talonarios {...userData} />} />
                     <Route exact path='/Dashboard/:uid/Perfil' component={() => userData === 'Error' ?  <Redirect to='/not-found' /> : <Perfil {...userData} />} />
                 </Switch>
             </BrowserRouter>

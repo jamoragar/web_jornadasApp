@@ -1,4 +1,5 @@
 .sideNav{
+    top:15%;
     width: 6rem;
     height:100%;
     position:fixed;
@@ -51,11 +52,12 @@
     background: #007bff;
 }
 .dash_content{
-    margin:2% 10vh 0 15vh;
+    margin:12% 10vh 0 18vh;
 }
 /* Pantallas pequeñas */
 @media only screen and (max-width: 600px){
     .sideNav{
+        top:auto;
         bottom: 0;
         width: 100%;
         height: 5rem;

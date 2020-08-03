@@ -56,7 +56,8 @@ const AgregarUsuarios = ({show, onHide}) => {
                                     apellido: apellido.value,
                                     email: email.value,
                                     password: password.value,
-                                    tipo: rol.value,
+                                    tipo: 'User',
+                                    subtipo: rol.value,
                                     uid: key
                                 })
                             })
