@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {Modal, Form, Button} from 'react-bootstrap';
 import firebase from '../../../Config/Firebase';
+import './Alcancias.css'
 
 const EntregarAlcancias = ({show, onHide, data}) => {
     const inputEl = useRef([])
