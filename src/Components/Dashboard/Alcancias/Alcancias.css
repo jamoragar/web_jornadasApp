@@ -1,7 +1,12 @@
 .error_code{
-    border-color: #777;
+    border-color: red !important;
 	color: #000;
-	background: red !important;
+    outline: 0;
+    transition: .5s !important;
+}
+.good_code{
+    border-color: lawngreen !important;
+    color: #000;
     outline: 0;
     transition: .5s !important;
 }

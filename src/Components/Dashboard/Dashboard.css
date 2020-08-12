@@ -1,5 +1,5 @@
 .sideNav{
-    top:15%;
+    top:0;
     width: 6rem;
     height:100%;
     position:fixed;
@@ -13,13 +13,13 @@
 }
 .sideNav-nav{
     list-style: none;
-    padding: 0;
+    padding: 140px 0 0 0;
     margin: 0 ;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 85%;
+    height: 100%;
 }
 .sideNav-item{
     width: 100%;
@@ -52,7 +52,7 @@
     background: #007bff;
 }
 .dash_content{
-    margin:12% 10vh 0 18vh;
+    margin:10% 10vh 0 20vh;
 }
 /* Pantallas pequeñas */
 @media only screen and (max-width: 600px){

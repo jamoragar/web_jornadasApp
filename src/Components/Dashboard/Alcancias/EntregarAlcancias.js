@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {Modal, Form, Button} from 'react-bootstrap';
+import {Modal, Form, Button, Alert} from 'react-bootstrap';
 import firebase from '../../../Config/Firebase';
 import './Alcancias.css'
 
@@ -12,31 +12,52 @@ const EntregarAlcancias = ({show, onHide, data}) => {
     const handleAlcancia = (value, input_position) => {
         firebase.database().ref('/Alcancias').orderByChild('codigo_barra').equalTo(value.toString()).once('value')
             .then(snapshot =>{
-                if(snapshot.val()){
-                    setValueAlcancia([...valueAlcancia, value])
-                    inputEl.current[input_position + 1].focus();
-                }else{
-                    setCodigoInexistente([...codigoInexistente, value])
+                let asignada_usuario;
+                snapshot.forEach(childSnapshot => asignada_usuario = childSnapshot.val().asignada_usuario)
+                if(asignada_usuario === false){
+                    if(parseInt(cantAlcancias) === 1 || parseInt(cantAlcancias) === (input_position + 1)){
+                        inputEl.current[input_position].focus();
+                    }else{
+                        inputEl.current[input_position + 1].focus();
+                    }
+                    
+                    if(inputEl.current[input_position].classList.contains('error_code')){
+                        inputEl.current[input_position].classList.remove('error_code')
+                    }
+                    
+                    inputEl.current[input_position].classList.add('good_code')
+                }
+                else{
                     inputEl.current[input_position].focus();
+                    if(inputEl.current[input_position].classList.contains('good_code')){
+                        inputEl.current[input_position].classList.remove('good_code');
+                    }
                     inputEl.current[input_position].classList.add('error_code')
                 }
-            })
-    }
+            });
+    };
 
     const asignarAlcancias = (e) => {
         e.preventDefault();
 
         const alcancias_firebase = [];
-        console.log('códigos existentes:', valueAlcancia)
-        console.log('códigos ERRONEOS:', codigoInexistente)
-        valueAlcancia.map(codigo_barra => {
-            firebase.database().ref('/Alcancias').orderByChild('codigo_barra').equalTo(codigo_barra.toString()).once('value')
-                .then(snapshot =>{
-                    alcancias_firebase.push(snapshot.val())
-                })
+        Object.keys(inputEl).map((key) => {
+            inputEl[key].map(input => {
+                console.log(input.classList)
+                alcancias_firebase.push(input.value);
+            })
         });
 
-        // firebase.database().ref('/Alcancias').orderByChild('asignada_usuario').equalTo(false).limitToFirst(parseInt(cant_alcancias.value))
+        // valueAlcancia.map(codigo_barra => {
+        //     firebase.database().ref('/Alcancias').orderByChild('codigo_barra').equalTo(codigo_barra.toString()).once('value')
+        //         .then(snapshot =>{
+        //             alcancias_firebase.push(snapshot.val())
+        //         })
+        // });
+
+
+
+        // firebase.database().ref('/Alcancias').orderByChild('asignada_usuario').equalTo(false).limitToFirst(cantAlcancias)
         // .once("value").then(snapshot => {
         //     Object.keys(snapshot.val()).forEach((key,i) => {
         //         alcanciasToArray[i] = snapshot.val()[key];
@@ -45,7 +66,7 @@ const EntregarAlcancias = ({show, onHide, data}) => {
         //             asignada_usuario: true
         //         })
         //     });
-            
+
         //     firebase.database().ref(`/Users/${data.uid}/alcancias`).once('value')
         //     .then(snapshot => {
         //         if(snapshot.val()){
@@ -60,15 +81,16 @@ const EntregarAlcancias = ({show, onHide, data}) => {
         // })
     }
     return (
+        <>
         <Modal show={show} onHide={onHide}>
             <Form onSubmit={asignarAlcancias} id='formEntregarAlcancias'>
-                <Modal.Header>
+                <Modal.Header closeButton>
                     <Modal.Title>Asignar Alcancias</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>
                         <Form.Label>¿Cuantas Alcancias va a asignarle a <b>{data.nombre}</b> ?</Form.Label>
-                        <Form.Control name='cant_alcancias' type='number' placeholder='Ingrese la cantidad de alcancias.' min="1" max="50" onChange={(e) => setCantAlcancias(e.target.value)} />
+                        <Form.Control name='cant_alcancias' type='number' placeholder='Ingrese la cantidad de alcancias.' min="1" max="50" onChange={e => setCantAlcancias(e.target.value)} />
                     </Form.Group>
                     {//Immediately-invoked function expression (IIFE).
                         (() => {
@@ -77,12 +99,13 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                                     inputs.push(
                                         <Form.Group key={i + 1}>
                                             <Form.Label>Alcancia Nro. {i + 1}:</Form.Label>
-                                            <Form.Control 
+                                            <Form.Control
                                                 name={`alcancia_nro${i + 1}`}
                                                 ref={el => inputEl.current[i] = el}
-                                                type='text' 
+                                                type='text'
                                                 placeholder='Ingrese el código de barra de la alcancia a entregar.'
-                                                onChange={(e) => handleAlcancia(e.target.value, i)} />
+                                                onChange={(e) => {handleAlcancia(e.target.value, i); setValueAlcancia([...valueAlcancia, e.target.name])}} />
+
                                         </Form.Group>
                                     );
                             }
@@ -97,7 +120,8 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                 </Modal.Footer>
             </Form>
         </Modal>
+         </>
     );
 }
- 
+
 export default EntregarAlcancias;

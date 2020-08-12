@@ -2,9 +2,11 @@ import React from 'react';
 import Routes from './Components/Routes/Routes';
 import { Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 const App = (props) => {
   if(props){
+    console.log(props)
     return (
       <div className="App">
         <Routes {...props} />

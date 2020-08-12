@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import DataTable from 'react-data-table-component';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import EntregarAlcancias from '../Alcancias/EntregarAlcancias';
+import EntregarTalonarios from '../Talonarios/EntregarTalonarios';
 
 const VerUsuarios = ({users}) => {
     const [showEntregarAlcancias, setShowEntregarAlcancias] = useState(false);
+    const [showEntregarTalonarios, setShowEntregarTalonarios] = useState(false);
     const [userData, setUserData] = useState(null);
     let usersToArray = [];
 
@@ -59,7 +61,12 @@ const VerUsuarios = ({users}) => {
                         <OverlayTrigger key={'bonos'} placement={'left'} overlay={
                             <Tooltip id={'tooltip-bottom'}><strong>Bonos Sorteo</strong></Tooltip>
                         }>
-                            <div style={{ cursor: 'pointer' }} className="text-primary">
+                            <div style={{ cursor: 'pointer' }} className="text-primary"
+                                onClick={() => {
+                                    setShowEntregarTalonarios(true);
+                                    setUserData(data);
+                                }
+                            }>
                                 <i className="fas fa-fw fa-receipt fa-lg" style={{ width: '35px', height: '20px' }} />
                             </div>
                         </OverlayTrigger>
@@ -94,9 +101,15 @@ const VerUsuarios = ({users}) => {
             persistTableHead
             highlightOnHover
         />
-        {
+        {//Modal Entregar Alcancias
             userData && showEntregarAlcancias !== false ?
                 <EntregarAlcancias show={showEntregarAlcancias} onHide={() => setShowEntregarAlcancias(false)} data={userData} />
+            :
+                null
+        }
+        {//Modal Entregar Talonarios
+            userData && showEntregarTalonarios !== false ?
+                <EntregarTalonarios show={showEntregarTalonarios} onHide={() => setShowEntregarTalonarios(false)} data={userData} />
             :
                 null
         }

@@ -15,10 +15,13 @@ const Dashboard = () => {
     const [userData, setUserData] = useState('Empty');
 
     useEffect(() => {
-        firebase.database().ref(`/Users/${uid}`).once('value').then(snapshot => {
+        const unsubscribe = firebase.database().ref(`/Users/${uid}`).once('value').then(snapshot => {
             snapshot.val() ?
                 setUserData(snapshot.val()) : setUserData('Error')
         });
+        return () => {
+            unsubscribe();
+        };
     }, [uid]);
     
     if(userData === 'Empty'){
