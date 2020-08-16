@@ -86,7 +86,7 @@ const Footer = () => {
                                     {/* Copyright Left */}
                                     <div className="copyright-left">© Copyrights 2020 Leones Cruz del Sur all rights reserved.</div>
                                     {/* Copyright Right */}
-                                    <div className="copyright-right">Hecho con <i className="fas fa-heart" /> Por <a className='copyright-a' href="/https://www.smartapps.cl/">Smart Apps SpA</a></div>
+                                    <div className="copyright-right">Hecho con <i className="fas fa-heart" /> Por <a className='copyright-a' href="https://www.smartapps.cl/">Smart Apps SpA</a></div>
                                 </div>
                             </div>
                         </div>

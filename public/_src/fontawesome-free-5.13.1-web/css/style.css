@@ -288,6 +288,9 @@ img {
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
 }
+.contact-area{
+    margin-top: 5%;
+}
 
 .homepage-5 .features-area .section-heading > h2::after,
 .contact-page .contact-area .section-heading > h2::after {
@@ -553,7 +556,7 @@ img {
 
 /*BACKGROUND IMAGES*/
 .welcome-area {
-    background: rgba(0, 0, 0, 0) url("/img/welcome-bg.jpg") no-repeat scroll center center / cover;
+    background: rgba(0, 0, 0, 0) url("/img/PuntaArenas.png") no-repeat scroll center center / cover;
 }
 
 .homepage-3 .welcome-area {
@@ -585,7 +588,7 @@ img {
 }
 
 .download-area {
-    background: rgba(0, 0, 0, 0) url("/img/download-bg.jpg") no-repeat fixed center center / cover;
+    background: rgba(0, 0, 0, 0) url("/img/Porvenir.png") no-repeat fixed center center / cover;
 }
 
 .subscribe-area {
