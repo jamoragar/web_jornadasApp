@@ -1,7 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Modal, Button} from 'react-bootstrap';
+
+import BonoSorteo from './BonoSorte';
+
+const ModalTransferencia = ({show, onHide}) => {
+    return(
+        <Modal show={show} onHide={onHide} size="lg">
+            <Modal.Header closeButton>
+                <Modal.Title>Transferencia Bancaria - Banco Estado</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h4>Ayuda desde cualquier parte del país.</h4>
+                <h6>Realiza tu depósito bancario desde cualquier lugar del país, teniendo en consideración los siguientes datos:</h6>
+                <ul>
+                    <li>* NOMBRE DEL BANCO: Banco Estado.</li>
+                    <li>* NOMBRE DEL BENEFICIARIO: Club de Leones Cruz del Sur.</li>
+                    <li>* RUT DEL BENEFICIARIO: 71.149.500-2.</li>
+                    <li>* NUMERO DE CTA DEL BENEFICIARIO: 91900176100.</li>
+                    <li>* DIRECCIÓN DEL BENEFICIARIO: Avenida Libertador Bernardo O’Higgins N° 301, Punta Arenas.</li>
+                </ul>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={onHide}>Cerrar</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+};
 
 const Features = () =>{
+
+    const [showModalTransferencia, setShowModalTransferencia] = useState(false);
+    const [showModalBonoSorteo, setShowModalBonoSorteo] = useState(false);
+
     return (
+        <>
         <section id="features" className="section features-area style-two overflow-hidden ptb_100">
             <div className="container">
                 <div className="row justify-content-center">
@@ -15,7 +47,7 @@ const Features = () =>{
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-6 col-lg-4 res-margin">
+                    <div className="col-12 col-md-6 col-lg-3 res-margin">
                         {/* Image Box */}
                         <div className="image-box text-center icon-1 p-5">
                             {/* Featured Image */}
@@ -29,7 +61,8 @@ const Features = () =>{
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-lg-4 res-margin">
+                    <div className="col-12 col-md-6 col-lg-3 res-margin"
+                        onClick={() => setShowModalBonoSorteo(true)}>
                         {/* Image Box */}
                         <div className="image-box text-center icon-1 p-5">
                             {/* Featured Image */}
@@ -43,7 +76,7 @@ const Features = () =>{
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-lg-4 res-margin">
+                    <div className="col-12 col-md-6 col-lg-3 res-margin">
                         {/* Image Box */}
                         <div className="image-box text-center icon-1 p-5">
                             {/* Featured Image */}
@@ -57,9 +90,27 @@ const Features = () =>{
                             </div>
                         </div>
                     </div>
+                    <div className="col-12 col-md-6 col-lg-3 res-margin">
+                        {/* Image Box */}
+                        <div className="image-box text-center icon-1 p-5"
+                            onClick={() => setShowModalTransferencia(true)}>
+                            {/* Featured Image */}
+                            <div className="featured-img mb-3">
+                                <i className="far fa-credit-card fa-3x" style={{color: 'rgb(157 243 147)'}}/>
+                            </div>
+                            {/* Icon Text */}
+                            <div className="icon-text">
+                                <h3 className="mb-2">Deposito Bancario</h3>
+                                <p>Siempre podrás transferir directamente a nuestra cuenta del banco estado, esto está disponible durante todo el año!</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+        <ModalTransferencia show={showModalTransferencia} onHide={() => setShowModalTransferencia(false)} />
+        <BonoSorteo show={showModalBonoSorteo} onHide={() => setShowModalBonoSorteo(false)}/>
+        </>
     )
 };
 
