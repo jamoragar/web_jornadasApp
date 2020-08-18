@@ -15,35 +15,35 @@ const Discover = () => {
                         {/* Discover Text */}
                         <div className="discover-text pt-4 pt-lg-0">
                             <h2 className="pb-4 pb-sm-0">Interactua Fácilmente con la App!</h2>
-                            <p className="d-none d-sm-block pt-3 pb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique dolor ut iusto vitae autem neque eum ipsam, impedit asperiores vel cumque laborum dicta repellendus inventore voluptatibus et explicabo nobis unde.</p>
+                            <p className="d-none d-sm-block pt-3 pb-4">Descarga nuestra nuestra nueva App Jornadas Magallanicas</p>
                             {/* Check List */}
                             <ul className="check-list">
                                 <li className="py-2">
                                     {/* List Box */}
                                     <div className="list-box media">
                                         <span className="icon align-self-center"><i className='fas fa-check'/></span>
-                                        <span className="media-body pl-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</span>
+                                        <span className="media-body pl-2">Regístrate y descubre la funciones que tenemos para ti.</span>
                                     </div>
                                 </li>
                                 <li className="py-2">
                                     {/* List Box */}
                                     <div className="list-box media">
                                         <span className="icon align-self-center"><i className='fas fa-check' /></span>
-                                        <span className="media-body pl-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</span>
+                                        <span className="media-body pl-2">Conoce tus donaciones realizadas.</span>
                                     </div>
                                 </li>
                                 <li className="py-2">
                                     {/* List Box */}
                                     <div className="list-box media">
                                         <span className="icon align-self-center"><i className='fas fa-check' /></span>
-                                        <span className="media-body pl-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</span>
+                                        <span className="media-body pl-2">Observa tus compras de Bono sorteo de en línea.</span>
                                     </div>
                                 </li>
                                 <li className="py-2">
                                     {/* List Box */}
                                     <div className="list-box media">
                                         <span className="icon align-self-center"><i className='fas fa-check' /></span>
-                                        <span className="media-body pl-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</span>
+                                        <span className="media-body pl-2">Y también podrás observar tus compras de tele bingo (próximamente).</span>
                                     </div>
                                 </li>
                             </ul>

@@ -18,7 +18,7 @@ const HeroSection = () => {
         <section id="home" className="section welcome-area bg-overlay overflow-hidden d-flex align-items-center">
             <div className='container'>
                 <div className='row align-items-center'>
-                    <div className='col-12 col-md-7 col-lg-6'>
+                    <div className='col-12 col-md-6 col-lg-6'>
                         <div className="welcome-intro">
                             <h1 className="text-white">{data.heading}</h1>
                             <p className="text-white my-4">{data.content}</p>
@@ -33,10 +33,24 @@ const HeroSection = () => {
                             <span className="d-inline-block text-white fw-3 font-italic mt-3">{data.headingSlug}</span>
                         </div>
                     </div>
-                    <div className="col-12 col-md-5 col-lg-6">
+                    <div className="col-12 col-md-3 col-lg-5">
                         {/* Welcome Thumb */}
                         <div className="welcome-thumb mx-auto">
-                            <img src={data.heroThumb} alt="" />
+                            <img src={data.heroThumb} alt="App Jornadas Magallanicas" />
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3 col-lg-1">
+                        {/* Welcome Thumb */}
+                        <div className="welcome-thumb text-center mx-auto">
+                        {/* Play Button */}
+                        <a className="play-btn" data-fancybox href="https://youtu.be/SzHCqiyxPnA">
+                            <div className="btn-circle play-animation" />
+                            <div className="btn-circle play-animation animation-short" />
+                            {/* Play Icon */}
+                            <div className="play-icon">
+                                <i className='fa fa-play' />
+                            </div>
+                        </a>
                         </div>
                     </div>
                 </div>

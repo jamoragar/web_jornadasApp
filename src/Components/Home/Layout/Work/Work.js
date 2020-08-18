@@ -22,7 +22,6 @@ const Work = () => {
                                 <img className="avatar-md" src='/img/work_thumb_1.png' alt="" />
                             </div>
                             <h3 className="text-white py-3">Descarga nuestra Aplicación</h3>
-                            <p className="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius saepe, voluptates quis enim incidunt obcaecati?</p>
                         </div>
                     </div>
                     <div className="col-12 col-md-4">
@@ -33,7 +32,6 @@ const Work = () => {
                                 <img className="avatar-md" src='/img/work_thumb_2.png' alt="" />
                             </div>
                             <h3 className="text-white py-3">Registrate si aún no tienes cuenta</h3>
-                            <p className="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius saepe, voluptates quis enim incidunt obcaecati?</p>
                         </div>
                     </div>
                     <div className="col-12 col-md-4">
@@ -44,7 +42,6 @@ const Work = () => {
                                 <img className="avatar-md" src='/img/work_thumb_3.png' alt="" />
                             </div>
                             <h3 className="text-white py-3">Disfruta de las opciones</h3>
-                            <p className="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius saepe, voluptates quis enim incidunt obcaecati?</p>
                         </div>
                     </div>
                 </div>

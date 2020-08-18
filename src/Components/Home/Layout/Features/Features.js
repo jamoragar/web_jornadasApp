@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 
 import BonoSorteo from './BonoSorte';
+import DonacionesModal from './DonacionesModal';
 
 const ModalTransferencia = ({show, onHide}) => {
     return(
@@ -31,6 +32,7 @@ const Features = () =>{
 
     const [showModalTransferencia, setShowModalTransferencia] = useState(false);
     const [showModalBonoSorteo, setShowModalBonoSorteo] = useState(false);
+    const [showModalDonacion, setShowModalDonacion] = useState(false);
 
     return (
         <>
@@ -47,7 +49,8 @@ const Features = () =>{
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-6 col-lg-3 res-margin">
+                    <div className="col-12 col-md-6 col-lg-3 res-margin"
+                        onClick={() => setShowModalDonacion(true)}>
                         {/* Image Box */}
                         <div className="image-box text-center icon-1 p-5">
                             {/* Featured Image */}
@@ -101,7 +104,7 @@ const Features = () =>{
                             {/* Icon Text */}
                             <div className="icon-text">
                                 <h3 className="mb-2">Deposito Bancario</h3>
-                                <p>Siempre podrás transferir directamente a nuestra cuenta del banco estado, esto está disponible durante todo el año!</p>
+                                <p>Siempre podrás transferir directamente a nuestra cuenta del Banco Estado.</p>
                             </div>
                         </div>
                     </div>
@@ -110,6 +113,7 @@ const Features = () =>{
         </section>
         <ModalTransferencia show={showModalTransferencia} onHide={() => setShowModalTransferencia(false)} />
         <BonoSorteo show={showModalBonoSorteo} onHide={() => setShowModalBonoSorteo(false)}/>
+        <DonacionesModal show={showModalDonacion} onHide={() => setShowModalDonacion(false)} />
         </>
     )
 };

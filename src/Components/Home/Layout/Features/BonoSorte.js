@@ -1,14 +1,33 @@
 import React, {useState} from 'react';
-import {Modal, Button, Form, InputGroup} from 'react-bootstrap'
+import {Modal, Button, Form, InputGroup, Spinner} from 'react-bootstrap'
+import axios from 'axios';
 
 const BonoSorteo = ({show, onHide}) => {
     const [cantidad, setCantidad] = useState(1);
+    const [loading, setLoading] = useState(false)
     const valorBono = 500;
 
     const comprarBonos=(e) => {
         e.preventDefault();
+        setLoading(true);
 
         const {nombre, apellido, email, cantidad_bonos} = e.target.elements;
+        axios({
+            method: 'post',
+            url: 'https://appjornadasmagallanicas.cl/api/api/transactions',
+            data: {
+                'orden_compra': 879,
+                'sessionID': 'BonoSorteoSitioWeb',
+                'monto': valorBono * cantidad_bonos.value,
+                'cantidad': cantidad_bonos.value,
+                'nombre': nombre.value.trim(),
+                'apellido': apellido.value.trim(),
+                'email': email.value.trim()
+            }
+        }).then(res => {
+                setLoading(false);
+                window.location.replace(`${res.data.url}?token_ws=${res.data.token_ws}`);
+            });
         console.log('estamos llegando...');
     }
     return (
@@ -36,22 +55,29 @@ const BonoSorteo = ({show, onHide}) => {
                             <Button variant="outline-danger" onClick={() => setCantidad(cantidad === 1 ? cantidad : cantidad -1)}>-</Button>
                         </InputGroup.Append>
                         <Form.Control
-                        name='cantidad_bonos'
-                        style={{textAlign: 'center'}}
-                        value={cantidad}
-                        defaultValue={1}
-                        aria-describedby="basic-addon2"
-                        readOnly
-                        min='1'
+                            type='number'
+                            name='cantidad_bonos'
+                            style={{textAlign: 'center'}}
+                            value={cantidad}
+                            readOnly
+                            min='1'
                         />
                         <InputGroup.Append>
                         <Button variant="outline-success" onClick={() => setCantidad(cantidad +1)}>+</Button>
                         </InputGroup.Append>
                     </InputGroup>
                     </Form.Group>
-                    <Button color='success' block type='submit'><b>${valorBono * cantidad}</b> Comprar</Button>
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button color='success' block type='submit'>
+                    {
+                        loading ?
+                        <Spinner animation="border" />
+                        :
+                        <><b>${valorBono * cantidad}</b> Comprar</>
+
+                    }
+                    </Button>
                 </Modal.Footer>
             </Form>
         </Modal>

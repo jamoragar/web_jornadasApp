@@ -15,7 +15,9 @@ const Footer = () => {
                                     <a className="navbar-brand" href="/#">
                                         <img className="logo" src='/img/logo.png' alt="Jornadas por la Rehabilitación en Magallanes" />
                                     </a>
-                                    
+                                    <br />
+                                    <br />
+                                    <br />
                                     <div className="social-icons d-flex">
                                         <a className='facebook' href="https://www.facebook.com/lasjornadas/">
                                             <i className='fab fa-facebook-f' />
