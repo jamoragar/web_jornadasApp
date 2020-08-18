@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import Donaciones from '../Doanciones/Donaciones';
 import HeroSection from '../Home/Layout/HeroSection/HeroSection';
@@ -11,9 +11,6 @@ import Footer from '../Home/Layout/Footer/Footer';
 const Home = () => {
     return(
         <div className=''>
-            <div id="scrollUp" title="Scroll To Top">
-                <i className="fas fa-arrow-up" />
-            </div>
             <HeroSection />
             {/* <Donaciones /> */}
             <Features />
