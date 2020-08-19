@@ -3,6 +3,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 import BonoSorteo from './BonoSorte';
 import DonacionesModal from './DonacionesModal';
+import ComingSoon from '../../../ComingSoon/ComingSoon';
 
 const ModalTransferencia = ({show, onHide}) => {
     return(
@@ -33,6 +34,7 @@ const Features = () =>{
     const [showModalTransferencia, setShowModalTransferencia] = useState(false);
     const [showModalBonoSorteo, setShowModalBonoSorteo] = useState(false);
     const [showModalDonacion, setShowModalDonacion] = useState(false);
+    const [showModalCS, setShowModalCS] = useState(false);
 
     return (
         <>
@@ -79,7 +81,8 @@ const Features = () =>{
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-lg-3 res-margin">
+                    <div className="col-12 col-md-6 col-lg-3 res-margin"
+                        onClick={() => setShowModalCS(true)}>
                         {/* Image Box */}
                         <div className="image-box text-center icon-1 p-5">
                             {/* Featured Image */}
@@ -114,6 +117,7 @@ const Features = () =>{
         <ModalTransferencia show={showModalTransferencia} onHide={() => setShowModalTransferencia(false)} />
         <BonoSorteo show={showModalBonoSorteo} onHide={() => setShowModalBonoSorteo(false)}/>
         <DonacionesModal show={showModalDonacion} onHide={() => setShowModalDonacion(false)} />
+        <ComingSoon show={showModalCS} onHide={() => setShowModalCS(false)} />
         </>
     )
 };

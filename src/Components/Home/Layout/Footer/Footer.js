@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ComingSoon from '../../../ComingSoon/ComingSoon';
 
 const Footer = () => {
+    const [showModalCS, setShowModalCS] = useState(false);
     return (
+        <>
         <div>
             <footer className="footer-area footer-fixed">
                 {/* Footer Top */}
@@ -43,7 +46,7 @@ const Footer = () => {
                                         <li className="py-2"><a className='link-util' href="/#">Donar</a></li>
                                         <li className="py-2"><a className='link-util' href="/#">Bonos de Sorteo</a></li>
                                         <li className="py-2"><a className='link-util' href="/#">Bingo</a></li>
-                                        <li className="py-2"><a className='link-util' href="/#">Contacto</a></li>
+                                        <li className="py-2"><a className='link-util' href="/contacto">Contacto</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -66,10 +69,10 @@ const Footer = () => {
                                     <h3 className="footer-title mb-2">Descargar App</h3>
                                     {/* Store Buttons */}
                                     <div className="button-group store-buttons store-black d-flex flex-wrap">
-                                        <a href="/#">
+                                        <a onClick={() => setShowModalCS(true)}>
                                             <img src='/img/google-play-black.png' alt="Jornadas Android" />
                                         </a>
-                                        <a href="/#">
+                                        <a onClick={() => setShowModalCS(true)}>
                                             <img src='/img/app-store-black.png' alt="Jornadas Iphone" />
                                         </a>
                                     </div>
@@ -95,6 +98,8 @@ const Footer = () => {
                 </div>
             </footer>
         </div>
+        <ComingSoon show={showModalCS} onHide={() => setShowModalCS(false)} />
+        </>
     )
 };
 
