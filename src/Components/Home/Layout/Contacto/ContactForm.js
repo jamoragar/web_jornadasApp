@@ -1,10 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Spinner} from 'react-bootstrap';
+import axios from 'axios';
+
 
 const ContactForm = () => {
     
+    const API_PATH = 'https://www.appjornadasmagallanicas.cl/api/form/form_submit.php';
+
+    const [btnText, setBtnText] = useState(false);
+    const [emailSended, setEmailSended] = useState(false);
+
     const submitHangler = (event) => {
-    event.preventDefault();
-    console.log(event);
+        event.preventDefault();
+
+        setBtnText(true);
+
+        const {name, email, subject, message} = event.target.elements;
+        console.log(name.value, email.value, subject.value, message.value);
+
+        axios({
+            method: 'post',
+            url: `${API_PATH}`,
+            headers: {'content-type': 'application/json'},
+            data: {
+                name: name.value.trim(),
+                email:email.value.trim(),
+                subject: subject.value.trim(),
+                message: message.value.trim()
+            }
+        }).then(result => {
+            console.log(result)
+            setBtnText(false);
+            setEmailSended(true);
+        })
     };
 
     return(
@@ -57,9 +85,22 @@ const ContactForm = () => {
                     <div className="col-12">
                         <button
                             type="submit"
-                            className="btn btn-lg btn-block mt-3"><span className="text-white pr-3"><i className="fas fa-paper-plane" /></span>
-                            Enviar Mensaje
+                            className="btn btn-lg btn-block mt-3">
+                            {
+                                btnText ?
+                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/>
+                                :
+                                    (<>
+                                    <span className="text-white pr-3">
+                                        <i className="fas fa-paper-plane" />
+                                    </span>
+                                    Enviar Mensaje
+                                    </>)
+                            }
                         </button>
+                        {
+                            emailSended ? (<h4>Mensaje enviado correctamente.</h4>): null
+                        }
                     </div>
                 </div>
             </form>

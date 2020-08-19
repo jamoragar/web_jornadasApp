@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import ComingSoon from '../../../ComingSoon/ComingSoon';
+
 
 const initData = {
     heading: "Descarga la App de las Jornadas Magallánicas",
@@ -11,10 +13,13 @@ const initData = {
 
 const HeroSection = () => {
     const [data, setData] = useState('');
+    const [showModalCS, setShowModalCS] = useState(false);
+
     useEffect(() =>{
         setData(initData);
     },[]);
     return (
+        <>
         <section id="home" className="section welcome-area bg-overlay overflow-hidden d-flex align-items-center">
             <div className='container'>
                 <div className='row align-items-center'>
@@ -23,10 +28,10 @@ const HeroSection = () => {
                             <h1 className="text-white">{data.heading}</h1>
                             <p className="text-white my-4">{data.content}</p>
                             <div className="button-group store-buttons d-flex">
-                                <a href="/#">
+                                <a onClick={() => setShowModalCS(true)}>
                                 <img src={data.playImg} alt="" />
                                 </a>
-                                <a href="/#">
+                                <a onClick={() => setShowModalCS(true)}>
                                 <img src={data.appleImg} alt="" />
                                 </a>
                             </div>
@@ -43,7 +48,7 @@ const HeroSection = () => {
                         {/* Welcome Thumb */}
                         <div className="welcome-thumb text-center mx-auto">
                         {/* Play Button */}
-                        <a className="play-btn" data-fancybox href="https://youtu.be/SzHCqiyxPnA">
+                        <a className="play-btn" data-fancybox href="https://www.youtube.com/embed/9R2iEO3lSpc">
                             <div className="btn-circle play-animation" />
                             <div className="btn-circle play-animation animation-short" />
                             {/* Play Icon */}
@@ -68,6 +73,8 @@ const HeroSection = () => {
                 </svg>
             </div>
         </section>
+        <ComingSoon show={showModalCS} onHide={() => setShowModalCS(false)} />
+        </>
     )
 };
 

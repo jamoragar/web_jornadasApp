@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import ComingSoon from '../../../ComingSoon/ComingSoon';
 
 const initData = {
     heading: "App Jornadas Magallánicas esta disponible para todos los dispositivos.",
@@ -11,12 +12,14 @@ const initData = {
 
 const Download = () => {
     const [data ,setData] = useState('');
+    const [showModalCS, setShowModalCS] = useState(false);
 
     useEffect(() => {
         setData(initData)
     }, []);
 
     return (
+        <>
         <section className="section download-area overlay-dark ptb_100">
             <div className="container">
                 <div className="row justify-content-center">
@@ -28,10 +31,10 @@ const Download = () => {
                     <p className="text-white my-3 d-block d-sm-none">{data.headingTexttwo}</p>
                     {/* Store Buttons */}
                     <div className="button-group store-buttons d-flex justify-content-center">
-                        <a href="/#">
+                        <a onClick={() => setShowModalCS(true)}>
                         <img src={data.playImg} alt="" />
                         </a>
-                        <a href="/#">
+                        <a onClick={() => setShowModalCS(true)}>
                         <img src={data.appleImg} alt="" />
                         </a>
                     </div>
@@ -41,6 +44,8 @@ const Download = () => {
                 </div>
             </div>
         </section>
+        <ComingSoon show={showModalCS} onHide={() => setShowModalCS(false)} />
+        </>
     );
 };
 
