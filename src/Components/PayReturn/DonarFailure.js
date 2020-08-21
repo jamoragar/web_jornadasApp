@@ -6,7 +6,7 @@ const DonarFailure = (props) => {
 	const initData = {
 		state: "No hemos podido procesar tu pago.",
         heading1: "Su aporte por",
-        heading2: "CLP no se ha podido llevar a cabo.",
+        heading2: "CLP no se ha logrado llevar a cabo.",
 		content: "Por favor intenta nuevamente, gracias.",
 		btnText: "Volver al inicio",
 	};

@@ -6,7 +6,7 @@ const DonarSuccess = (props) => {
 	const initData = {
 		state: "Pago realizado con éxito.",
 		heading1: "Su aporte por",
-		heading2: "CLP ha sido recibido con éxito.",
+		heading2: "CLP ha sido recibido exitosamente.",
 		content: "Gracias por colaborar con esta noble causa.",
 		btnText: "Volver al inicio",
 	};
