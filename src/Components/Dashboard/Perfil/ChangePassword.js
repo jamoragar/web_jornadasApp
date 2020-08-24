@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Button, Spinner, Toast } from "react-bootstrap";
+import { Modal, Button, Spinner, Alert } from "react-bootstrap";
 import * as firebase from "firebase";
 import { handleLogOut } from "../../../Config/Firebase";
 
 export const ChangePassword = ({ show, onHide, userInfo }) => {
 	const [loading, setLoading] = useState(false);
     const [showPass, setShowPass] = useState(false);
-    const [err, setErr] =useState(null)
+	const [alertShow, setAlertShow] = useState(false);
     console.log(userInfo.tipo);
 
 	const handleUpdate = (e) => {
@@ -19,7 +19,7 @@ export const ChangePassword = ({ show, onHide, userInfo }) => {
 			!password.value.trim() ||
 			!repeatPassword.value.trim()
 		) {
-			setErr("campos incompletos");
+			alert("campos incompletos");
 			setLoading(false);
 		} else if (passwordActual.value.trim() !== userInfo.password.trim()) {
 			alert("Contraseña actual no coincide");
@@ -43,9 +43,9 @@ export const ChangePassword = ({ show, onHide, userInfo }) => {
 					firebase
 						.auth()
 						.currentUser.updatePassword(updatPassword.password.trim());
-					alert("Datos Actualizados con exito.");
 					setLoading(false);
-					handleLogOut();
+					setAlertShow(true);
+					setTimeout(()=>{ handleLogOut(); }, 4000);
 				})
 				.catch(() => {
 					alert("No se ha logrado actualizar el email");
@@ -135,6 +135,15 @@ export const ChangePassword = ({ show, onHide, userInfo }) => {
 									{loading ? <Spinner animation="border" /> : "Actualizar"}
 								</button>
 							</div>
+							<div className="col-12 mt-3">
+									<Alert
+										show={alertShow}
+										variant={"success"}
+										onClose={() => setAlertShow(false)}
+									>
+										¡contraseña actualizada con éxito! su sesión se cerrará, y tendrá que ingresar de nuevamente.
+									</Alert>
+								</div>
 						</div>
 					</form>
 				</Modal.Body>

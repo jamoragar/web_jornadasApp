@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import { Form, Button, Modal, Alert, Spinner, Col } from "react-bootstrap";
 import * as firebase from "firebase";
 
-export const EditarUsuario = ({ show, onHide, data }) => {
-	const [alertShow, setAlertShow] = useState(false);
+export const EditarEmpresa = ({ show, onHide, data }) => {
+    const [alertShow, setAlertShow] = useState(false);
 	const [loading, setLoading] = useState(false);
-
-	
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
 		setLoading(true);
-		const { nombre, apellido, rol } = e.target.elements;
+		const { nombre, representante, telefono, rol } = e.target.elements;
 		let uid = data.uid;
 		firebase
 			.database()
@@ -19,7 +17,8 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 			.child(`Users/${uid}`)
 			.update({
 				nombre: nombre.value.trim(),
-				apellido: apellido.value.trim(),
+                representante: representante.value.trim(),
+                telefono: telefono.value.trim(),
 				subtipo: rol.value,
 			})
 			.then(() => {
@@ -39,7 +38,7 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 				<Modal show={show} onHide={onHide}>
 					<Form id="myForm" onSubmit={handleUpdate}>
 						<Modal.Header closeButton>
-							<Modal.Title>Editar Usuario</Modal.Title>
+							<Modal.Title>Editar Empresa</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
 							<Form.Row>
@@ -55,21 +54,30 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 								</Form.Group>
 							</Form.Row>
 							<Form.Group>
-								<Form.Label>Nombre:</Form.Label>
+								<Form.Label>Nombre de Empresa:</Form.Label>
 								<Form.Control
 									defaultValue={data.nombre}
 									name="nombre"
 									type="text"
-									placeholder="Ingrese el nombre."
+									placeholder="Ingrese el nombre de la empresa."
 								/>
 							</Form.Group>
 							<Form.Group>
-								<Form.Label>Apellido:</Form.Label>
+								<Form.Label>Representante Legal:</Form.Label>
 								<Form.Control
-									defaultValue={data.apellido}
-									name="apellido"
+									defaultValue={data.representante}
+									name="representante"
 									type="text"
-									placeholder="Ingrese el apellido."
+									placeholder="Ingrese nombre de representante."
+								/>
+							</Form.Group>
+                            <Form.Group>
+								<Form.Label>Teléfono de Contacto:</Form.Label>
+								<Form.Control
+									defaultValue={data.telefono}
+									name="telefono"
+									type="text"
+									placeholder="Ingrese Teléfono de Contacto."
 								/>
 							</Form.Group>
 							<Form.Group>
@@ -80,7 +88,7 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 									defaultValue={data.subtipo}
 									required
 								>
-									<option value={data.subtipo}>{`Actual: ${data.subtipo}...`}</option>
+                                    <option value={data.subtipo}>{`Actual: ${data.subtipo}...`}</option>
 									<option value="User">Usuario</option>
 									<option value="Company">Empresa</option>
 									<option value="Leo/Leon">Leo/Leon</option>

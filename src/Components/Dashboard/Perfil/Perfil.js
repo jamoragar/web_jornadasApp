@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
-import { EditPerfil } from "./EditPerfil";
+import { EditPerfilUser } from "./EditPerfilUser";
+import { EditPerfilCompany } from "./EditPerfilComprany";
 
 const Perfil = ({ type, uid }) => {
 	const [userInfo, setUserInfo] = useState({});
@@ -14,11 +15,18 @@ const Perfil = ({ type, uid }) => {
 			});
 	}, []);
 
-	return (
-		<div className="dash_content">
-			<EditPerfil userInfo={userInfo} />
-		</div>
-	);
+	if (userInfo) {
+		return (
+			<div className="dash_content">
+				{userInfo.tipo === 'User'?
+				<EditPerfilUser userInfo={userInfo} />
+				:
+				<EditPerfilCompany userInfo={userInfo}/>
+			}
+				
+			</div>
+		);
+	}
 };
 
 export default Perfil;

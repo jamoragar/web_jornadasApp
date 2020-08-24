@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Alert } from "react-bootstrap";
 import * as firebase from "firebase";
-import { ModalExito } from "./ModalExito";
 import { ChangePassword } from "./ChangePassword";
-import {Redirect} from 'react-router-dom';
+import { handleLogOut } from "../../../Config/Firebase";
 
-export const EditPerfil = (props) => {
+export const EditPerfilCompany = (props) => {
 	const { userInfo } = props;
 	const [loading, setLoading] = useState(false);
-	const [showModal, setShowModal] = useState(false);
 	const [showPassModal, setShowPassModal] = useState(false);
+	const [alertShow, setAlertShow] = useState(false);
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
 		setLoading(true);
-		const { nombre, apellido, email } = e.target.elements;
+		const { nombre, representante, email, telefono } = e.target.elements;
 		let uid = userInfo.uid;
 		firebase
 			.database()
@@ -22,16 +21,17 @@ export const EditPerfil = (props) => {
 			.child(`Users/${uid}`)
 			.update({
 				nombre: nombre.value.trim(),
-				apellido: apellido.value.trim(),
-				email: email.value.trim(),
+				representante: representante.value.trim(),
+                email: email.value.trim(),
+                telefono: telefono.value.trim(),
 			})
 			.then(() => {
 				const update = { email: email.value };
 				firebase.auth().currentUser.updateEmail(update.email.trim());
 				console.log("Datos Actualizados con exito.");
 				setLoading(false);
-				setShowModal(true);
-			
+                setAlertShow(true);
+                setTimeout(()=>{ handleLogOut(); }, 4000);
 			})
 			.catch(() => {
 				console.log("No se ha logrado actualizar el email");
@@ -40,20 +40,13 @@ export const EditPerfil = (props) => {
 	};
 
 	if (userInfo) {
-		console.log(userInfo);
 		return (
 			<>
-				<div className="col-12 col-lg-7">
-					<div className="welcome-intro">
-						<h1 className="text-white">Perfil</h1>
-						<p className="text-white my-4"></p>
-					</div>
-				</div>
-				<div className="col-12 col-md-8 col-lg-5">
+				<div className="col-12 col-md-8 col-lg-10">
 					<div className="contact-box bg-white text-center rounded p-4 p-sm-5 mt-5 mt-lg-0 shadow-lg">
 						<form id="contact-form" onSubmit={handleUpdate}>
 							<div className="contact-top">
-								<h3 className="contact-title">Perfil</h3>
+								<h3 className="contact-title">Perfil Empresa</h3>
 								<h5 className="text-secondary fw-3 py-3">Editar información</h5>
 							</div>
 							<div className="row">
@@ -71,7 +64,7 @@ export const EditPerfil = (props) => {
 												name="nombre"
 												defaultValue={userInfo.nombre}
 												placeholder="Nombre"
-												required="required"
+												required
 											/>
 										</div>
 									</div>
@@ -85,10 +78,10 @@ export const EditPerfil = (props) => {
 											<input
 												type="text"
 												className="form-control"
-												name="apellido"
-												defaultValue={userInfo.apellido}
-												placeholder="Apellido"
-												required="required"
+												name="representante"
+												defaultValue={userInfo.representante}
+												placeholder="representante"
+												required
 											/>
 										</div>
 									</div>
@@ -105,7 +98,24 @@ export const EditPerfil = (props) => {
 												name="email"
 												defaultValue={userInfo.email}
 												placeholder="Email"
-												required="required"
+												required
+											/>
+										</div>
+									</div>
+                                    <div className="form-group">
+										<div className="input-group">
+											<div className="input-group-prepend">
+												<span className="input-group-text">
+													<i className="fas fa-phone" />
+												</span>
+											</div>
+											<input
+												type='phone'
+												className="form-control"
+												name="telefono"
+												defaultValue={userInfo.telefono}
+												placeholder="Teléfono"
+												required
 											/>
 										</div>
 									</div>
@@ -113,27 +123,35 @@ export const EditPerfil = (props) => {
 								<div className="col-12">
 									<button
 										title="Actualizar"
-										className="btn btn-bordered w-100 mt-3"
+										className="w-25  mt-3"
 										type="submit"
 									>
 										{loading ? <Spinner animation="border" /> : "Actualizar"}
 									</button>
 								</div>
 							</div>
+							<div className="col-12">
+								<button
+									title="PassModal"
+									className=" w-25 mt-3"
+									onClick={() => setShowPassModal(true)}
+								>
+									{loading ? (
+										<Spinner animation="border" />
+									) : (
+										"Cambiar contraseña"
+									)}
+								</button>
+							</div>
+							<div className="mt-3">
+								<Alert
+									show={alertShow}
+									variant={"success"}
+								>
+									¡Datos Actualizados con éxito! su sesión se cerrará, y tendrá que ingresar de nuevamente.
+								</Alert>
+							</div>
 						</form>
-						<div className="col-12">
-							<button
-								title="PassModal"
-								className="btn btn-bordered w-100 mt-3"
-								onClick={() => setShowPassModal(true)}
-							>
-								{loading ? (
-									<Spinner animation="border" />
-								) : (
-									"Cambiar contraseña"
-								)}
-							</button>
-						</div>
 					</div>
 				</div>
 				<ChangePassword
@@ -141,7 +159,6 @@ export const EditPerfil = (props) => {
 					show={showPassModal}
 					onHide={() => setShowPassModal(false)}
 				/>
-				<ModalExito show={showModal} onHide={() => setShowModal(false)} />
 			</>
 		);
 	}

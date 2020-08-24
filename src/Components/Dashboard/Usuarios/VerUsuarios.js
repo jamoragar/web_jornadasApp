@@ -3,10 +3,14 @@ import DataTable from 'react-data-table-component';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import EntregarAlcancias from '../Alcancias/EntregarAlcancias';
 import EntregarTalonarios from '../Talonarios/EntregarTalonarios';
+import { EditarUsuario } from './EditarUsuario';
+import {EditarEmpresa} from './EditarEmpresa';
 
 const VerUsuarios = ({users}) => {
     const [showEntregarAlcancias, setShowEntregarAlcancias] = useState(false);
     const [showEntregarTalonarios, setShowEntregarTalonarios] = useState(false);
+    const [showEditarUsuario, setShowEditarUsuario] = useState(false);
+    const [showEditarEmpresa, setShowEditarEmpresa] = useState(false)
     const [userData, setUserData] = useState(null);
     let usersToArray = [];
 
@@ -73,7 +77,10 @@ const VerUsuarios = ({users}) => {
                         <OverlayTrigger id={'ver'} placement={'left'} overlay={
                             <Tooltip id={'tooltip-bottom'}><strong>Ver</strong></Tooltip>
                         }>
-                            <div style={{ cursor: 'pointer' }} className="text-success">
+                            <div style={{ cursor: 'pointer' }} className="text-success" onClick={() => { data.tipo === 'User'?
+                                    setShowEditarUsuario(true):setShowEditarEmpresa(true);
+                                    setUserData(data);
+                                }}>
                                 <i className="fas fa-fw fa-search fa-lg" style={{ width: '35px', height: '20px' }} />
                             </div>
                         </OverlayTrigger>
@@ -113,6 +120,8 @@ const VerUsuarios = ({users}) => {
             :
                 null
         }
+        <EditarUsuario show={showEditarUsuario} onHide={()=> setShowEditarUsuario(false) } data={userData}/>
+        <EditarEmpresa show={showEditarEmpresa} onHide={()=> setShowEditarEmpresa(false) } data={userData}/>
         </>
     );
 }
