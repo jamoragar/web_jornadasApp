@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { Spinner } from "react-bootstrap";
 import * as firebase from "firebase";
+import { ModalExito } from "./ModalExito";
+import { ChangePassword } from "./ChangePassword";
+import {Redirect} from 'react-router-dom';
 
 export const EditPerfil = (props) => {
 	const { userInfo } = props;
-	console.log(userInfo)
+	const [loading, setLoading] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+	const [showPassModal, setShowPassModal] = useState(false);
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
+		setLoading(true);
 		const { nombre, apellido, email } = e.target.elements;
 		let uid = userInfo.uid;
 		firebase
@@ -14,20 +21,26 @@ export const EditPerfil = (props) => {
 			.ref()
 			.child(`Users/${uid}`)
 			.update({
-				nombre: nombre.value,
-				apellido: apellido.value,
-				email: email.value,
+				nombre: nombre.value.trim(),
+				apellido: apellido.value.trim(),
+				email: email.value.trim(),
 			})
 			.then(() => {
-				const update = { email: email.value};
-				firebase.auth().currentUser.updateEmail(update.email);
+				const update = { email: email.value };
+				firebase.auth().currentUser.updateEmail(update.email.trim());
+				console.log("Datos Actualizados con exito.");
+				setLoading(false);
+				setShowModal(true);
+			
 			})
 			.catch(() => {
 				console.log("No se ha logrado actualizar el email");
+				setLoading(false);
 			});
 	};
 
 	if (userInfo) {
+		console.log(userInfo);
 		return (
 			<>
 				<div className="col-12 col-lg-7">
@@ -96,23 +109,6 @@ export const EditPerfil = (props) => {
 											/>
 										</div>
 									</div>
-									<div className="form-group">
-										<div className="input-group">
-											<div className="input-group-prepend">
-												<span className="input-group-text">
-													<i className="fas fa-unlock-alt" />
-												</span>
-											</div>
-											<input
-												type="password"
-												className="form-control"
-												name="password"
-												defaultValue={userInfo.password}
-												placeholder="Password"
-												required="required"
-											/>
-										</div>
-									</div>
 								</div>
 								<div className="col-12">
 									<button
@@ -120,13 +116,32 @@ export const EditPerfil = (props) => {
 										className="btn btn-bordered w-100 mt-3"
 										type="submit"
 									>
-										Actualizar
+										{loading ? <Spinner animation="border" /> : "Actualizar"}
 									</button>
 								</div>
 							</div>
 						</form>
+						<div className="col-12">
+							<button
+								title="PassModal"
+								className="btn btn-bordered w-100 mt-3"
+								onClick={() => setShowPassModal(true)}
+							>
+								{loading ? (
+									<Spinner animation="border" />
+								) : (
+									"Cambiar contraseña"
+								)}
+							</button>
+						</div>
 					</div>
 				</div>
+				<ChangePassword
+					userInfo={userInfo}
+					show={showPassModal}
+					onHide={() => setShowPassModal(false)}
+				/>
+				<ModalExito show={showModal} onHide={() => setShowModal(false)} />
 			</>
 		);
 	}
