@@ -23,10 +23,10 @@ const Routes = (props) => {
                     <Route path="/Contacto" exact component={Contacto} />
                     <Route path="/Dashboard/:uid" component={() => props.authenticated ? <Dashboard/> : <Home/>} />
                     <Route path='/not-found' component={NotFound404} />
-                    <Route path='/Donar-exito' component={DonarSuccess}/>
+                    <Route path='/procesa-pago/' component={DonarSuccess}/>
                     <Route path='/Donar-fallo' component={DonarFailure}/>
-                    <Route path='/Bono-exito' component={BonoSuccess}/>
-                    <Route path='/Bono-fallo' component={BonoFailure}/>
+                    <Route path='/pago-exito' component={BonoSuccess}/>
+                    <Route path='/pago-fallo' component={BonoFailure}/>
                     <Route component={() => <Redirect to='/'/>} />
                 </Switch>
             </BrowserRouter>

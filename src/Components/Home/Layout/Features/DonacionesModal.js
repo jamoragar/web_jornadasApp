@@ -12,7 +12,7 @@ const DonacionesModal = ({show, onHide}) => {
         const {nombre, apellido, email, monto} = e.target.elements;
         axios({
             method: 'post',
-            url: 'https://appjornadasmagallanicas.cl/api/api/transactions',
+            url: 'http://127.0.0.1:8000/api/transactions',
             data: {
                 'orden_compra': 737,
                 'sessionID': 'DonacionSitioWeb',
