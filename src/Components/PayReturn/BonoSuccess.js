@@ -6,7 +6,7 @@ const BonoSuccess = (props) => {
 	const initData = {
 		state: "Pago realizado con éxito.",
 		heading1: "Su compra de bono(s) por",
-		heading2: "CLP ha sido procesada con éxito. ",
+		heading2: "CLP ha sido procesada exitosamente. ",
 		content: "Gracias por colaborar con esta noble causa.",
 		btnText: "Volver al inicio",
 	};
