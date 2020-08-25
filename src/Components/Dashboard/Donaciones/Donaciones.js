@@ -15,8 +15,7 @@ const Donaciones = () => {
 					? setDonaciones(snapshot.val())
 					: setDonaciones("NO_DATA_FOUND");
 			});
-    }, []);
-     
+	}, []);
 
 	if (donaciones !== "EMPTY") {
 		return (
