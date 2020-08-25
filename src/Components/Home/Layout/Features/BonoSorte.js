@@ -77,6 +77,7 @@ const BonoSorteo = ({ show, onHide }) => {
 					id: key,
 					estado_de_pago: "Pendiente",
 					forma_de_pago: "Pendiente",
+					plataforma: "web",
 				});
 			axios({
 				method: "post",
