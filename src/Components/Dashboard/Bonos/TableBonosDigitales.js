@@ -1,41 +1,42 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { InfoDonacion } from "./InfoDonacion";
+import { InfoBono } from "./InfoBono";
 
-const TableDonaciones = ({ donaciones }) => {
-	const [showDonacion, setShowDonacion] = useState(false);
-	const [donacionData, setDonacionData] = useState(null);
-	let donacionesToArray = [];
+const TableBonosDigitales = ({ bonosSorteo}) => {
+	const [showBono, setShowBono] = useState(false);
+	const [bonoData, setBonoData] = useState(null);
+	let bonosSorteoToArray = [];
 
 	const columns = [
 		{
 			name: "Orden de compra",
 			selector: "numero_orden",
 			sortable: true,
-			width: "5%",
+			width: "10%",
 		},
 		{
 			name: "Nombre",
-			selector: (donaciones) => {
-				return `${donaciones.nombre} ${
-					donaciones.apellido ? donaciones.apellido : ""
+			selector: (bonosSorteo) => {
+				return `${bonosSorteo.nombre} ${
+					bonosSorteo.apellido ? bonosSorteo.apellido : ""
 				}`;
 			},
 			sortable: true,
-			width: "20%",
+			width: "15%",
 		},
 		{
 			name: "Email",
 			selector: "email",
 			sortable: true,
-			width: "17.5%",
+			width: "15%",
 		},
 		{
-			name: "Aporte",
-			selector: "aporte",
+			name: "cantidad",
+			selector: "cantidad",
 			sortable: true,
-			width: "10%",
+            width: "10%",
+            
 		},
 		{
 			name: "Estado del pago",
@@ -53,12 +54,21 @@ const TableDonaciones = ({ donaciones }) => {
 			name: "Fecha",
 			selector: "fecha",
 			sortable: true,
-			width: "15%",
-		},
+			width: "10%",
+        },
+        {
+            name:'Disponibilidad',
+            selector: 'isAviable',
+            sortable: false,
+            width: "10%",
+            cell: (data) => {
+                return `${data.isAviable ? 'Disponible ': 'Vendido'}`
+            }
+        },
 		{
 			name: "Control",
 			button: true,
-			width: "20%",
+			width: "10%",
 			cell: (data) => {
 				return (
 					<div style={{ display: "flex" }}>
@@ -75,8 +85,8 @@ const TableDonaciones = ({ donaciones }) => {
 								style={{ cursor: "pointer" }}
 								className="text-success"
 								onClick={() => {
-									setShowDonacion(true);
-									setDonacionData(data);
+									setShowBono(true);
+									setBonoData(data);
 								}}
 							>
 								<i
@@ -90,15 +100,16 @@ const TableDonaciones = ({ donaciones }) => {
 			},
 		},
 	];
-	Object.keys(donaciones).forEach((key, i) => {
-		donacionesToArray[i] = donaciones[key];
+
+	Object.keys(bonosSorteo).forEach((key, i) => {
+		bonosSorteoToArray[i] = bonosSorteo[key];
 	});
 
 	return (
 		<>
 			<DataTable
 				columns={columns}
-				data={donacionesToArray}
+				data={bonosSorteoToArray}
 				fixedHeader
 				fixedHeaderScrollHeight="500px"
 				pagination
@@ -113,13 +124,13 @@ const TableDonaciones = ({ donaciones }) => {
 				persistTableHead
 				highlightOnHover
 			/>
-			<InfoDonacion
-				show={showDonacion}
-				onHide={() => setShowDonacion(false)}
-				data={donacionData}
+			<InfoBono
+				show={showBono}
+				onHide={() => setShowBono(false)}
+				data={bonoData}
 			/>
 		</>
 	);
 };
 
-export default TableDonaciones;
+export default TableBonosDigitales;

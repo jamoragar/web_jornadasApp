@@ -5,7 +5,6 @@ import * as firebase from "firebase";
 export const RecoverPassword = ({ show, onHide }) => {
     const [alertShow, setAlertShow] = useState(false);
     const [alertErrorShow, setAlertErrorShow] = useState(false);
-	const [loading, setLoading] = useState(false);
 	const [loadingText, setLoadingText] = useState("Recuperar");
 
 	const recuperarPassword = (e) => {
@@ -48,9 +47,9 @@ export const RecoverPassword = ({ show, onHide }) => {
 						</Form.Row>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant="success" type="submit" block>
-							{loading ? <Spinner animation="border" /> : "Actualizar"}
-						</Button>
+                        <Button variant="success" type="submit" block>
+						{loadingText}
+					</Button>
 					</Modal.Footer>
 					<Alert
 						show={alertShow}

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Form, Button, Modal, Alert, Spinner, Col } from "react-bootstrap";
-import * as firebase from "firebase";
+import React from "react";
+import { Form, Modal } from "react-bootstrap";
 
 export const InfoDonacion = ({ show, onHide, data }) => {
 	if (data) {
