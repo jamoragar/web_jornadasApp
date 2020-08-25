@@ -5,15 +5,17 @@ import {
 	Form,
 	Overlay,
 	Tooltip,
-	Spinner,
+	Spinner
 } from "react-bootstrap";
 import Handler from "../Handler/Handler";
 import useErr from "../Hook/useErr";
 import firebase from "../../Config/Firebase";
+import { RecoverPassword } from "./RecoverPassword";
 
 const Login = ({ show, onHide }) => {
 	const [loadingText, setLoadingText] = useState("Ingresar");
 	const [showToolTip, setShowTooltip] = useState(false);
+	const [showRecoverpassword, setShowRecoverPassword] = useState(false);
 	const Err = useErr();
 	const { err, setErr } = Err;
 	const target = useRef(null);
@@ -45,20 +47,6 @@ const Login = ({ show, onHide }) => {
 				});
 				setTimeout(() => setShowTooltip(false), 3500);
 			});
-	};
-
-	const recuperarPassword = (e) => {
-		e.preventDefault();
-		setLoadingText(<Spinner animation="border" size="sm" />);
-
-        let { email } = e.target;
-        console.log(email)
-		// firebase
-		// 	.auth()
-		// 	.sendPasswordResetEmail(email.value.trim())
-		// 	.then(() => {
-		// 		console.log("email de recuperacion enviado");
-		// 	});
 	};
 
 	return (
@@ -115,9 +103,10 @@ const Login = ({ show, onHide }) => {
 					</Button>
 				</Modal.Footer>
 			</Form>
-			<Button variant="light" onClick={(e)=>recuperarPassword(e)} block>
+			<Button variant="light" onClick={()=> setShowRecoverPassword(true)} block>
 				Olvidaste tu contraseña?
 			</Button>
+			<RecoverPassword show={showRecoverpassword} onHide={()=> setShowRecoverPassword(false)}/> 
 		</Modal>
 	);
 };
