@@ -26,7 +26,7 @@ const Routes = (props) => {
                     <Route path='/procesa-pago/' component={DonarSuccess}/>
                     <Route path='/Donar-fallo' component={DonarFailure}/>
                     <Route path='/pago-exito' component={BonoSuccess}/>
-                    <Route path='/pago-fallo' component={BonoFailure}/>
+                    <Route path='/pago-fallido' component={BonoFailure}/>
                     <Route component={() => <Redirect to='/'/>} />
                 </Switch>
             </BrowserRouter>
@@ -34,7 +34,7 @@ const Routes = (props) => {
         )
     }else{
         return(
-            <h1>Loading...</h1>
+			<h2>Loading...</h2>
         )
     }
 }

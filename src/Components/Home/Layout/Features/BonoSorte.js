@@ -10,6 +10,11 @@ const BonoSorteo = ({ show, onHide }) => {
 	const valorBono = 500;
 	const [numeroOrden, setNumeroOrden] = useState();
 
+	//Desarrollo
+	const url = 'http://127.0.0.1:8000/api/transactions';
+	//Producción
+	// const url = 'https://appjornadasmagallanicas.cl/api/api/transactions';
+
 	useEffect(() => {
 		firebase
 			.database()
@@ -80,7 +85,7 @@ const BonoSorteo = ({ show, onHide }) => {
 				});
 			axios({
 				method: "post",
-				url: "https://appjornadasmagallanicas.cl/api/api/transactions",
+				url: url,
 				data: {
                     'item' : 'Bono',
 					'orden_compra': key,

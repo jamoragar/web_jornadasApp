@@ -1,11 +1,43 @@
 import React, {useState, useEffect} from "react";
+import firebase from '../../Config/Firebase';
 
 const DonarSuccess = (props) => {
 	const [data, setData] = useState([]);
 	
 	useEffect(() => {
 		const querystring = window.location.search;
-		setData([querystring.split('?')[1], querystring.split('?')[2]]);
+		const splitted_data = querystring.split('?');
+
+		/*
+		0: '',
+		1: url de redirección,
+		2: token ws,
+		3: Código de autorización,
+		4: Monto ($),
+		5: Código de respuesta,
+		6: Orden de Compra,
+		7: Fecha de Transacción
+		*/
+
+		/* Seteando valores en local storage para usarlos y consultar a firebase...*/
+		window.localStorage.setItem('oc', splitted_data[6]);
+
+		setData([splitted_data[1],
+				splitted_data[2],
+				splitted_data[3],
+				splitted_data[4],
+				splitted_data[5],
+				splitted_data[6],
+				splitted_data[7]]);
+		firebase.database().ref(`Transbank/orden_${splitted_data[6]}`).update({
+			estado_de_pago: 'Aprobado',
+			transbank_data:{
+				token_ws: splitted_data[2],
+				cod_autorizacion: splitted_data[3],
+				cod_respuesta: splitted_data[5],
+				fecha_transaccion: splitted_data[7]
+			}
+		})
 	}, [])
 
 	if(data[0]){
@@ -26,7 +58,7 @@ const DonarSuccess = (props) => {
 								</form>
 								{//Immediately-invoked function expression (IIFE).
 									(() => {
-									setTimeout(() => {document.getElementById('form-return').submit()}, 1173)
+									setTimeout(() => {document.getElementById('form-return').submit()}, 1473)
 								})
 
 								()}
