@@ -41,11 +41,11 @@ const EntregarAlcancias = ({show, onHide, data}) => {
         e.preventDefault();
 
         const alcancias_firebase = [];
+
         Object.keys(inputEl).map((key) => {
             inputEl[key].map(input => {
-                let name = input['name'];
-                console.log(input['value'])
-                alcancias_firebase.push(input.value);
+                let input_value = input['value'];
+                alcancias_firebase.push(input_value);
             })
         });
 
