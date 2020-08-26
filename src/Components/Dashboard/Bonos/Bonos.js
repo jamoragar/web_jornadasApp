@@ -1,63 +1,39 @@
 import React, {useEffect, useState} from 'react';
-import firebase from '../../../Config/Firebase';
-import DataTable from 'react-data-table-component';
-import {Row, Button} from 'react-bootstrap';
+import * as firebase from 'firebase';
+import {Spinner} from 'react-bootstrap';
+import TableBonosDigitales from './TableBonosDigitales';
 
-const BonosRifa = ({type, uid}) => {
-    const columns = [
-        {
-            name: 'Número',
-            selector: 'bono_rifa',
-            sortable: true
-        },
-        {
-            name: 'ID',
-            selector: 'id',
-            sortable: false
-        },
-        {
-            name:'Disponibilidad',
-            selector: 'isAviable',
-            sortable: false,
-            cell: (data) => {
-                return `${data.isAviable ? 'Disponible ': 'Vendido'}`
-            }
-        }
-    ];
-    const [bonosSorteo, setBonosSorteo] = useState(null);
+const BonosRifa = () => {
+   
+    const [bonosSorteo, setBonosSorteo] = useState('EMPTY');
 
     useEffect(() => {
-        firebase.database().ref('/Bonos_Sorteo').once('value')
-            .then(snapshot => {
-                snapshot.val() ? setBonosSorteo(snapshot.val()) : setBonosSorteo('ERROR');
+        firebase.database().ref('/Bono_digital').on('value', snapshot => {
+                snapshot.val() ? setBonosSorteo(snapshot.val()) : setBonosSorteo('NO_DATA_FOUND')
             });
     }, [])
 
-    if(bonosSorteo){
-        console.log(bonosSorteo)
+    if(bonosSorteo !== 'EMPTY'){
         return (
             <div className='dash_content'>
-                <Row>
-                    <h1>Bonos de Sorteo:</h1>
-                </Row>
-                <DataTable
-                    columns={columns}
-                    data={bonosSorteo}
-                    fixedHeader
-                    pagination
-                    subHeader
-                    persistTableHead
-                    highlightOnHover
-                    paginationRowsPerPageOptions={[100, 250, 800, 2000]}
-                    paginationComponentOptions={{rowsPerPageText: 'Filas por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todo'}}
-                />
+                <h1>Bonos Digitales:</h1>
+                <TableBonosDigitales bonosSorteo={bonosSorteo}/>
             </div>
         );
     }else{
-        return(
-            <h2>Loading...</h2>
+        return (
+            <div className='dash_content'>
+                <Spinner animation="grow" variant="primary" />
+                <Spinner animation="grow" variant="secondary" />
+                <Spinner animation="grow" variant="success" />
+                <Spinner animation="grow" variant="danger" />
+                <Spinner animation="grow" variant="warning" />
+                <Spinner animation="grow" variant="info" />
+                <Spinner animation="grow" variant="light" />
+                <Spinner animation="grow" variant="dark" />
+            </div>
         )
-    };
-};
+    }
+}
  
 export default BonosRifa;
