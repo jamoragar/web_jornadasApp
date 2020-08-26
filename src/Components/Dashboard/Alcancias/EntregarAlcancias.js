@@ -43,7 +43,8 @@ const EntregarAlcancias = ({show, onHide, data}) => {
         const alcancias_firebase = [];
         Object.keys(inputEl).map((key) => {
             inputEl[key].map(input => {
-                console.log(input.classList)
+                let name = input['name'];
+                console.log(input['value'])
                 alcancias_firebase.push(input.value);
             })
         });
