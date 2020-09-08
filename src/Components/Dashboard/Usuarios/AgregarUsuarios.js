@@ -10,7 +10,7 @@ const AgregarUsuarios = ({show, onHide}) => {
         document.getElementById('myForm').reset();
     }
 
-    const onFormSurmit = async e => {
+    const onFormSubmit = async e => {
         e.preventDefault();
 
         const key = firebase.database().ref().push().key;
@@ -80,7 +80,7 @@ const AgregarUsuarios = ({show, onHide}) => {
 
     return (
         <Modal show={show} onHide={onHide}>
-            <Form onSubmit={onFormSurmit} id='myForm'>
+            <Form onSubmit={onFormSubmit} id='myForm'>
                 <Modal.Header closeButton>
                     <Modal.Title>Crear Nuevo Usuario</Modal.Title>
                 </Modal.Header>

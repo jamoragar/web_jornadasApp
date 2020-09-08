@@ -74,8 +74,8 @@ const Alcancias = ({type, uid}) => {
     return (
         <div className='dash_content'>
             <Row>
-                <h1>Alcancias:</h1>
-                <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 60)}}>Generar Alcancias</Button>
+                <h1>Alcancías:</h1>
+                <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 60)}}>Generar Alcancías</Button>
             </Row>
         </div>
     );

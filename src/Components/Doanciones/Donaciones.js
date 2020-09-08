@@ -7,7 +7,7 @@ const Donaciones = () =>{
     const generarPeticion = ()=>{
         axios({
             method: 'post', 
-            url: 'http://127.0.0.1:8000/api/transactions',
+            url: 'https://appjornadasmagallanicas.cl/api/api/transactions',
             data: {
                 "orden_compra": 11,
                 "sessionID": "uid",

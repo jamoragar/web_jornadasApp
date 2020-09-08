@@ -11,9 +11,9 @@ const BonoSorteo = ({ show, onHide }) => {
 	const [numeroOrden, setNumeroOrden] = useState();
 
 	//Desarrollo
-	const url = 'http://127.0.0.1:8000/api/transactions';
-	//Producción
-	// const url = 'https://appjornadasmagallanicas.cl/api/api/transactions';
+	// const url = 'http://127.0.0.1:8000/api/transactions';
+	// Producción
+	const url = 'https://appjornadasmagallanicas.cl/api/api/transactions';
 
 	useEffect(() => {
 		firebase
@@ -48,7 +48,7 @@ const BonoSorteo = ({ show, onHide }) => {
 			Object.keys(numeroOrden).forEach((key, i) => {
 				orderToArray[i] = numeroOrden[key];
 			});
-			let key = parseInt(orderToArray[0].numero_orden) + 1;
+			let key = parseInt(orderToArray[0].numero_orden.split('-')[1]) + 1;
 			console.log(key);
 			firebase
 				.database()
@@ -62,7 +62,7 @@ const BonoSorteo = ({ show, onHide }) => {
 					apellido: apellido.value,
 					email: email.value,
 					fecha: moment().format("DD-MM-YYYY h:mm:ss a"),
-					numero_orden: key,
+					numero_orden: 'JMAGALLANICAS-' + key,
 					estado_de_pago: "Pendiente",
 					forma_de_pago: "Pendiente",
 					plataforma: "Web",
@@ -77,7 +77,7 @@ const BonoSorteo = ({ show, onHide }) => {
 					apellido: apellido.value,
 					email: email.value,
 					cantidad: cantidad_bonos.value,
-					numero_orden: key,
+					numero_orden: 'JMAGALLANICAS-' + key,
 					fecha: moment().format("DD-MM-YYYY h:mm:ss a"),
 					id: key,
 					estado_de_pago: "Pendiente",
@@ -88,8 +88,8 @@ const BonoSorteo = ({ show, onHide }) => {
 				method: "post",
 				url: url,
 				data: {
-                    'item' : 'Bono',
-					'orden_compra': key,
+                    'item' : 'Bono Sorteo',
+					'orden_compra': 'JMAGALLANICAS-' + key,
 					'sessionID': "BonoSorteoSitioWeb",
 					'monto': valorBono * cantidad_bonos.value,
 					'cantidad': cantidad_bonos.value,

@@ -36,7 +36,7 @@ const Contacto = () => {
                                         <div className="social-icon mr-3">
                                             <i className='fas fa-phone-alt' />
                                         </div>
-                                        <span className="link-util media-body align-self-center">+56 9 1234 5678 - +56 61 2222222</span>
+                                        <span className="link-util media-body align-self-center">+56 9 6872 8049 - +56 61 2 229520</span>
                                     </a>
                                 </li>
                                 <li className="py-2">
@@ -44,7 +44,7 @@ const Contacto = () => {
                                         <div className="social-icon mr-3">
                                             <i className='fas fa-envelope' />
                                         </div>
-                                        <span className="link-util media-body align-self-center">contacto@leonescruzdelsur.cl</span>
+                                        <span className="link-util media-body align-self-center">contacto@appjornadasmagallanicas.cl</span>
                                     </a>
                                 </li>
                             </ul>

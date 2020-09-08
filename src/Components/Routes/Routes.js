@@ -6,10 +6,11 @@ import Contacto from '../Home/Layout/Contacto/Contacto';
 import Header from '../NavBar/NavBar';
 import Dashboard from '../Dashboard/Dashboard';
 import NotFound404 from '../404/404';
-import DonarSuccess from '../PayReturn/DonarSuccess';
+import ProcesaPago from '../PayReturn/ProcesaPago';
 import DonarFailure from '../PayReturn/DonarFailure';
-import BonoSuccess from '../PayReturn/BonoSuccess';
-import BonoFailure from '../PayReturn/BonoFailure';
+import PagoExito from '../PayReturn/PagoExito';
+import PagoFallido from '../PayReturn/PagoFallido';
+import Terminos from '../Home/Layout/Terminos/Terminos';
 
 const Routes = (props) => {
     if(props){
@@ -23,10 +24,11 @@ const Routes = (props) => {
                     <Route path="/Contacto" exact component={Contacto} />
                     <Route path="/Dashboard/:uid" component={() => props.authenticated ? <Dashboard/> : <Home/>} />
                     <Route path='/not-found' component={NotFound404} />
-                    <Route path='/procesa-pago/' component={DonarSuccess}/>
+                    <Route path='/procesa-pago/' component={ProcesaPago}/>
                     <Route path='/Donar-fallo' component={DonarFailure}/>
-                    <Route path='/pago-exito' component={BonoSuccess}/>
-                    <Route path='/pago-fallido' component={BonoFailure}/>
+                    <Route path='/pago-exito' component={PagoExito}/>
+                    <Route path='/pago-fallido' component={PagoFallido}/>
+                    <Route path='/terminos' component={Terminos} />
                     <Route component={() => <Redirect to='/'/>} />
                 </Switch>
             </BrowserRouter>

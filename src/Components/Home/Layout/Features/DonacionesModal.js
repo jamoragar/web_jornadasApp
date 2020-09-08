@@ -8,6 +8,11 @@ const DonacionesModal = ({ show, onHide }) => {
 	const [loading, setLoading] = useState(false);
     const [numeroOrden, setNumeroOrden] = useState();
 
+	// //Desarrollo
+	// const url = 'http://127.0.0.1:8000/api/transactions';
+	// Producción
+	const url = 'https://appjornadasmagallanicas.cl/api/api/transactions';
+
 	useEffect(() => {
 		firebase
 			.database()
@@ -39,7 +44,7 @@ const DonacionesModal = ({ show, onHide }) => {
 			Object.keys(numeroOrden).forEach((key, i) => {
 				orderToArray[i] = numeroOrden[key];
 			});
-			let key = parseInt(orderToArray[0].numero_orden) + 1;
+			let key = parseInt(orderToArray[0].numero_orden.split('-')[1]) + 1;
 			console.log(key);
 			firebase
 				.database()
@@ -47,11 +52,11 @@ const DonacionesModal = ({ show, onHide }) => {
 				.child(`Transbank/orden_${key}`)
 				.set({
 					item: "Aporte",
-					aporte: parseInt(monto.value),
+					monto: parseInt(monto.value),
 					nombre: nombre.value,
 					apellido: apellido.value,
 					fecha: moment().format("DD-MM-YYYY h:mm:ss a"),
-					numero_orden: key,
+					numero_orden: 'JMAGALLANICAS-'  + key,
 					estado_de_pago: "Pendiente",
 					forma_de_pago: "Pendiente",
 					plataforma: "web",
@@ -66,7 +71,7 @@ const DonacionesModal = ({ show, onHide }) => {
 					nombre: nombre.value,
 					apellido: apellido.value,
 					fecha: moment().format("DD-MM-YYYY h:mm:ss a"),
-					numero_orden: key,
+					numero_orden: 'JMAGALLANICAS-' + key,
 					estado_de_pago: "Pendiente",
 					forma_de_pago: "Pendiente",
 					email: email.value,
@@ -74,10 +79,10 @@ const DonacionesModal = ({ show, onHide }) => {
 				});
 			axios({
 				method: "post",
-				url: "https://appjornadasmagallanicas.cl/api/api/transactions",
+				url: url,
 				data: {
                     'item': 'Aporte',
-					'orden_compra': key,
+					'orden_compra': 'JMAGALLANICAS-' + key,
 					'sessionID': "DonacionSitioWeb",
 					'monto': parseInt(monto.value),
 					'cantidad': 1,

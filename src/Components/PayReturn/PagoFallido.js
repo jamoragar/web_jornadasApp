@@ -3,8 +3,9 @@ import firebase from '../../Config/Firebase';
 import Header from "../NavBar/NavBar";
 import Footer from "../Home/Layout/Footer/Footer";
 
-const BonoFailure = (props) => {
+const PagoFallido = (props) => {
 	const [data, setData] = useState([]);
+	const [fbData, setFbData] = useState(null);
 
 	useEffect(() => {
 		const querystring = window.location.search;
@@ -16,20 +17,46 @@ const BonoFailure = (props) => {
 			3: Monto ($),
 			4: token ws,
 			5: Fecha de Transacción
+			6: Session ID
+			7: uid
 		*/
 		setData([splitted_data[1],
 				splitted_data[2],
 				splitted_data[3],
 				splitted_data[4],
 				splitted_data[5]]);
-		firebase.database().ref(`Transbank/orden_${splitted_data[2]}`).update({
-			forma_de_pago: 'Rechazado'
-		})
+		firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).once('value').then(snapshot => snapshot.val()).then(estado => {
+			if(estado.estado_de_pago === 'Pendiente'){
+				firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).update({
+					estado_de_pago: 'Rechazado',
+					transbank_data: {
+						token_ws: splitted_data[4],
+						cod_respuesta:splitted_data[1],
+						fecha_transaccion: splitted_data[5],
+						cod_autorizacion: 'NA'
+					}
+				})
+				firebase.database().ref((estado.item === 'Aporte' ? 'Donaciones' : 'Bono_digital') + '/' + splitted_data[2].split('-')[1]).update({
+					estado_de_pago: 'Rechazado',
+					transbank_data: {
+						token_ws: splitted_data[4],
+						cod_respuesta:splitted_data[1],
+						fecha_transaccion: splitted_data[5],
+						cod_autorizacion: 'NA'
+					}
+				})
+				if(splitted_data[7]){
+					firebase.database().ref(`Users/${splitted_data[7]}/aportes/${splitted_data[2].split('-')[1]}`).update({
+						estado_de_pago: 'Rechazado'
+					})
+				}
+			}
+		});
 	}, []);
 
 
 	const initData = {
-		state: "No hemos podido procesar tu pago",
+		state: "No hemos podido procesar su pago",
         heading1: "El pago por ",
         heading2: "CLP no se ha logrado llevar a cabo.",
 		btnText: "Volver al inicio",
@@ -61,8 +88,8 @@ const BonoFailure = (props) => {
 				mensaje = 'Transacción con riesgo de posible fraude';
 				break;
 			default:
-				error = 'Error.';
-				mensaje = 'Error desconocido. Póngase en contacto con la adminsitración.';
+				error = 'Anulación.';
+				mensaje = 'Se ha anulado la transacción, por favor intente nuevamente.';
 				break;
 		};
 
@@ -106,4 +133,4 @@ const BonoFailure = (props) => {
 	}
 };
 
-export default BonoFailure;
+export default PagoFallido;

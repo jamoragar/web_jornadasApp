@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import firebase from '../../Config/Firebase';
 
-const DonarSuccess = (props) => {
+const ProcesaPago = (props) => {
 	const [data, setData] = useState([]);
 	
 	useEffect(() => {
@@ -16,7 +16,9 @@ const DonarSuccess = (props) => {
 		4: Monto ($),
 		5: Código de respuesta,
 		6: Orden de Compra,
-		7: Fecha de Transacción
+		7: Fecha de Transacción,
+		8: Session ID,
+		9: PaymentType
 		*/
 
 		/* Seteando valores en local storage para usarlos y consultar a firebase...*/
@@ -29,8 +31,9 @@ const DonarSuccess = (props) => {
 				splitted_data[5],
 				splitted_data[6],
 				splitted_data[7]]);
-		firebase.database().ref(`Transbank/orden_${splitted_data[6]}`).update({
+		firebase.database().ref(`Transbank/orden_${splitted_data[6].split('-')[1]}`).update({
 			estado_de_pago: 'Aprobado',
+			numero_orden: splitted_data[6],
 			transbank_data:{
 				token_ws: splitted_data[2],
 				cod_autorizacion: splitted_data[3],
@@ -76,4 +79,4 @@ const DonarSuccess = (props) => {
 	}
 };
 
-export default DonarSuccess;
+export default ProcesaPago;
