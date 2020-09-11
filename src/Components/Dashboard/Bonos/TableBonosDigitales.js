@@ -32,6 +32,12 @@ const TableBonosDigitales = ({ bonosSorteo}) => {
 			width: "15%",
 		},
 		{
+			name: "Telefono",
+			selector: "telefono",
+			sortable: true,
+			width: "15%",
+		},
+		{
 			name: "cantidad",
 			selector: "cantidad",
 			sortable: true,
@@ -55,15 +61,6 @@ const TableBonosDigitales = ({ bonosSorteo}) => {
 			selector: "fecha",
 			sortable: true,
 			width: "10%",
-        },
-        {
-            name:'Disponibilidad',
-            selector: 'isAviable',
-            sortable: false,
-            width: "10%",
-            cell: (data) => {
-                return `${data.isAviable ? 'Disponible ': 'Vendido'}`
-            }
         },
 		{
 			name: "Control",
