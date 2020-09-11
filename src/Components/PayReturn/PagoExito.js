@@ -24,7 +24,7 @@ const PagoExito = (props) => {
 			splitted_data[4],
 			splitted_data[5],
 			splitted_data[6]]);
-
+		console.log(splitted_data[6])
 			firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).update({
 				estado_de_pago: 'Aprobado'
 			}).then(
@@ -39,8 +39,8 @@ const PagoExito = (props) => {
 							fecha_transaccion: splitted_data[3]
 						}
 					})
-					if(splitted_data[6].length > 20){
-						firebase.database().ref(`Users/${splitted_data[6]}/aportes/${splitted_data[2].split('-')[1]}`).update({
+					if(splitted_data[6].length >= 20){
+						firebase.database().ref(`Users/${splitted_data[6]}/${(snapshot.val().item === 'Aporte' ? 'aportes' : 'bonos')}/${splitted_data[2].split('-')[1]}`).update({
 							apellido: snapshot.val().apellido,
 							aporte: splitted_data[5],
 							email: snapshot.val().email,

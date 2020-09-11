@@ -18,7 +18,8 @@ const PagoFallido = (props) => {
 			4: token ws,
 			5: Fecha de Transacción
 			6: Session ID
-			7: uid
+			7: UID
+			8: paymentType
 		*/
 		setData([splitted_data[1],
 				splitted_data[2],
@@ -45,7 +46,7 @@ const PagoFallido = (props) => {
 						cod_autorizacion: 'NA'
 					}
 				})
-				if(splitted_data[7]){
+				if(splitted_data[7].length >= 20){
 					firebase.database().ref(`Users/${splitted_data[7]}/aportes/${splitted_data[2].split('-')[1]}`).update({
 						estado_de_pago: 'Rechazado'
 					})

@@ -17,11 +17,10 @@ const DonacionesModal = ({ show, onHide }) => {
 		firebase
 			.database()
 			.ref("Transbank")
-			.orderByChild("numero_orden")
+			.orderByChild("numero")
 			.limitToLast(1)
 			.on("value", (snapshot) => {
 				setNumeroOrden(snapshot.val());
-				console.log(numeroOrden);
 			});
 	}, []);
 
@@ -34,9 +33,10 @@ const DonacionesModal = ({ show, onHide }) => {
 		firebase
 			.database()
 			.ref("Transbank")
-			.orderByChild("numero_orden")
+			.orderByChild("numero")
 			.limitToLast(1)
 			.on("value", (snapshot) => {
+				console.log(snapshot.val())
 				setNumeroOrden(snapshot.val());
 			});
 		if (numeroOrden) {
@@ -51,6 +51,7 @@ const DonacionesModal = ({ show, onHide }) => {
 				.ref()
 				.child(`Transbank/orden_${key}`)
 				.set({
+					numero: key,
 					item: "Aporte",
 					monto: parseInt(monto.value),
 					nombre: nombre.value,
