@@ -3,6 +3,7 @@ import firebase from '../../Config/Firebase';
 
 const ProcesaPago = (props) => {
 	const [data, setData] = useState([]);
+	const [numeroBonoDigital, setNumeroBonoDigital] = useState();
 	
 	useEffect(() => {
 		const querystring = window.location.search;
@@ -24,13 +25,19 @@ const ProcesaPago = (props) => {
 		/* Seteando valores en local storage para usarlos y consultar a firebase...*/
 		window.localStorage.setItem('oc', splitted_data[6]);
 
-		setData([splitted_data[1],
+
+
+		setData([
+				splitted_data[1],
 				splitted_data[2],
 				splitted_data[3],
 				splitted_data[4],
 				splitted_data[5],
 				splitted_data[6],
-				splitted_data[7]]);
+				splitted_data[7]
+				]);
+
+
 		firebase.database().ref(`Transbank/orden_${splitted_data[6].split('-')[1]}`).update({
 			estado_de_pago: 'Aprobado',
 			numero_orden: splitted_data[6],
@@ -61,7 +68,7 @@ const ProcesaPago = (props) => {
 								</form>
 								{//Immediately-invoked function expression (IIFE).
 									(() => {
-									setTimeout(() => {document.getElementById('form-return').submit()}, 1473)
+									setTimeout(() => {document.getElementById('form-return').submit()}, 2173)
 								})
 
 								()}

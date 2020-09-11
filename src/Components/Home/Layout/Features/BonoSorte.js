@@ -19,11 +19,10 @@ const BonoSorteo = ({ show, onHide }) => {
 		firebase
 			.database()
 			.ref("Transbank")
-			.orderByChild("numero_orden")
+			.orderByChild("numero")
 			.limitToLast(1)
 			.on("value", (snapshot) => {
 				setNumeroOrden(snapshot.val());
-				console.log(numeroOrden);
 			});
 	}, []);
 
@@ -32,17 +31,17 @@ const BonoSorteo = ({ show, onHide }) => {
 		e.preventDefault();
 		setLoading(true);
 
-		const { nombre, apellido, email, cantidad_bonos } = e.target.elements;
+		const { nombre, apellido, email, cantidad_bonos, telefono } = e.target.elements;
 
 		firebase
 			.database()
 			.ref("Transbank")
-			.orderByChild("numero_orden")
+			.orderByChild("numero")
 			.limitToLast(1)
 			.on("value", (snapshot) => {
 				setNumeroOrden(snapshot.val());
 				console.log(numeroOrden);
-			});
+		});
 		if (numeroOrden) {
 			console.log(numeroOrden);
 			Object.keys(numeroOrden).forEach((key, i) => {
@@ -55,6 +54,7 @@ const BonoSorteo = ({ show, onHide }) => {
 				.ref()
 				.child(`Transbank/orden_${key}`)
 				.set({
+					numero:key,
 					item: "Bono",
 					cantidad: cantidad_bonos.value,
 					monto: valorBono * cantidad_bonos.value,
@@ -66,6 +66,7 @@ const BonoSorteo = ({ show, onHide }) => {
 					estado_de_pago: "Pendiente",
 					forma_de_pago: "Pendiente",
 					plataforma: "Web",
+					telefono: telefono.value
 				});
 			firebase
 				.database()
@@ -83,6 +84,7 @@ const BonoSorteo = ({ show, onHide }) => {
 					estado_de_pago: "Pendiente",
 					forma_de_pago: "Pendiente",
 					plataforma: "web",
+					telefono: telefono.value
 				});
 			axios({
 				method: "post",
@@ -97,6 +99,7 @@ const BonoSorteo = ({ show, onHide }) => {
 					'apellido': apellido.value,
 					'email': email.value,
 					'plataforma': "Web",
+					'telefono': telefono.value
 				},
 			}).then((res) => {
 				setLoading(false);
@@ -139,6 +142,15 @@ const BonoSorteo = ({ show, onHide }) => {
 							name="email"
 							type="email"
 							placeholder="Ingrese su e-mail"
+							required
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Teléfono:</Form.Label>
+						<Form.Control
+							name="telefono"
+							type="text"
+							placeholder="Ingrese su nro. de teléfono"
 							required
 						/>
 					</Form.Group>
