@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Row, Button } from 'react-bootstrap';
 import firebase from '../../../Config/Firebase';
+import TableAlcancias from './TableAlcancias'
 
 const Alcancias = ({type, uid}) => {
     var usedNums = new Array(76);
-
+    const [alcancias, setAlcancias] = useState('EMPTY')
     let alcancias_generadas = [];
+
+    useEffect(() => {
+        firebase.database().ref('/Alcancias').on('value', snapshot => {
+                snapshot.val() ? setAlcancias(snapshot.val()) : setAlcancias('NO_DATA_FOUND')
+            });
+    }, [])
 
     const eanCheckDigit = s => {
         let result = 0;
@@ -77,6 +84,9 @@ const Alcancias = ({type, uid}) => {
                 <h1>Alcancías:</h1>
                 <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 60)}}>Generar Alcancías</Button>
             </Row>
+            <div>
+            <TableAlcancias alcancias={alcancias}/>
+            </div>
         </div>
     );
 }

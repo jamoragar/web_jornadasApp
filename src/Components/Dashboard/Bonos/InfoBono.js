@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Button, Modal, Alert, Spinner, Col } from "react-bootstrap";
-import * as firebase from "firebase";
 
 export const InfoBono = ({ show, onHide, data }) => {
 	if (data) {
@@ -57,16 +56,6 @@ export const InfoBono = ({ show, onHide, data }) => {
 								<Form.Control
 									defaultValue={data.estado_de_pago}
 									name="Estado De Pago"
-									type="text"
-									placeholder="no hay datos registrados."
-									readOnly
-								/>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label>Forma de pago:</Form.Label>
-								<Form.Control
-									defaultValue={data.forma_de_pago}
-									name="Forma De Pago"
 									type="text"
 									placeholder="no hay datos registrados."
 									readOnly
