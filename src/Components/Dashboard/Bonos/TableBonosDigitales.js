@@ -204,5 +204,6 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
     </>
   );
 };
+  
 
 export default TableBonosDigitales;
