@@ -91,8 +91,8 @@ const Features = () =>{
                             </div>
                             {/* Icon Text */}
                             <div className="icon-text">
-                                <h3 className="mb-2">Bingo</h3>
-                                <p>Ahora tus cartones son digitales, y la forma de aportar igual, compra tu cartón y recíbelo en tu correo electrónico. La Rehabilitación no tiene límites y nuestra forma de aportar tampoco.</p>
+                                <h3 className="mb-2">Pronto Novedades</h3>
+                                {/* <p>Ahora tus cartones son digitales, y la forma de aportar igual, compra tu cartón y recíbelo en tu correo electrónico. La Rehabilitación no tiene límites y nuestra forma de aportar tampoco.</p> */}
                             </div>
                         </div>
                     </div>

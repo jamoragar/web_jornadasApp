@@ -36,7 +36,7 @@ const Contacto = () => {
                                         <div className="social-icon mr-3">
                                             <i className='fas fa-phone-alt' />
                                         </div>
-                                        <span className="link-util media-body align-self-center">+56 9 6872 8049 - +56 61 2 229520</span>
+                                        <span className="link-util media-body align-self-center">+56 9 6872 8049 - +56 61 2 244015</span>
                                     </a>
                                 </li>
                                 <li className="py-2">

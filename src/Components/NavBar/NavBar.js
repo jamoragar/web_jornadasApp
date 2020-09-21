@@ -15,7 +15,7 @@ const Header = ({auth, name, uid}) => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/"><i className="fas fa-home fa-fw" />Inicio</Nav.Link>
-                    <Nav.Link href="/About"><i className="fas fa-mobile-alt fa-fw" />Aplicación</Nav.Link>
+                    <Nav.Link href="#"><i className="fas fa-mobile-alt fa-fw" />Aplicación</Nav.Link>
                     <Nav.Link href="/Contacto"><i className="fas fa-phone fa-fw" />Contacto</Nav.Link>
                 </Nav>
                 <Nav>

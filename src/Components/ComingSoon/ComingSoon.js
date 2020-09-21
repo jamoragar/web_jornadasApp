@@ -5,7 +5,7 @@ const ComingSoon = ({show, onHide}) => {
     return(
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Proximamente</Modal.Title>
+                <Modal.Title>Próximamente</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <h5>Estamos trabajando en este apartado. Te sorprenderémos dentro de poco!</h5>
