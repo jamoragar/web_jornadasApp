@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import {InfoAlcancia} from './InfoAlcancia'
 
 const TableAlcancias = ({ alcancias }) => {
 	const [showAlcancia, setShowAlcancia] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [alcanciasData, setAlcanciasData] = useState(null);
 	let alcanciasToArray = [];
-
+	console.log(alcancias)
 	const columns = [
 		{
 			name: "Numero de alcancia",
@@ -19,7 +20,7 @@ const TableAlcancias = ({ alcancias }) => {
 			name: "Codigo de barra",
 			selector: "codigo_barra",
 			sortable: true,
-			width: "10%",
+			width: "20%",
 		},
 		{
 			name: "Asignada",
@@ -59,7 +60,7 @@ const TableAlcancias = ({ alcancias }) => {
 		{
 			name: "Control",
 			button: true,
-			width: "20%",
+			width: "10%",
 			cell: (data) => {
 				return (
 					<div style={{ display: "flex" }}>
@@ -91,36 +92,41 @@ const TableAlcancias = ({ alcancias }) => {
 			},
 		},
 	];
+
 	Object.keys(alcancias).forEach((key, i) => {
 		alcanciasToArray[i] = alcancias[key];
 	});
 
+
 	return (
 		<>
-			<DataTable
-				columns={columns}
-				data={alcanciasToArray}
-				fixedHeader
-				fixedHeaderScrollHeight="500px"
-				pagination
-				paginationRowsPerPageOptions={[20, 40, 50, 100]}
-				paginationComponentOptions={{
-					rowsPerPageText: "Filas por página",
-					rangeSeparatorText: "de",
-					selectAllRowsItem: true,
-					selectAllRowsItemText: "Todo",
-				}}
-				subHeader
-				persistTableHead
-                highlightOnHover
-			/>
-			<InfoAlcancia
-				show={showAlcancia}
-				onHide={() => setShowAlcancia(false)}
-				data={alcanciasData}
-			/>
+		<DataTable
+			columns={columns}
+			data={alcanciasToArray}
+			fixedHeader
+			loading={alcancias}
+			fixedHeaderScrollHeight="500px"
+			pagination
+			paginationRowsPerPageOptions={[1000]}
+			paginationComponentOptions={{
+				rowsPerPageText: "Filas por página",
+				rangeSeparatorText: "de",
+				// selectAllRowsItem: true,
+				// selectAllRowsItemText: "Todo",
+			}}
+			paginationPerPage={1000}
+			subHeader
+			persistTableHead
+			highlightOnHover
+		/>
+		<InfoAlcancia
+			show={showAlcancia}
+			onHide={() => setShowAlcancia(false)}
+			data={alcanciasData}
+		/>
 		</>
 	);
+	
 };
 
 export default TableAlcancias;

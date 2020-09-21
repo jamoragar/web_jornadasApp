@@ -240,13 +240,11 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                                                 type='text'
                                                 placeholder='Ingrese el código de barra de la alcancía a entregar.'
                                                 onKeyPress={(e) => {
-                                                                    handleAlcancia(e.target.value, i, e.key);
-                                                                    setValueAlcancia([...valueAlcancia, e.target.name])
-                                                                    e.key === 'Enter' && e.preventDefault();
-                                                                    }}
+                                                    handleAlcancia(e.target.value, i, e.key);
+                                                    setValueAlcancia([...valueAlcancia, e.target.name])
+                                                    e.key === 'Enter' && e.preventDefault();
+                                                    }}
                                                 />
-                                                
-
                                         </Form.Group>
                                     );
                             }

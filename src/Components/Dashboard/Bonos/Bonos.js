@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import * as firebase from 'firebase';
-import {Spinner} from 'react-bootstrap';
+import {Spinner, Row} from 'react-bootstrap';
 import TableBonosDigitales from './TableBonosDigitales';
 
 const BonosRifa = () => {
@@ -16,8 +16,12 @@ const BonosRifa = () => {
     if(bonosSorteo !== 'EMPTY'){
         return (
             <div className='dash_content'>
-                <h1>Bonos Digitales:</h1>
-                <TableBonosDigitales bonosSorteo={bonosSorteo}/>
+                <Row>
+                    <h1>Bonos Digitales:</h1>
+                </Row>
+                <div>
+                    <TableBonosDigitales bonosSorteo={bonosSorteo}/>
+                </div>
             </div>
         );
     }else{
