@@ -6,6 +6,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 
 const EntregarAlcancias = ({show, onHide, data}) => {
+    console.log(data);
     let inputEl = useRef([])
     const [cantAlcancias, setCantAlcancias] = useState(0);
     const [alertExitoShow, setAlertExitoShow] = useState(false);
@@ -102,27 +103,33 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                     .then(snapshot => {
                         let alcancia_asignada;
                         let data_alcancia;
+                        let num_alcancia = Object.getOwnPropertyNames(snapshot.val())[0];
 
                         snapshot.forEach(childSnapshot => {
                             alcancia_asignada = childSnapshot.val().asignada_usuario
                             data_alcancia = childSnapshot.val()
                         });
+
                         if(!snapshot.val()){
                             console.log('error...')
                             setCodigoError(codigo);
                             setModalErrorCodigo(true);
-                        }
-                        else if(alcancia_asignada == true){
+                        }else if(alcancia_asignada == true){
                             setCodigoError(codigo);
                             setModalCodigoYaAsignado(true);
                         }else{
                             alcancias_validadas.push(snapshot.val()[Object.keys(snapshot.val())]);
                         }
-                        
-                        let num_alcancia = Object.getOwnPropertyNames(snapshot.val())[0];
 
                         firebase.database().ref(`/Alcancias/${num_alcancia}`).update({
-                            asignada_usuario: true
+                            asignada_usuario: true,
+                            usuario: {
+                                uid: data.uid,
+                                nombre: data.nombre,
+                                apellido: data.apellido,
+                                email: data.email,
+                                subtipo: data.subtipo ? data.subtipo : null
+                            }
                         })
                         firebase.database().ref(`/Users/${data.uid}/alcancias/${num_alcancia}`).update({
                             alcancia_numero: data_alcancia.alcancia_numero,
