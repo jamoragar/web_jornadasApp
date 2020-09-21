@@ -11,13 +11,13 @@ const TableAlcancias = ({ talonarios }) => {
 	const columns = [
 		{
 			name: "Numero de Talonario",
-			selector: "talonario_numero",
+			selector: "correlativo",
 			sortable: true,
 			width: "7.5%",
-        },
-        {
+		},
+		{
 			name: "correlativo",
-			selector: "correlativo",
+			selector: "talonario_numero",
 			sortable: true,
 			width: "10%",
 		},
@@ -103,13 +103,12 @@ const TableAlcancias = ({ talonarios }) => {
 				fixedHeader
 				fixedHeaderScrollHeight="500px"
 				pagination
-				paginationRowsPerPageOptions={[20, 40, 50, 100]}
+				paginationRowsPerPageOptions={[500]}
 				paginationComponentOptions={{
 					rowsPerPageText: "Filas por página",
 					rangeSeparatorText: "de",
-					selectAllRowsItem: true,
-					selectAllRowsItemText: "Todo",
 				}}
+				paginationPerPage={500}
 				subHeader
 				persistTableHead
                 highlightOnHover

@@ -225,7 +225,12 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                 <Modal.Body>
                     <Form.Group>
                         <Form.Label>¿Cuantas Alcancías va a asignarle a <b>{data.nombre}</b> ?</Form.Label>
-                        <Form.Control name='cant_alcancias' type='number' placeholder='Ingrese la cantidad de alcancias.' min="1" max="50" onChange={e => setCantAlcancias(e.target.value)} />
+                        <Form.Control
+                            name='cant_alcancias'
+                            type='number'
+                            placeholder='Ingrese la cantidad de alcancias.'
+                            min="1" max="50"
+                            onChange={e => setCantAlcancias(e.target.value)} />
                     </Form.Group>
                     {//Immediately-invoked function expression (IIFE).
                         (() => {
