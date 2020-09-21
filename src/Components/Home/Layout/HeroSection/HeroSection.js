@@ -28,7 +28,8 @@ const HeroSection = () => {
                             <h1 className="text-white">{data.heading}</h1>
                             <p className="text-white my-4">{data.content}</p>
                             <div className="button-group store-buttons d-flex">
-                                <a onClick={() => setShowModalCS(true)}>
+                                {/* <a onClick={() => setShowModalCS(true)}> */}
+                                <a href='https://play.google.com/store/apps/details?id=cl.SmartApps.AppJornadasMagallanicas'>
                                 <img src={data.playImg} alt="" />
                                 </a>
                                 <a onClick={() => setShowModalCS(true)}>

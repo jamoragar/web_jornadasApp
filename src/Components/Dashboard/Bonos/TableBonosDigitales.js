@@ -40,7 +40,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Orden de compra",
       selector: "numero_orden",
       sortable: true,
-      width: "10%",
+      width: "15%",
     },
     {
       name: "Nombre",
@@ -62,13 +62,13 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Telefono",
       selector: "telefono",
       sortable: true,
-      width: "15%",
+      width: "10%",
     },
     {
       name: "Cantidad",
       selector: "cantidad",
       sortable: true,
-      width: "10%",
+      width: "5%",
     },
     {
       name: "Estado del pago",
@@ -80,7 +80,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Plataforma",
       selector: "plataforma",
       sortable: true,
-      width: "10%",
+      width: "5%",
     },
     {
       name: "Fecha",
@@ -183,13 +183,14 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         fixedHeader
         fixedHeaderScrollHeight="500px"
         pagination
-        paginationRowsPerPageOptions={[20, 40, 50, 100]}
+        paginationRowsPerPageOptions={[1000]}
         paginationComponentOptions={{
           rowsPerPageText: "Filas por página",
           rangeSeparatorText: "de",
-          selectAllRowsItem: true,
-          selectAllRowsItemText: "Todo",
+          // selectAllRowsItem: true,
+          // selectAllRowsItemText: "Todo",
         }}
+        paginationPerPage={1000}
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
         persistTableHead

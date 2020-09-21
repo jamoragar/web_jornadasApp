@@ -2,10 +2,15 @@ import React, {useState, useRef} from 'react';
 import {Modal, Form, Button} from 'react-bootstrap';
 
 const EntregarTalonarios = ({show, onHide, data}) =>{
+    let inputEl = useRef([]);
+    const [valueTalonario, setValueTalonario] = useState([]);
+    const [cantTalonarios, setCantTalonarios] = useState([]);
 
-    const setCantTalonarios = (cantidad) => {
-        console.log(cantidad);
-    }
+
+    const handleTalonario = (value, input_position, key) => {
+
+    };
+
     return(
         <>
         <Modal show={show} onHide={onHide}>
@@ -26,10 +31,34 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
                     </Form.Group>
                     {//Immediately-invoked function expression (IIFE).
                         (() => {
-                            console.log('IIFE')
+                            const inputs = [];
+                            for(let i = 0; i < cantTalonarios; i++){
+                                inputs.push(
+                                    <Form.Group key={i + 1}>
+                                        <Form.Label>Talonario Nro. {i + 1}:</Form.Label>
+                                        <Form.Control
+                                            name={`talonario_nro${i + 1}`}
+                                            ref={el => inputEl.current[i] = el}
+                                            type='text'
+                                            placeholder='Ingrese el correlativo del talonario a entregar.'
+                                            onKeyPress={(e) => {
+                                                handleTalonario(e.target.value, i, e.key);
+                                                setValueTalonario([...valueTalonario, e.target.name])
+                                                e.key === 'Enter' && e.preventDefault();
+                                                }}
+                                            />
+                                    </Form.Group>
+                                );
+                            }
+                            return inputs;
                         })
                     ()}
                 </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='success' type='submit' block>
+                        Asignar
+                    </Button>
+                </Modal.Footer>
             </Form>
         </Modal>
         </>

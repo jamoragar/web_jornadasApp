@@ -39,13 +39,13 @@ const Discover = () => {
                                         <span className="media-body pl-2">Observa tus compras de Bono sorteo de en línea.</span>
                                     </div>
                                 </li>
-                                <li className="py-2">
-                                    {/* List Box */}
+                                {/* <li className="py-2">
+
                                     <div className="list-box media">
                                         <span className="icon align-self-center"><i className='fas fa-check' /></span>
                                         <span className="media-body pl-2">Y también podrás observar tus compras de tele bingo (próximamente).</span>
                                     </div>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                         <div className="icon-box d-flex mt-3">

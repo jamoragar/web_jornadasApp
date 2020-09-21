@@ -69,7 +69,8 @@ const Footer = () => {
                                     <h3 className="footer-title mb-2">Descargar App</h3>
                                     {/* Store Buttons */}
                                     <div className="button-group store-buttons store-black d-flex flex-wrap">
-                                        <a onClick={() => setShowModalCS(true)}>
+                                        {/* <a onClick={() => setShowModalCS(true)}> */}
+                                        <a href='https://play.google.com/store/apps/details?id=cl.SmartApps.AppJornadasMagallanicas'>
                                             <img src='/img/google-play-black.png' alt="Jornadas Android" />
                                         </a>
                                         <a onClick={() => setShowModalCS(true)}>
