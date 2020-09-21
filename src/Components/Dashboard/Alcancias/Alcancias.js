@@ -89,7 +89,7 @@ const Alcancias = ({type, uid}) => {
                 alcancias !== 'EMPTY' ?
                 <TableAlcancias alcancias={alcancias}/>
                 :
-                null
+                <h6>Cargando...</h6>
             }
             </div>
         </div>

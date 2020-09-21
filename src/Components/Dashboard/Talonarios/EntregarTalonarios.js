@@ -1,5 +1,10 @@
 import React, {useState, useRef} from 'react';
 import {Modal, Form, Button} from 'react-bootstrap';
+import firebase from '../../../Config/Firebase';
+import moment from 'moment';
+import Swal from 'sweetalert2';
+import './Alcancias.css';
+
 
 const EntregarTalonarios = ({show, onHide, data}) =>{
     let inputEl = useRef([]);
@@ -8,6 +13,12 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
 
 
     const handleTalonario = (value, input_position, key) => {
+        const input_value = value;
+        const position = input_position;
+        const enter = key === 'Enter' ? true : false;
+        if(enter === true){
+
+        }
 
     };
 

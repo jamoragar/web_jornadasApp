@@ -108,6 +108,7 @@ const TableAlcancias = ({ talonarios }) => {
 					rowsPerPageText: "Filas por página",
 					rangeSeparatorText: "de",
 				}}
+				loading={talonarios}
 				paginationPerPage={500}
 				subHeader
 				persistTableHead
