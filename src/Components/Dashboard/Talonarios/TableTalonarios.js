@@ -2,28 +2,44 @@ import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { OverlayTrigger, Tooltip, Col, Form, Button } from "react-bootstrap";
 import { InfoTalonario } from "./InfoTalonario";
+import styled from 'styled-components';
+
+
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 32px;
+  width: 80px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => {
   return (
     <>
-      <Col>
-        <Form>
-          <Form.Group>
-            <Form.Control
-              id="search"
-              type="text"
-              placeholder="Buscar por nombre"
-              value={filterText}
-              onChange={onFilter}
-            />
-          </Form.Group>
-        </Form>
-      </Col>
-      <Col>
-        <Button type="button" onClick={onClear}>
-          Limpiar
-        </Button>
-      </Col>
+      <TextField id="search" type="text" placeholder="correlativo" aria-label="Search Input" value={filterText} onChange={onFilter} />
+    <ClearButton type="button" onClick={onClear}>Limpiar</ClearButton>
     </>
   );
 };
@@ -34,46 +50,7 @@ const TableAlcancias = ({ talonarios }) => {
   let talonariosToArray = [];
 
 
-//   const [filterText, setFilterText] = useState("");
 
-//   const subHeaderComponentMemo = useMemo(() => {
-//     const handleClear = () => {
-//       if (filterText) {
-//         setFilterText("");
-//       }
-//     };
-//     return (
-//       <>
-//         <Col>
-//           <p>Seleccione Filtro:</p>
-//         </Col>
-//         <Col>
-//           <Form>
-//             <Form.Group controlId="exampleForm.ControlSelect1">
-//               <Form.Control
-//                 name="filtrar"
-//                 as="select"
-//                 onChange={(e) => setFiltrarPor(e.target.value)}
-//               >
-//                 <option value="orde_de_compra">Orden De Compra</option>
-//                 <option value="nombre">Nombre</option>
-//                 <option value="email">Email</option>
-//                 <option value="telefono">Telefono</option>
-//                 <option value="estado_de_pago">Estado De Pago</option>
-//                 <option value="plataforma">Plataforma</option>
-//                 <option value="fecha">Fecha</option>
-//               </Form.Control>
-//             </Form.Group>
-//           </Form>
-//         </Col>
-//         <FilterComponent
-//           onFilter={(e) => setFilterText(e.target.value)}
-//           onClear={handleClear}
-//           filterText={filterText}
-//         />
-//       </>
-//     );
-//   }, [filterText]);
 
 	const columns = [
 		{
@@ -162,22 +139,46 @@ const TableAlcancias = ({ talonarios }) => {
 		talonariosToArray[i] = talonarios[key];
 	});
 
+	const [filterText, setFilterText] = useState("");
+
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setFilterText("");
+      }
+    };
+    return (
+        <FilterComponent
+          onFilter={(e) => setFilterText(e.target.value)}
+          onClear={handleClear}
+          filterText={filterText}
+        />
+    );
+  }, [filterText]);
+
+  const filteredItems = talonariosToArray.filter(
+    (item) =>
+      item.talonario_numero &&
+      item.talonario_numero.includes(filterText)
+  );
+
 	return (
 		<>
 			<DataTable
 				columns={columns}
-				data={talonariosToArray}
+				data={filteredItems}
 				fixedHeader
 				fixedHeaderScrollHeight="500px"
 				pagination
-				paginationRowsPerPageOptions={[500]}
+				paginationRowsPerPageOptions={[50,100]}
 				paginationComponentOptions={{
 					rowsPerPageText: "Filas por página",
 					rangeSeparatorText: "de",
 				}}
 				loading={talonarios}
-				paginationPerPage={500}
+				paginationPerPage={50}
 				subHeader
+				subHeaderComponent={subHeaderComponentMemo}
 				persistTableHead
                 highlightOnHover
 			/>
