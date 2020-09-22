@@ -52,7 +52,7 @@
     background: #007bff;
 }
 .dash_content{
-    margin:10% 10vh 0 20vh;
+    margin:8% 10vh 0 20vh;
 }
 /* Pantallas pequeñas */
 @media only screen and (max-width: 600px){

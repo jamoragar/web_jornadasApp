@@ -69,7 +69,7 @@ const TableDonaciones = ({ donaciones }) => {
       name: "Orden de compra",
       selector: "numero_orden",
       sortable: true,
-      width: "15%",
+      width: "10%",
     },
     {
       name: "Nombre",
@@ -79,13 +79,13 @@ const TableDonaciones = ({ donaciones }) => {
         }`;
       },
       sortable: true,
-      width: "20%",
+      width: "18%",
     },
     {
       name: "Email",
       selector: "email",
       sortable: true,
-      width: "17.5%",
+      width: "15%",
     },
     {
       name: "Aporte",
@@ -94,7 +94,7 @@ const TableDonaciones = ({ donaciones }) => {
       width: "10%",
     },
     {
-      name: "Estado del pago",
+      name: "Estado de pago",
       selector: "estado_de_pago",
       sortable: true,
       width: "10%",
@@ -114,7 +114,7 @@ const TableDonaciones = ({ donaciones }) => {
     {
       name: "Control",
       button: true,
-      width: "20%",
+      width: "10%",
       cell: (data) => {
         return (
           <div style={{ display: "flex" }}>

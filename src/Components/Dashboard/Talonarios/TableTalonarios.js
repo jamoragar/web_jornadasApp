@@ -65,7 +65,7 @@ const TableAlcancias = ({ talonarios }) => {
 			width: "7.5%",
 		},
 		{
-			name: "correlativo",
+			name: "Correlativo",
 			selector: "correlativo",
 			sortable: true,
 			width: "10%",
@@ -108,7 +108,7 @@ const TableAlcancias = ({ talonarios }) => {
 		{
 			name: "Control",
 			button: true,
-			width: "20%",
+			width: "5%",
 			cell: (data) => {
 				return (
 					<div style={{ display: "flex" }}>
@@ -124,7 +124,7 @@ const TableAlcancias = ({ talonarios }) => {
 							<div
 								style={{ cursor: "pointer" }}
 								className="text-success"
-								onClick={() => {
+								onCli3ck={() => {
 									setShowTalonario(true);
 									setTalonariosData(data);
 								}}
@@ -154,32 +154,32 @@ const TableAlcancias = ({ talonarios }) => {
     };
     return (
 		<div>
-        <Row>
-          <Col>
-            <p className="mt-2">Seleccione Filtro:</p>
-          </Col>
-          <Form>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Control
-                as="select"
-                onChange={(e) => setFilter(e.target.value)}
-              >
-                <option value="codigo_barra">Codigo de barra</option>
-                {/* <option value="alcancia_numero">Numero de alcancia</option>
-                <option value="asignada_usuario">Asignada</option>
-                <option value="recuperada">Recuperada</option> */}
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </Row>
-        <Row>
-          <FilterComponent
-            onFilter={(e) => setFilterText(e.target.value)}
-            onClear={handleClear}
-            filterText={filterText}
-          />
-        </Row>
-      </div>
+			<Row>
+			<Col>
+				<p className="mt-2">Seleccione Filtro:</p>
+			</Col>
+			<Form>
+				<Form.Group controlId="exampleForm.ControlSelect1">
+				<Form.Control
+					as="select"
+					onChange={(e) => setFilter(e.target.value)}
+				>
+					<option value="codigo_barra">Correlativo</option>
+					{/* <option value="alcancia_numero">Numero de alcancia</option>
+					<option value="asignada_usuario">Asignada</option>
+					<option value="recuperada">Recuperada</option> */}
+				</Form.Control>
+				</Form.Group>
+			</Form>
+			</Row>
+			<Row>
+			<FilterComponent
+				onFilter={(e) => setFilterText(e.target.value)}
+				onClear={handleClear}
+				filterText={filterText}
+			/>
+			</Row>
+      	</div>
     );
   }, [filterText]);
 
