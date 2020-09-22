@@ -1,9 +1,15 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
+import {
+  OverlayTrigger,
+  Tooltip,
+  Button,
+  Col,
+  Row,
+  Form,
+} from "react-bootstrap";
 import { InfoDonacion } from "./InfoDonacion";
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 const TextField = styled.input`
   height: 32px;
@@ -37,8 +43,17 @@ const ClearButton = styled(Button)`
 const FilterComponent = ({ filterText, onFilter, onClear }) => {
   return (
     <>
-      <TextField id="search" type="text" placeholder="Nombre" aria-label="Search Input" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" onClick={onClear}>Limpiar</ClearButton>
+      <TextField
+        id="search"
+        type="text"
+        placeholder='Busqueda...'
+        aria-label="Search Input"
+        value={filterText}
+        onChange={onFilter}
+      />
+      <ClearButton type="button" onClick={onClear}>
+        Limpiar
+      </ClearButton>
     </>
   );
 };
@@ -143,47 +158,94 @@ const TableDonaciones = ({ donaciones }) => {
       }
     };
     return (
-      <FilterComponent
-        onFilter={(e) => setFilterText(e.target.value)}
-        onClear={handleClear}
-        filterText={filterText}
-      />
+      <div>
+        <Row>
+          <Col>
+            <p className='mt-2'>Seleccione Filtro:</p>
+          </Col>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Control
+                as="select"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="nombre">Nombre</option>
+                <option value="email">Email</option>
+                <option value="numero_orden">Orden de compra</option>
+                <option value="fecha">Fecha</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Row>
+        <Row>
+          <FilterComponent
+            onFilter={(e) => setFilterText(e.target.value)}
+            onClear={handleClear}
+            filterText={filterText}
+          />
+        </Row>
+      </div>
     );
   }, [filterText]);
 
-  const filteredItems = donacionesToArray.filter(
-    (item) =>
-      item.nombre.toLowerCase() &&
-      item.nombre.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const [filter, setFilter] = useState("nombre");
 
-  return (
-    <>
-      <DataTable
-        columns={columns}
-        data={filteredItems}
-        fixedHeader
-        fixedHeaderScrollHeight="500px"
-        pagination
-        paginationRowsPerPageOptions={[20, 40, 50, 100]}
-        paginationComponentOptions={{
-          rowsPerPageText: "Filas por página",
-          rangeSeparatorText: "de",
-          selectAllRowsItem: true,
-          selectAllRowsItemText: "Todo",
-        }}
-        subHeader
-        subHeaderComponent={subHeaderComponentMemo}
-        persistTableHead
-        highlightOnHover
-      />
-      <InfoDonacion
-        show={showDonacion}
-        onHide={() => setShowDonacion(false)}
-        data={donacionData}
-      />
-    </>
-  );
+  const filteredItems = donacionesToArray.filter((item) => {
+    if (filter === "numero_orden") {
+      return (
+        item.numero_orden.toLowerCase() &&
+        item.numero_orden.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filter === "nombre") {
+      return (
+        item.nombre.toLowerCase() &&
+        item.nombre.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filter === "email") {
+      return (
+        item.email.toLowerCase() &&
+        item.email.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filter === "fecha") {
+      return (
+        item.fecha &&
+        item.fecha.includes(filterText)
+      );
+    }
+  });
+
+  console.log(filter);
+
+  if (filteredItems) {
+    return (
+      <>
+        <DataTable
+          columns={columns}
+          data={filteredItems}
+          fixedHeader
+          fixedHeaderScrollHeight="500px"
+          pagination
+          paginationRowsPerPageOptions={[20, 40, 50, 100]}
+          paginationComponentOptions={{
+            rowsPerPageText: "Filas por página",
+            rangeSeparatorText: "de",
+            selectAllRowsItem: true,
+            selectAllRowsItemText: "Todo",
+          }}
+          subHeader
+          subHeaderComponent={subHeaderComponentMemo}
+          persistTableHead
+          highlightOnHover
+          paginationPerPage={50}
+        />
+        <InfoDonacion
+          show={showDonacion}
+          onHide={() => setShowDonacion(false)}
+          data={donacionData}
+        />
+      </>
+    );
+  }
 };
 
 export default TableDonaciones;

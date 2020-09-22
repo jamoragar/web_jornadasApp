@@ -1,9 +1,15 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
-import {InfoAlcancia} from './InfoAlcancia'
-import styled from 'styled-components';
-
+import {
+  OverlayTrigger,
+  Tooltip,
+  Button,
+  Col,
+  Row,
+  Form,
+} from "react-bootstrap";
+import { InfoAlcancia } from "./InfoAlcancia";
+import styled from "styled-components";
 
 const TextField = styled.input`
   height: 32px;
@@ -37,158 +43,211 @@ const ClearButton = styled(Button)`
 const FilterComponent = ({ filterText, onFilter, onClear }) => {
   return (
     <>
-      <TextField id="search" type="text" placeholder="Codigo de barra" aria-label="Search Input" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" onClick={onClear}>Limpiar</ClearButton>
+      <TextField
+        id="search"
+        type="text"
+        placeholder="Busqueda..."
+        aria-label="Search Input"
+        value={filterText}
+        onChange={onFilter}
+      />
+      <ClearButton type="button" onClick={onClear}>
+        Limpiar
+      </ClearButton>
     </>
   );
 };
 
 const TableAlcancias = ({ alcancias }) => {
-	const [showAlcancia, setShowAlcancia] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const [alcanciasData, setAlcanciasData] = useState(null);
-	let alcanciasToArray = [];
-	console.log(alcancias)
-	const columns = [
-		{
-			name: "Numero de alcancia",
-			selector: "alcancia_numero",
-			sortable: true,
-			width: "7.5%",
-        },
-        {
-			name: "Codigo de barra",
-			selector: "codigo_barra",
-			sortable: true,
-			width: "20%",
-		},
-		{
-			name: "Asignada",
-			selector: (alcancias) => { return `${alcancias.asignada_usuario? 'Si':'No'}`
-			},
-			sortable: true,
-			width: "10%",
-		},
-		{
-			name: "Asignada a tercero",
-			selector:  (alcancias) => { return `${alcancias.asignada_tercero? 'Si':'No'}`
-        },
-			sortable: true,
-			width: "10%",
-		},
-		{
-			name: "Asignada a externo",
-			selector:  (alcancias) => { return `${alcancias.asignada_externo? 'Si':'No'}`
-        },
-			sortable: true,
-			width: "10%",
-		},
-		{
-			name: "Recuperada",
-			selector: (alcancias) => { return `${alcancias.recuperada? 'Si':'No'}`
-        },
-			sortable: true,
-			width: "10%",
-		},
-		{
-			name: "Fecha",
-			selector: (alcancias) => { return `${alcancias.fecha_asignacion? 'Si':'N.A'}`
-        },
-			sortable: true,
-			width: "15%",
-		},
-		{
-			name: "Control",
-			button: true,
-			width: "10%",
-			cell: (data) => {
-				return (
-					<div style={{ display: "flex" }}>
-						<OverlayTrigger
-							id={"ver"}
-							placement={"left"}
-							overlay={
-								<Tooltip id={"tooltip-bottom"}>
-									<strong>Ver</strong>
-								</Tooltip>
-							}
-						>
-							<div
-								style={{ cursor: "pointer" }}
-								className="text-success"
-								onClick={() => {
-									setShowAlcancia(true);
-									setAlcanciasData(data);
-								}}
-							>
-								<i
-									className="fas fa-fw fa-search fa-lg"
-									style={{ width: "35px", height: "20px" }}
-								/>
-							</div>
-						</OverlayTrigger>
-					</div>
-				);
-			},
-		},
-	];
+  const [showAlcancia, setShowAlcancia] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [alcanciasData, setAlcanciasData] = useState(null);
+  let alcanciasToArray = [];
+  console.log(alcancias);
+  const columns = [
+    {
+      name: "Numero de alcancia",
+      selector: "alcancia_numero",
+      sortable: true,
+      width: "7.5%",
+    },
+    {
+      name: "Codigo de barra",
+      selector: "codigo_barra",
+      sortable: true,
+      width: "20%",
+    },
+    {
+      name: "Asignada",
+      selector: (alcancias) => {
+        return `${alcancias.asignada_usuario ? "Si" : "No"}`;
+      },
+      sortable: true,
+      width: "10%",
+    },
+    {
+      name: "Asignada a tercero",
+      selector: (alcancias) => {
+        return `${alcancias.asignada_tercero ? "Si" : "No"}`;
+      },
+      sortable: true,
+      width: "10%",
+    },
+    {
+      name: "Asignada a externo",
+      selector: (alcancias) => {
+        return `${alcancias.asignada_externo ? "Si" : "No"}`;
+      },
+      sortable: true,
+      width: "10%",
+    },
+    {
+      name: "Recuperada",
+      selector: (alcancias) => {
+        return `${alcancias.recuperada ? "Si" : "No"}`;
+      },
+      sortable: true,
+      width: "10%",
+    },
+    {
+      name: "Fecha",
+      selector: (alcancias) => {
+        return `${alcancias.fecha_asignacion ? "Si" : "N.A"}`;
+      },
+      sortable: true,
+      width: "15%",
+    },
+    {
+      name: "Control",
+      button: true,
+      width: "10%",
+      cell: (data) => {
+        return (
+          <div style={{ display: "flex" }}>
+            <OverlayTrigger
+              id={"ver"}
+              placement={"left"}
+              overlay={
+                <Tooltip id={"tooltip-bottom"}>
+                  <strong>Ver</strong>
+                </Tooltip>
+              }
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                className="text-success"
+                onClick={() => {
+                  setShowAlcancia(true);
+                  setAlcanciasData(data);
+                }}
+              >
+                <i
+                  className="fas fa-fw fa-search fa-lg"
+                  style={{ width: "35px", height: "20px" }}
+                />
+              </div>
+            </OverlayTrigger>
+          </div>
+        );
+      },
+    },
+  ];
 
-	Object.keys(alcancias).forEach((key, i) => {
-		alcanciasToArray[i] = alcancias[key];
-	});
+  Object.keys(alcancias).forEach((key, i) => {
+    alcanciasToArray[i] = alcancias[key];
+  });
 
-	const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState("");
 
-	const subHeaderComponentMemo = useMemo(() => {
-	  const handleClear = () => {
-		if (filterText) {
-		  setFilterText("");
-		}
-	  };
-	  return (
-		  <FilterComponent
-			onFilter={(e) => setFilterText(e.target.value)}
-			onClear={handleClear}
-			filterText={filterText}
-		  />
-	  );
-	}, [filterText]);
-  
-	  const filteredItems = alcanciasToArray.filter(
-    (item) =>
-      item.codigo_barra &&
-      item.codigo_barra.includes(filterText)
+  const subHeaderComponentMemo = useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setFilterText("");
+      }
+    };
+    return (
+      <div>
+        <Row>
+          <Col>
+            <p className="mt-2">Seleccione Filtro:</p>
+          </Col>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Control
+                as="select"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="codigo_barra">Codigo de barra</option>
+                {/* <option value="alcancia_numero">Numero de alcancia</option>
+                <option value="asignada_usuario">Asignada</option>
+                <option value="recuperada">Recuperada</option> */}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Row>
+        <Row>
+          <FilterComponent
+            onFilter={(e) => setFilterText(e.target.value)}
+            onClear={handleClear}
+            filterText={filterText}
+          />
+        </Row>
+      </div>
+    );
+  }, [filterText]);
+
+  const [filter, setFilter] = useState("codigo_barra");
+
+  const filteredItems = alcanciasToArray.filter((item) => {
+    if (filter === "codigo_barra") {
+      return (
+        item.codigo_barra.toLowerCase() &&
+        item.codigo_barra.toLowerCase().includes(filterText.toLowerCase())
+      );
+      // } else if (filter === "alcancia_numero") {
+      //   return item.alcancia_numero;
+      // } else if (filter === "asignada_usuario") {
+      //   return (
+      //     item.asignada_usuario.toLowerCase() &&
+      //     item.asignada_usuario.toLowerCase().includes(filterText.toLowerCase())
+      //   );
+      // } else if (filter === "recuperada") {
+      //   return (
+      //     item.recuperada &&
+      //     item.recuperada.includes(filterText)
+      //   );
+    }
+  });
+
+  console.log(filter);
+
+  return (
+    <>
+      <DataTable
+        columns={columns}
+        data={filteredItems}
+        fixedHeader
+        loading={alcancias}
+        fixedHeaderScrollHeight="500px"
+        pagination
+        paginationRowsPerPageOptions={[50, 100, 200]}
+        paginationComponentOptions={{
+          rowsPerPageText: "Filas por página",
+          rangeSeparatorText: "de",
+        }}
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+        persistTableHead
+        highlightOnHover
+        paginationPerPage={50}
+      />
+      <InfoAlcancia
+        show={showAlcancia}
+        onHide={() => setShowAlcancia(false)}
+        data={alcanciasData}
+      />
+    </>
   );
-
-
-	return (
-		<>
-		<DataTable
-			columns={columns}
-			data={filteredItems}
-			fixedHeader
-			loading={alcancias}
-			fixedHeaderScrollHeight="500px"
-			pagination
-			paginationRowsPerPageOptions={[50,100,200]}
-			paginationComponentOptions={{
-				rowsPerPageText: "Filas por página",
-				rangeSeparatorText: "de",
-			}}
-			paginationPerPage={50}
-			subHeader
-			subHeaderComponent={subHeaderComponentMemo}
-			persistTableHead
-			highlightOnHover
-		/>
-		<InfoAlcancia
-			show={showAlcancia}
-			onHide={() => setShowAlcancia(false)}
-			data={alcanciasData}
-		/>
-		</>
-	);
-	
 };
 
 export default TableAlcancias;

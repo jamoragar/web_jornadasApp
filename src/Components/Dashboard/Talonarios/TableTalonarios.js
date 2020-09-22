@@ -1,6 +1,11 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
+import {OverlayTrigger,
+	Tooltip,
+	Button,
+	Col,
+	Row,
+	Form, } from "react-bootstrap";
 import { InfoTalonario } from "./InfoTalonario";
 import styled from 'styled-components';
 
@@ -38,7 +43,7 @@ const ClearButton = styled(Button)`
 const FilterComponent = ({ filterText, onFilter, onClear }) => {
   return (
     <>
-      <TextField id="search" type="text" placeholder="correlativo" aria-label="Search Input" value={filterText} onChange={onFilter} />
+      <TextField id="search" type="text" placeholder='Busqueda...' aria-label="Search Input" value={filterText} onChange={onFilter} />
     <ClearButton type="button" onClick={onClear}>Limpiar</ClearButton>
     </>
   );
@@ -148,19 +153,58 @@ const TableAlcancias = ({ talonarios }) => {
       }
     };
     return (
-        <FilterComponent
-          onFilter={(e) => setFilterText(e.target.value)}
-          onClear={handleClear}
-          filterText={filterText}
-        />
+		<div>
+        <Row>
+          <Col>
+            <p className="mt-2">Seleccione Filtro:</p>
+          </Col>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Control
+                as="select"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="codigo_barra">Codigo de barra</option>
+                {/* <option value="alcancia_numero">Numero de alcancia</option>
+                <option value="asignada_usuario">Asignada</option>
+                <option value="recuperada">Recuperada</option> */}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Row>
+        <Row>
+          <FilterComponent
+            onFilter={(e) => setFilterText(e.target.value)}
+            onClear={handleClear}
+            filterText={filterText}
+          />
+        </Row>
+      </div>
     );
   }, [filterText]);
 
-  const filteredItems = talonariosToArray.filter(
-    (item) =>
-      item.correlativo &&
-      item.correlativo.includes(filterText)
-  );
+  const [filter, setFilter] = useState("correlativo");
+
+  const filteredItems = talonariosToArray.filter((item) => {
+    if (filter === "correlativo") {
+      return (
+        item.correlativo.toLowerCase() &&
+        item.correlativo.toLowerCase().includes(filterText.toLowerCase())
+      );
+      // } else if (filter === "alcancia_numero") {
+      //   return item.alcancia_numero;
+      // } else if (filter === "asignada_usuario") {
+      //   return (
+      //     item.asignada_usuario.toLowerCase() &&
+      //     item.asignada_usuario.toLowerCase().includes(filterText.toLowerCase())
+      //   );
+      // } else if (filter === "recuperada") {
+      //   return (
+      //     item.recuperada &&
+      //     item.recuperada.includes(filterText)
+      //   );
+    }
+  });
 
 	return (
 		<>
@@ -176,11 +220,11 @@ const TableAlcancias = ({ talonarios }) => {
 					rangeSeparatorText: "de",
 				}}
 				loading={talonarios}
-				paginationPerPage={50}
 				subHeader
 				subHeaderComponent={subHeaderComponentMemo}
 				persistTableHead
-                highlightOnHover
+				highlightOnHover
+				paginationPerPage={50}
 			/>
 			<InfoTalonario
 				show={showTalonario}

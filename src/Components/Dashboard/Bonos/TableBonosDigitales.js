@@ -1,8 +1,15 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
+import {
+  OverlayTrigger,
+  Tooltip,
+  Button,
+  Col,
+  Row,
+  Form,
+} from "react-bootstrap";
 import { InfoBono } from "./InfoBono";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const TextField = styled.input`
   height: 32px;
@@ -36,8 +43,17 @@ const ClearButton = styled(Button)`
 const FilterComponent = ({ filterText, onFilter, onClear }) => {
   return (
     <>
-      <TextField id="search" type="text" placeholder="Nombre" aria-label="Search Input" value={filterText} onChange={onFilter} />
-    <ClearButton type="button" onClick={onClear}>Limpiar</ClearButton>
+      <TextField
+        id="search"
+        type="text"
+        placeholder="Busqueda..."
+        aria-label="Search Input"
+        value={filterText}
+        onChange={onFilter}
+      />
+      <ClearButton type="button" onClick={onClear}>
+        Limpiar
+      </ClearButton>
     </>
   );
 };
@@ -45,9 +61,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => {
 const TableBonosDigitales = ({ bonosSorteo }) => {
   const [showBono, setShowBono] = useState(false);
   const [bonoData, setBonoData] = useState(null);
-  const [filtrarPor, setFiltrarPor] = useState("nombre"); //se guarda la informacion de select del formulario de "filtrar por:"
   let bonosSorteoToArray = [];
-  console.log(filtrarPor);
 
   const columns = [
     {
@@ -151,19 +165,63 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       }
     };
     return (
-        <FilterComponent
-          onFilter={(e) => setFilterText(e.target.value)}
-          onClear={handleClear}
-          filterText={filterText}
-        />
+      <div>
+        <Row>
+          <Col>
+            <p className='mt-2'>Seleccione Filtro:</p>
+          </Col>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Control
+                as="select"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="nombre">Nombre</option>
+                <option value="email">Email</option>
+                <option value="numero_orden">Orden de compra</option>
+                <option value="fecha">Fecha</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Row>
+        <Row>
+          <FilterComponent
+            onFilter={(e) => setFilterText(e.target.value)}
+            onClear={handleClear}
+            filterText={filterText}
+          />
+        </Row>
+      </div>
     );
   }, [filterText]);
 
-  const filteredItems = bonosSorteoToArray.filter(
-    (item) =>
-      item.nombre.toLowerCase() &&
-      item.nombre.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const [filter, setFilter] = useState("nombre");
+
+  const filteredItems = bonosSorteoToArray.filter((item) => {
+    if (filter === "numero_orden") {
+      return (
+        item.numero_orden.toLowerCase() &&
+        item.numero_orden.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filter === "nombre") {
+      return (
+        item.nombre.toLowerCase() &&
+        item.nombre.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filter === "email") {
+      return (
+        item.email.toLowerCase() &&
+        item.email.toLowerCase().includes(filterText.toLowerCase())
+      );
+    } else if (filter === "fecha") {
+      return (
+        item.fecha &&
+        item.fecha.includes(filterText)
+      );
+    }
+  });
+
+  console.log(filter);
 
   return (
     <>
@@ -173,16 +231,16 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         fixedHeader
         fixedHeaderScrollHeight="500px"
         pagination
-        paginationRowsPerPageOptions={[50,100,200]}
+        paginationRowsPerPageOptions={[50, 100, 200]}
         paginationComponentOptions={{
           rowsPerPageText: "Filas por página",
           rangeSeparatorText: "de",
         }}
-        paginationPerPage={50}
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
         persistTableHead
         highlightOnHover
+        paginationPerPage={50}
       />
       <InfoBono
         show={showBono}
@@ -192,6 +250,5 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
     </>
   );
 };
-  
 
 export default TableBonosDigitales;
