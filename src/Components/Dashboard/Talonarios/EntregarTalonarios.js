@@ -98,7 +98,7 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
                             let num_talonario = Object.getOwnPropertyNames(snapshot.val())[0];
 
                             talonarios_validados.push(snapshot.val()[Object.keys(snapshot.val())]);
-                            
+
                             firebase.database().ref(`/Talonarios/${num_talonario}`).update({
                                 asignado_usuario: true,
                                 usuario: {
@@ -143,6 +143,11 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
                         }
                     })
             })
+            Swal.fire(
+                'Asignación Correcta!',
+                'La asignación de talonarios ha finalizado con éxito.',
+                'success'
+              )
         }else if(checkIfArrayIsUnique(talonarios_firebase) == false){
             setAlertFalloShow(true);
             setTimeout(() => {
