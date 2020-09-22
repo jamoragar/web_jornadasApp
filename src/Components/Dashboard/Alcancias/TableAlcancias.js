@@ -1,7 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Col, Form, Button } from "react-bootstrap";
 import {InfoAlcancia} from './InfoAlcancia'
+import styled from 'styled-components';
+
+
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 32px;
+  width: 80px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FilterComponent = ({ filterText, onFilter, onClear }) => {
+  return (
+    <>
+      <TextField id="search" type="text" placeholder="Codigo de barra" aria-label="Search Input" value={filterText} onChange={onFilter} />
+    <ClearButton type="button" onClick={onClear}>Limpiar</ClearButton>
+    </>
+  );
+};
 
 const TableAlcancias = ({ alcancias }) => {
 	const [showAlcancia, setShowAlcancia] = useState(false);
@@ -97,25 +137,47 @@ const TableAlcancias = ({ alcancias }) => {
 		alcanciasToArray[i] = alcancias[key];
 	});
 
+	const [filterText, setFilterText] = useState("");
+
+	const subHeaderComponentMemo = useMemo(() => {
+	  const handleClear = () => {
+		if (filterText) {
+		  setFilterText("");
+		}
+	  };
+	  return (
+		  <FilterComponent
+			onFilter={(e) => setFilterText(e.target.value)}
+			onClear={handleClear}
+			filterText={filterText}
+		  />
+	  );
+	}, [filterText]);
+  
+	  const filteredItems = alcanciasToArray.filter(
+    (item) =>
+      item.codigo_barra &&
+      item.codigo_barra.includes(filterText)
+  );
+
 
 	return (
 		<>
 		<DataTable
 			columns={columns}
-			data={alcanciasToArray}
+			data={filteredItems}
 			fixedHeader
 			loading={alcancias}
 			fixedHeaderScrollHeight="500px"
 			pagination
-			paginationRowsPerPageOptions={[1000]}
+			paginationRowsPerPageOptions={[50,100,200]}
 			paginationComponentOptions={{
 				rowsPerPageText: "Filas por página",
 				rangeSeparatorText: "de",
-				// selectAllRowsItem: true,
-				// selectAllRowsItemText: "Todo",
 			}}
-			paginationPerPage={1000}
+			paginationPerPage={50}
 			subHeader
+			subHeaderComponent={subHeaderComponentMemo}
 			persistTableHead
 			highlightOnHover
 		/>
