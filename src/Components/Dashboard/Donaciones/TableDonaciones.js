@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Col, Form, Button } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { InfoDonacion } from "./InfoDonacion";
 import styled from 'styled-components';
 
@@ -53,7 +53,7 @@ const TableDonaciones = ({ donaciones }) => {
       name: "Orden de compra",
       selector: "numero_orden",
       sortable: true,
-      width: "5%",
+      width: "15%",
     },
     {
       name: "Nombre",

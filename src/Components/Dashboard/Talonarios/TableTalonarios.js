@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Col, Form, Button } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { InfoTalonario } from "./InfoTalonario";
 import styled from 'styled-components';
 
@@ -55,13 +55,13 @@ const TableAlcancias = ({ talonarios }) => {
 	const columns = [
 		{
 			name: "Numero de Talonario",
-			selector: "correlativo",
+			selector: "talonario_numero",
 			sortable: true,
 			width: "7.5%",
 		},
 		{
 			name: "correlativo",
-			selector: "talonario_numero",
+			selector: "correlativo",
 			sortable: true,
 			width: "10%",
 		},
@@ -158,8 +158,8 @@ const TableAlcancias = ({ talonarios }) => {
 
   const filteredItems = talonariosToArray.filter(
     (item) =>
-      item.talonario_numero &&
-      item.talonario_numero.includes(filterText)
+      item.correlativo &&
+      item.correlativo.includes(filterText)
   );
 
 	return (

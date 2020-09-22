@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import { OverlayTrigger, Tooltip, Form, Button, Col } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { InfoBono } from "./InfoBono";
 import styled from 'styled-components';
 
