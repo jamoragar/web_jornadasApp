@@ -94,7 +94,8 @@ const EntregarAlcancias = ({show, onHide, data}) => {
         if(checkIfArrayIsUnique(alcancias_firebase) && alcancias_firebase.length === cantidad_inputs){
 
             // Validamos que los codigos de las alcancias existan en la bd
-            alcancias_firebase.forEach(codigo =>{
+            alcancias_firebase.forEach((codigo, i) =>{
+                console.log(i)
                 firebase.database()
                     .ref('/Alcancias')
                     .orderByChild('codigo_barra')
@@ -103,13 +104,8 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                     .then(snapshot => {
                         let alcancia_asignada;
                         let data_alcancia;
-                        let num_alcancia = Object.getOwnPropertyNames(snapshot.val())[0];
-
-                        snapshot.forEach(childSnapshot => {
-                            alcancia_asignada = childSnapshot.val().asignada_usuario
-                            data_alcancia = childSnapshot.val()
-                        });
-
+                        
+                        
                         if(!snapshot.val()){
                             console.log('error...')
                             setCodigoError(codigo);
@@ -118,32 +114,61 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                             setCodigoError(codigo);
                             setModalCodigoYaAsignado(true);
                         }else{
+                            snapshot.forEach(childSnapshot => {
+                                alcancia_asignada = childSnapshot.val().asignada_usuario
+                                data_alcancia = childSnapshot.val()
+                            });
+
+                            let num_alcancia = Object.getOwnPropertyNames(snapshot.val())[0];
+
                             alcancias_validadas.push(snapshot.val()[Object.keys(snapshot.val())]);
+
+                            firebase.database().ref(`/Alcancias/${num_alcancia}`).update({
+                                asignada_usuario: true,
+                                usuario: {
+                                    uid: data.uid,
+                                    nombre: data.nombre,
+                                    apellido: data.apellido,
+                                    email: data.email,
+                                    subtipo: data.subtipo ? data.subtipo : null
+                                }
+                            });
+                            firebase.database().ref(`/Users/${data.uid}/alcancias`).once('value').then(snapshot => {
+                                if(snapshot.val() === null){
+                                    firebase.database().ref(`/Users/${data.uid}/alcancias/${i}`).update({
+                                        alcancia_numero: data_alcancia.alcancia_numero,
+                                        asignada_externo: data_alcancia.asignada_externo,
+                                        asignada_tercero: data_alcancia.asignada_tercero,
+                                        asignada_usuario: true,
+                                        codigo_barra: data_alcancia.codigo_barra,
+                                        fecha_asignacion: moment().format('MM-DD-YYYY h:mm:ss a'),
+                                        fecha_recuperacion: "",
+                                        fecha_reinicio: "",
+                                        monto_recaudad: "",
+                                        recuperada: false,
+                                        reset: false
+                                    })
+                                }else{
+                                    let aux_array = Object.keys(snapshot.val())
+
+                                    firebase.database().ref(`/Users/${data.uid}/alcancias/${aux_array.length + i}`).update({
+                                        alcancia_numero: data_alcancia.alcancia_numero,
+                                        asignada_externo: data_alcancia.asignada_externo,
+                                        asignada_tercero: data_alcancia.asignada_tercero,
+                                        asignada_usuario: true,
+                                        codigo_barra: data_alcancia.codigo_barra,
+                                        fecha_asignacion: moment().format('MM-DD-YYYY h:mm:ss a'),
+                                        fecha_recuperacion: "",
+                                        fecha_reinicio: "",
+                                        monto_recaudad: "",
+                                        recuperada: false,
+                                        reset: false
+                                    })
+                                }
+                            })
+
                         }
 
-                        firebase.database().ref(`/Alcancias/${num_alcancia}`).update({
-                            asignada_usuario: true,
-                            usuario: {
-                                uid: data.uid,
-                                nombre: data.nombre,
-                                apellido: data.apellido,
-                                email: data.email,
-                                subtipo: data.subtipo ? data.subtipo : null
-                            }
-                        })
-                        firebase.database().ref(`/Users/${data.uid}/alcancias/${num_alcancia}`).update({
-                            alcancia_numero: data_alcancia.alcancia_numero,
-                            asignada_externo: data_alcancia.asignada_externo,
-                            asignada_tercero: data_alcancia.asignada_tercero,
-                            asignada_usuario: true,
-                            codigo_barra: data_alcancia.codigo_barra,
-                            fecha_asignacion: moment().format('MM-DD-YYYY h:mm:ss a'),
-                            fecha_recuperacion: "",
-                            fecha_reinicio: "",
-                            monto_recaudad: "",
-                            recuperada: false,
-                            reset: false
-                        })
                      });
             });
 
@@ -271,7 +296,7 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                         onClose={() => setAlertFalloShow(false)}
                         dismissible
                     >
-                        Existen Códigos diplicados, por favor verifique.
+                        Existen Códigos duplicados, por favor verifique.
                     </Alert>
                     <Alert style={{width:'100%'}} show={alertCompletarShow} variant={"danger"} onClose={() => setAlertCompletarShow(false)} dismissible>
                         Debe completar todos los campos antes de continuar.
