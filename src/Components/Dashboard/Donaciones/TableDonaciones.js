@@ -68,7 +68,7 @@ const TableDonaciones = ({ donaciones }) => {
       name: "Orden de compra",
       selector: "numero_orden",
       sortable: true,
-      width: "10%",
+      width: "12%",
     },
     {
       name: "Nombre",
@@ -90,7 +90,7 @@ const TableDonaciones = ({ donaciones }) => {
       name: "Aporte",
       selector: "aporte",
       sortable: true,
-      width: "10%",
+      width: "8%",
     },
     {
       name: "Estado de pago",

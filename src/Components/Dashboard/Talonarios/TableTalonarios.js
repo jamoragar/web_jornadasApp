@@ -59,7 +59,7 @@ const TableAlcancias = ({ talonarios }) => {
 
 	const columns = [
 		{
-			name: "Numero de Talonario",
+			name: "Número de Talonario",
 			selector: "talonario_numero",
 			sortable: true,
 			width: "7.5%",

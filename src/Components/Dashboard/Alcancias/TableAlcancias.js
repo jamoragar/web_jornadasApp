@@ -66,16 +66,16 @@ const TableAlcancias = ({ alcancias }) => {
   console.log(alcancias);
   const columns = [
     {
-      name: "Numero de alcancia",
+      name: "Número de alcancía",
       selector: "alcancia_numero",
       sortable: true,
       width: "7.5%",
     },
     {
-      name: "Codigo de barra",
+      name: "Código de barra",
       selector: "codigo_barra",
       sortable: true,
-      width: "20%",
+      width: "18%",
     },
     {
       name: "Asignada",
