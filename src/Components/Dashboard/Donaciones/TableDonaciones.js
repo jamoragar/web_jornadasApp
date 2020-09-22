@@ -11,6 +11,7 @@ import {
 import { InfoDonacion } from "./InfoDonacion";
 import styled from "styled-components";
 
+
 const TextField = styled.input`
   height: 32px;
   width: 200px;

@@ -239,7 +239,7 @@ const TableAlcancias = ({ alcancias }) => {
         subHeaderComponent={subHeaderComponentMemo}
         persistTableHead
         highlightOnHover
-        paginationPerPage={50}
+		paginationPerPage={50}
       />
       <InfoAlcancia
         show={showAlcancia}
