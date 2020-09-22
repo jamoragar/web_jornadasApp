@@ -33,7 +33,48 @@ const TableAlcancias = ({ talonarios }) => {
   const [talonariosData, setTalonariosData] = useState(null);
   let talonariosToArray = [];
 
- 
+
+//   const [filterText, setFilterText] = useState("");
+
+//   const subHeaderComponentMemo = useMemo(() => {
+//     const handleClear = () => {
+//       if (filterText) {
+//         setFilterText("");
+//       }
+//     };
+//     return (
+//       <>
+//         <Col>
+//           <p>Seleccione Filtro:</p>
+//         </Col>
+//         <Col>
+//           <Form>
+//             <Form.Group controlId="exampleForm.ControlSelect1">
+//               <Form.Control
+//                 name="filtrar"
+//                 as="select"
+//                 onChange={(e) => setFiltrarPor(e.target.value)}
+//               >
+//                 <option value="orde_de_compra">Orden De Compra</option>
+//                 <option value="nombre">Nombre</option>
+//                 <option value="email">Email</option>
+//                 <option value="telefono">Telefono</option>
+//                 <option value="estado_de_pago">Estado De Pago</option>
+//                 <option value="plataforma">Plataforma</option>
+//                 <option value="fecha">Fecha</option>
+//               </Form.Control>
+//             </Form.Group>
+//           </Form>
+//         </Col>
+//         <FilterComponent
+//           onFilter={(e) => setFilterText(e.target.value)}
+//           onClear={handleClear}
+//           filterText={filterText}
+//         />
+//       </>
+//     );
+//   }, [filterText]);
+
 	const columns = [
 		{
 			name: "Numero de Talonario",
@@ -134,6 +175,7 @@ const TableAlcancias = ({ talonarios }) => {
 					rowsPerPageText: "Filas por página",
 					rangeSeparatorText: "de",
 				}}
+				loading={talonarios}
 				paginationPerPage={500}
 				subHeader
 				persistTableHead

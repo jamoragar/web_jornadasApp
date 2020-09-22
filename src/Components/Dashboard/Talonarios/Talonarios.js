@@ -38,7 +38,12 @@ const Talonarios = ({type, uid}) => {
                 {/* <Button className='ml-auto' variant='danger' onClick={() => generarTalonarios(40, 500)}>Generar Talonarios</Button> */}
             </Row>
             <div>
-            <TableTalonarios talonarios={talonarios}/>
+            {
+                talonarios ?
+                <TableTalonarios talonarios={talonarios}/>
+                :
+                <h6>Cargando...</h6>
+            }
             </div>
         </div>
     );
