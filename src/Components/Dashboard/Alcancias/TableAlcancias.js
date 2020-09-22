@@ -75,7 +75,7 @@ const TableAlcancias = ({ alcancias }) => {
       name: "Codigo de barra",
       selector: "codigo_barra",
       sortable: true,
-      width: "20%",
+      width: "18%",
     },
     {
       name: "Asignada",
