@@ -114,7 +114,7 @@ const VerUsuarios = ({ users }) => {
               placement={"left"}
               overlay={
                 <Tooltip id={"tooltip-bottom"}>
-                  <strong>Alcancias</strong>
+                  <strong>Alcancías</strong>
                 </Tooltip>
               }
             >
@@ -137,7 +137,7 @@ const VerUsuarios = ({ users }) => {
               placement={"left"}
               overlay={
                 <Tooltip id={"tooltip-bottom"}>
-                  <strong>Bonos Sorteo</strong>
+                  <strong>Talonarios</strong>
                 </Tooltip>
               }
             >

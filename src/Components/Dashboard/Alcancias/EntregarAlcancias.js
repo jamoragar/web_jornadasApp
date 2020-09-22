@@ -105,6 +105,10 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                         let alcancia_asignada;
                         let data_alcancia;
                         
+                        snapshot.forEach(childSnapshot => {
+                            alcancia_asignada = childSnapshot.val().asignada_usuario
+                            data_alcancia = childSnapshot.val()
+                        });
                         
                         if(!snapshot.val()){
                             console.log('error...')
@@ -125,6 +129,7 @@ const EntregarAlcancias = ({show, onHide, data}) => {
 
                             firebase.database().ref(`/Alcancias/${num_alcancia}`).update({
                                 asignada_usuario: true,
+                                fecha_entrega: moment().format('MM-DD-YYYY h:mm:ss a'),
                                 usuario: {
                                     uid: data.uid,
                                     nombre: data.nombre,
@@ -166,17 +171,18 @@ const EntregarAlcancias = ({show, onHide, data}) => {
                                     })
                                 }
                             })
+                            Swal.fire(
+                                'Asignación Correcta!',
+                                'La asignación de alcancía ha finalizado con éxito.',
+                                'success'
+                              )
 
                         }
 
                      });
             });
 
-            Swal.fire(
-                'Asignación Correcta!',
-                'La asignación de alcancía ha finalizado con éxito.',
-                'success'
-              )
+            
             // setTimeout(() =>{
             //     console.log(alcancias_validadas)
             //     if(alcancias_validadas.length == cantidad_inputs){

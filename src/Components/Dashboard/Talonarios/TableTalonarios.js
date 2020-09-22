@@ -124,7 +124,7 @@ const TableAlcancias = ({ talonarios }) => {
 							<div
 								style={{ cursor: "pointer" }}
 								className="text-success"
-								onCli3ck={() => {
+								onClick={() => {
 									setShowTalonario(true);
 									setTalonariosData(data);
 								}}

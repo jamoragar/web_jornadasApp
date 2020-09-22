@@ -80,13 +80,16 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
                     .then(snapshot => {
                         let talonario_asignado;
                         let data_talonario;
-                        
+                        snapshot.forEach(childSnapshot => {
+                            talonario_asignado = childSnapshot.val().asignado_usuario
+                            data_talonario = childSnapshot.val()
+                        });
                         
                         if(!snapshot.val()){
                             console.log('error...')
                             setCodigoError(codigo);
                             setModalErrorCodigo(true);
-                        }else if(talonario_asignado == true){
+                        }else if(talonario_asignado === true){
                             setCodigoError(codigo);
                             setModalCodigoYaAsignado(true);
                         }else{
@@ -101,6 +104,7 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
 
                             firebase.database().ref(`/Talonarios/${num_talonario}`).update({
                                 asignado_usuario: true,
+                                fecha_entrega: moment().format('MM-DD-YYYY h:mm:ss a'),
                                 usuario: {
                                     uid: data.uid,
                                     nombre: data.nombre,
@@ -140,14 +144,15 @@ const EntregarTalonarios = ({show, onHide, data}) =>{
                                     })
                                 }
                             })
+                            Swal.fire(
+                                'Asignación Correcta!',
+                                'La asignación de talonarios ha finalizado con éxito.',
+                                'success'
+                              )
                         }
                     })
             })
-            Swal.fire(
-                'Asignación Correcta!',
-                'La asignación de talonarios ha finalizado con éxito.',
-                'success'
-              )
+            
         }else if(checkIfArrayIsUnique(talonarios_firebase) == false){
             setAlertFalloShow(true);
             setTimeout(() => {
