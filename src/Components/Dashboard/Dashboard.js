@@ -85,12 +85,12 @@ const Dashboard = () => {
 								<span className="link-text">Bonos Digitales Vendidos</span>
 							</Link>
 						</li>
-						<li className="sideNav-item">
+						{/* <li className="sideNav-item">
 							<Link className="sideNav-link" to={`/Dashboard/${uid}/Eventos`}>
 								<i className="fab fa-delicious fa-fw fa-3x" />
 								<span className="link-text">Bingos Digitales Vendidos</span>
 							</Link>
-						</li>
+						</li> */}
 						<li className="sideNav-item">
 							<Link
 								className="sideNav-link"
