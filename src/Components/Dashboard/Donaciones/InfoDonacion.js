@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Modal } from "react-bootstrap";
 
 export const InfoDonacion = ({ show, onHide, data }) => {
+    console.log(data)
 	if (data) {
         if(data.tipo === 'Usuario'){
             return (
@@ -187,6 +188,30 @@ export const InfoDonacion = ({ show, onHide, data }) => {
                                         readOnly
                                     />
                                 </Form.Group>
+                                {data.certificado? 
+                                <Form.Group>
+                                <Form.Label>Certificado de aporte:</Form.Label>
+                                <Form.Control
+                                    defaultValue="Si"
+                                    name="certificado"
+                                    type="text"
+                                    placeholder="no hay datos registrados."
+                                    readOnly
+                                />
+                            </Form.Group>
+                            :
+                            <Form.Group>
+                                    <Form.Label>Certificado de aporte:</Form.Label>
+                                    <Form.Control
+                                        defaultValue="No"
+                                        name="certificado"
+                                        type="text"
+                                        placeholder="no hay datos registrados."
+                                        readOnly
+                                    />
+                                </Form.Group>    
+                            
+                            }
                                 <Form.Group>
                                     <Form.Label>Fecha:</Form.Label>
                                     <Form.Control

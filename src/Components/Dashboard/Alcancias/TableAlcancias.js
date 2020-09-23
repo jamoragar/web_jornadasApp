@@ -112,7 +112,7 @@ const TableAlcancias = ({ alcancias }) => {
     {
       name: "Fecha",
       selector: (alcancias) => {
-        return `${alcancias.fecha_asignacion ? "Si" : "N.A"}`;
+        return `${alcancias.fecha_asignacion ? alcancias.fecha_asignacion : "N.A"}`;
       },
       sortable: true,
       width: "15%",

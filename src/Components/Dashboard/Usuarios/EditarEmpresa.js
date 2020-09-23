@@ -90,9 +90,7 @@ export const EditarEmpresa = ({ show, onHide, data }) => {
 								>
                                     <option value={data.subtipo}>{`Actual: ${data.subtipo}...`}</option>
 									<option value="User">Usuario</option>
-									<option value="Company">Empresa</option>
 									<option value="Leo/Leon">Leo/Leon</option>
-									<option value="Externo">Externo</option>
 								</Form.Control>
 							</Form.Group>
 						</Modal.Body>

@@ -100,7 +100,7 @@ const TableAlcancias = ({ talonarios }) => {
 		},
 		{
 			name: "Fecha",
-			selector: (talonarios) => { return `${talonarios.fecha_asignacion? 'Si':'N.A'}`
+			selector: (talonarios) => { return `${talonarios.fecha_asignacion? talonarios.fecha_asignacion:'N.A'}`
         },
 			sortable: true,
 			width: "15%",
