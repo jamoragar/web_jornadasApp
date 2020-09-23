@@ -22,7 +22,7 @@ const Routes = (props) => {
                     <Route path="/" exact component={Home} />
                     <Route path="/About" exact component={About} />
                     <Route path="/Contacto" exact component={Contacto} />
-                    <Route path="/Dashboard/:uid" component={() => props.authenticated ? <Dashboard/> : <Home/>} />
+                    <Route path="/Dashboard/:uid" component={() => props.authenticated ? <Dashboard /> : <Home/>} />
                     <Route path='/not-found' component={NotFound404} />
                     <Route path='/procesa-pago/' component={ProcesaPago}/>
                     <Route path='/Donar-fallo' component={DonarFailure}/>

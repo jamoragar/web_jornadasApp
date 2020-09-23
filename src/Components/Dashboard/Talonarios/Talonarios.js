@@ -13,29 +13,28 @@ const Talonarios = ({type, uid}) => {
             });
     }, [])
 
-    console.log(talonarios)
-    const generarTalonarios = (secuencia, cantidad) => {
-        let numero_bonos = 48001
-        for(let i = 0; i < cantidad; i++){
-            // numero_bonos = numero_bonos + secuencia;
-            talonarios_generados[talonarios_generados.length] = {
-                correlativo: (numero_bonos + (secuencia * i)).toString(),
-                asignado_usuario: false,
-                asignado_tercero: false,
-                asignado_externo: false,
-                monto_recaudado: '',
-                talonario_numero: (i + 1)
-            }
+    // const generarTalonarios = (secuencia, cantidad) => {
+    //     let numero_bonos = 48001
+    //     for(let i = 0; i < cantidad; i++){
+    //         // numero_bonos = numero_bonos + secuencia;
+    //         talonarios_generados[talonarios_generados.length] = {
+    //             correlativo: (numero_bonos + (secuencia * i)).toString(),
+    //             asignado_usuario: false,
+    //             asignado_tercero: false,
+    //             asignado_externo: false,
+    //             monto_recaudado: '',
+    //             talonario_numero: (i + 1)
+    //         }
 
-            firebase.database().ref(`Talonarios/${i}`).set(talonarios_generados[i]);
-        };
-    };
+    //         firebase.database().ref(`Talonarios/${i}`).set(talonarios_generados[i]);
+    //     };
+    // };
 
     return (
         <div className='dash_content'>
             <Row>
                 <h1>Talonarios:</h1>
-                <Button className='ml-auto' variant='danger' onClick={() => generarTalonarios(40, 500)}>Generar Talonarios</Button>
+                {/* <Button className='ml-auto' variant='danger' onClick={() => generarTalonarios(40, 500)}>Generar Talonarios</Button> */}
             </Row>
             <div>
             {

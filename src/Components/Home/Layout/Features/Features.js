@@ -18,8 +18,9 @@ const ModalTransferencia = ({show, onHide}) => {
                     <li>* NOMBRE DEL BANCO: Banco Estado.</li>
                     <li>* NOMBRE DEL BENEFICIARIO: Club de Leones Cruz del Sur.</li>
                     <li>* RUT DEL BENEFICIARIO: 71.149.500-2.</li>
-                    <li>* NUMERO DE CTA DEL BENEFICIARIO: 91900176100.</li>
-                    <li>* DIRECCIÓN DEL BENEFICIARIO: Avenida Libertador Bernardo O’Higgins N° 301, Punta Arenas.</li>
+                    <li>* NUMERO DE CTA CORRIENTE DEL BENEFICIARIO: 91900176100.</li>
+                    <li>* DIRECCIÓN DEL BENEFICIARIO: Libertador Bernardo O’Higgins N° 301, Punta Arenas.</li>
+                    <li>* CORREO: RECURSOSLEONES@TIE.CL</li>
                 </ul>
             </Modal.Body>
             <Modal.Footer>

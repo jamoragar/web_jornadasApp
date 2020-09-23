@@ -63,7 +63,7 @@ const TableAlcancias = ({ alcancias }) => {
   const [loading, setLoading] = useState(true);
   const [alcanciasData, setAlcanciasData] = useState(null);
   let alcanciasToArray = [];
-  console.log(alcancias);
+
   const columns = [
     {
       name: "Número de alcancía",
@@ -218,8 +218,6 @@ const TableAlcancias = ({ alcancias }) => {
       //   );
     }
   });
-
-  console.log(filter);
 
   return (
     <>

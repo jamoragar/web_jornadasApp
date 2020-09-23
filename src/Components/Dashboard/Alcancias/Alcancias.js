@@ -14,37 +14,37 @@ const Alcancias = ({type, uid}) => {
             });
     }, [])
 
-    const eanCheckDigit = s => {
-        let result = 0;
-        for (let counter = s.length-1; counter >=0; counter--){
-          result = result + parseInt(s.charAt(counter)) * (1+(2*(counter % 2)));
-        }
-        return (10 - (result % 10)) % 10;
-      }
+    // const eanCheckDigit = s => {
+    //     let result = 0;
+    //     for (let counter = s.length-1; counter >=0; counter--){
+    //       result = result + parseInt(s.charAt(counter)) * (1+(2*(counter % 2)));
+    //     }
+    //     return (10 - (result % 10)) % 10;
+    //   }
 
-    const generarAlcancias = (secuencia, cantidad) => {
-        let k = 1;
-        const codBarra = '980201100000';
+    // const generarAlcancias = (secuencia, cantidad) => {
+    //     let k = 1;
+    //     const codBarra = '980201100000';
 
-        for(let i = 0; i < cantidad; i++){
+    //     for(let i = 0; i < cantidad; i++){
 
-            let genCodBarra = parseInt(codBarra) + k;
-            alcancias_generadas[alcancias_generadas.length] = {
-                alcancia_numero: i + 1,
-                codigo_barra: genCodBarra.toString() + eanCheckDigit(genCodBarra.toString()),
-                asignada_usuario: false,
-                asignada_externo: false,
-                asignada_tercero: false,
-                monto_recaudad: '',
+    //         let genCodBarra = parseInt(codBarra) + k;
+    //         alcancias_generadas[alcancias_generadas.length] = {
+    //             alcancia_numero: i + 1,
+    //             codigo_barra: genCodBarra.toString() + eanCheckDigit(genCodBarra.toString()),
+    //             asignada_usuario: false,
+    //             asignada_externo: false,
+    //             asignada_tercero: false,
+    //             monto_recaudad: '',
 
-            };
+    //         };
 
-            firebase.database().ref(`/Alcancias/${i}`).set(alcancias_generadas[i]);
+    //         firebase.database().ref(`/Alcancias/${i}`).set(alcancias_generadas[i]);
             
-            k = k + secuencia;
-        };
-        console.log(alcancias_generadas);
-    }
+    //         k = k + secuencia;
+    //     };
+    //     console.log(alcancias_generadas);
+    // }
     // function newCard() {
     //     for(var i=0 ; i<24 ; i++){
     //         setSquare(i);
@@ -82,7 +82,7 @@ const Alcancias = ({type, uid}) => {
         <div className='dash_content'>
             <Row>
                 <h1>Alcancías:</h1>
-                <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 2000)}}>Generar Alcancías</Button>
+                {/* <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 2000)}}>Generar Alcancías</Button> */}
             </Row>
             <div>
             {
