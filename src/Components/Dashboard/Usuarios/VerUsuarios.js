@@ -91,13 +91,13 @@ const VerUsuarios = ({ users }) => {
       sortable: true,
     },
     {
-      name: "Nivel",
+      name: "Tipo",
       selector: "tipo",
       sortable: true,
       width: "10%",
     },
     {
-      name: "Rol",
+      name: "SubTipo",
       selector: "subtipo",
       sortable: true,
       width: "10%",

@@ -73,7 +73,7 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 								/>
 							</Form.Group>
 							<Form.Group>
-								<Form.Label>Rol:</Form.Label>
+								<Form.Label>Cambiar SubTipo:</Form.Label>
 								<Form.Control
 									name="rol"
 									as="select"
@@ -82,9 +82,7 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 								>
 									<option value={data.subtipo}>{`Actual: ${data.subtipo}...`}</option>
 									<option value="User">Usuario</option>
-									<option value="Company">Empresa</option>
 									<option value="Leo/Leon">Leo/Leon</option>
-									<option value="Externo">Externo</option>
 								</Form.Control>
 							</Form.Group>
 						</Modal.Body>
