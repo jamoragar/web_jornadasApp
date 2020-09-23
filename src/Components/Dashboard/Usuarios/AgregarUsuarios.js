@@ -6,9 +6,9 @@ const AgregarUsuarios = ({show, onHide}) => {
     const [alertShow, setAlertShow] = useState(false);
     const [buttonAceptarText, setButtonAceptarText] = useState(true);
 
-    const handleResetForm = () => {
-        document.getElementById('myForm').reset();
-    }
+    // const handleResetForm = () => {
+    //     document.getElementById('myForm').reset();
+    // }
 
     const onFormSubmit = async e => {
         e.preventDefault();
@@ -45,7 +45,7 @@ const AgregarUsuarios = ({show, onHide}) => {
                         if(snapshot.val()){
                             setButtonAceptarText(true);
                             alert('La cuenta de correo que intenta ingresar, ya pertenece a otro usuario.');
-                            handleResetForm();
+                            // handleResetForm();
                         }else{
                             console.log('Creando usuario...');
                             const createUserWithFirebaseFunction = fetch("https://us-central1-jornadas2020.cloudfunctions.net/createUser", requestOptions);
@@ -60,19 +60,18 @@ const AgregarUsuarios = ({show, onHide}) => {
                                     subtipo: rol.value,
                                     uid: key
                                 })
+                                .then(response => {
+                                    setButtonAceptarText(true);
+                                    setAlertShow(true)
+                                    setTimeout(() => {
+                                        setAlertShow(false);
+                                        // handleResetForm()
+                                    }, 2173)
+                                })
                             })
-                            .then(response => {
-                                setButtonAceptarText(true);
-                                setAlertShow(true)
-                                setTimeout(() => {
-                                    setAlertShow(false);
-                                    handleResetForm()
-                                }, 2173)
-                            })
-                            .catch(error => console.log('error', error));
                         }
                 })
-                .catch(something => console.log(something));
+                // .catch(something => console.log(something));
         }else{
             alert('Debe completar todos los campos antes de continuar.');
         };
@@ -116,7 +115,7 @@ const AgregarUsuarios = ({show, onHide}) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="success" type="submit" block>
-                        {buttonAceptarText ? (<><i className="far fa-save fa-fw" />Aceptar</>) : (<Spinner animation="border" />)}
+                        {buttonAceptarText ? (<div><i className="far fa-save fa-fw" />Aceptar</div>) : (<Spinner animation="border" />)}
                     </Button>
                 </Modal.Footer>
                     <Alert show={alertShow} variant={'success'} onClose={() => setAlertShow(false)} dismissible>
