@@ -39,9 +39,9 @@ const PagoExito = (props) => {
 							fecha_transaccion: splitted_data[3]
 						}
 					})
-					if(splitted_data[6].length >= 20){
+					if(splitted_data[6].length >= 19){
 						firebase.database().ref(`Users/${splitted_data[6]}/${(snapshot.val().item === 'Aporte' ? 'aportes' : 'bonos')}/${splitted_data[2].split('-')[1]}`).update({
-							apellido: snapshot.val().apellido,
+							apellido: snapshot.val().apellido ? snapshot.val().apellido : null,
 							aporte: splitted_data[5],
 							email: snapshot.val().email,
 							estado_de_pago: 'Aprobado',
@@ -55,6 +55,7 @@ const PagoExito = (props) => {
 	}, []);
 
 	if(data && fbData){
+		console.log(fbData)
 		const initData = {
 			state: "Transacción realizada con éxito.",
 			heading1: `Su pago por "${fbData.item}" ha sido procesado exitosamente.`,
@@ -96,13 +97,20 @@ const PagoExito = (props) => {
 													<th>Nombre</th>
 													<td>{fbData.nombre}</td>
 												</tr>
+												{
+													fbData.apellido ? (
+														<tr>
+															<th>Apellido</th>
+															<td>{fbData.apellido}</td>
+														</tr>
+													)
+													:
+													null
+												}
 												<tr>
-													<th>Apellido</th>
-													<td>{fbData.apellido}</td>
-												</tr>
-												<tr>
+												
 													<th>Monto</th>
-													<td>${fbData.monto}</td>
+													<td>${fbData.monto ? fbData.monto : fbData.aporte}</td>
 												</tr>
 												{
 													fbData.item === 'Bono' ? (

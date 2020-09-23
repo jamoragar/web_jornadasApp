@@ -23,7 +23,6 @@ const CreateUsers = ({tipo, uid}) => {
 
 
 
-
     if(users !== 'EMPTY' && userAuth !== 'EMPTY'){
         console.log(userAuth)
         return (
