@@ -90,7 +90,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Telefono",
       selector: "telefono",
       sortable: true,
-      width: "10%",
+      width: "8%",
     },
     {
       name: "Cantidad",
@@ -102,11 +102,17 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Estado del pago",
       selector: "estado_de_pago",
       sortable: true,
-      width: "10%",
+      width: "8%",
     },
     {
       name: "Plataforma",
       selector: "plataforma",
+      sortable: true,
+      width: "5%",
+    },
+    {
+      name: "Tipo",
+      selector: "tipo",
       sortable: true,
       width: "5%",
     },
@@ -180,6 +186,8 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
                 <option value="email">Email</option>
                 <option value="numero_orden">Orden de compra</option>
                 <option value="fecha">Fecha</option>
+                <option value="estado_de_pago">Estado de Pago</option>
+                <option value="tipo">Tipo</option>
               </Form.Control>
             </Form.Group>
           </Form>
@@ -217,6 +225,18 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       return (
         item.fecha &&
         item.fecha.includes(filterText)
+      );
+    }
+    else if (filter === "estado_de_pago") {
+      return (
+        item.estado_de_pago.toLowerCase() &&
+        item.estado_de_pago.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
+    else if (filter === "tipo") {
+      return (
+        item.tipo &&
+        item.tipo.includes(filterText)
       );
     }
   });
