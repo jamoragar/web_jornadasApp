@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Modal } from "react-bootstrap";
 
 export const InfoDonacion = ({ show, onHide, data }) => {
-    console.log(data)
 	if (data) {
         if(data.tipo === 'Usuario'){
             return (

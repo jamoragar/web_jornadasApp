@@ -3,8 +3,7 @@ import * as firebase from 'firebase';
 import {Spinner, Row} from 'react-bootstrap';
 import TableBonosDigitales from './TableBonosDigitales';
 
-const BonosRifa = () => {
-   
+const BonosRifa = ({subtipo}) => {
     const [bonosSorteo, setBonosSorteo] = useState('EMPTY');
 
     useEffect(() => {
@@ -14,16 +13,25 @@ const BonosRifa = () => {
     }, [])
 
     if(bonosSorteo !== 'EMPTY'){
-        return (
-            <div className='dash_content'>
-                <Row>
-                    <h1>Bonos Digitales:</h1>
-                </Row>
-                <div>
-                    <TableBonosDigitales bonosSorteo={bonosSorteo}/>
+        if(subtipo === 'Admin'){
+            return (
+                <div className='dash_content'>
+                    <Row>
+                        <h1>Bonos Digitales:</h1>
+                    </Row>
+                    <div>
+                        <TableBonosDigitales bonosSorteo={bonosSorteo}/>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }else{
+			return(
+				<div className='dash_content'>
+				<br />
+					<h2>No tiene permitido ingresar a esta area.</h2>
+				</div>
+			);
+		}
     }else{
         return (
             <div className='dash_content'>

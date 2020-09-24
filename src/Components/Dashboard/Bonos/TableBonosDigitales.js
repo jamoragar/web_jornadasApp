@@ -241,8 +241,6 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
     }
   });
 
-  console.log(filter);
-
   return (
     <>
       <DataTable

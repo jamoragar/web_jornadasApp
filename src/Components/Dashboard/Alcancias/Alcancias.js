@@ -3,7 +3,7 @@ import { Row, Button } from 'react-bootstrap';
 import firebase from '../../../Config/Firebase';
 import TableAlcancias from './TableAlcancias'
 
-const Alcancias = ({type, uid}) => {
+const Alcancias = ({subtipo, uid}) => {
     var usedNums = new Array(76);
     const [alcancias, setAlcancias] = useState('EMPTY')
     let alcancias_generadas = [];
@@ -77,23 +77,31 @@ const Alcancias = ({type, uid}) => {
     //     newCard();
     //     return false;
     //   }
-
-    return (
-        <div className='dash_content'>
-            <Row>
-                <h1>Alcancías:</h1>
-                {/* <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 2000)}}>Generar Alcancías</Button> */}
-            </Row>
-            <div>
-            {
-                alcancias !== 'EMPTY' ?
-                <TableAlcancias alcancias={alcancias}/>
-                :
-                <h6>Cargando...</h6>
-            }
+    if(subtipo === 'Admin'){
+        return (
+            <div className='dash_content'>
+                <Row>
+                    <h1>Alcancías:</h1>
+                    {/* <Button className='ml-auto' variant='danger' onClick={() => {generarAlcancias(1, 2000)}}>Generar Alcancías</Button> */}
+                </Row>
+                <div>
+                {
+                    alcancias !== 'EMPTY' ?
+                    <TableAlcancias alcancias={alcancias}/>
+                    :
+                    <h6>Cargando...</h6>
+                }
+                </div>
             </div>
-        </div>
-    );
+        );
+    }else{
+			return(
+				<div className='dash_content'>
+				<br />
+					<h2>No tiene permitido ingresar a esta area.</h2>
+				</div>
+			);
+		}
 }
  
 export default Alcancias;

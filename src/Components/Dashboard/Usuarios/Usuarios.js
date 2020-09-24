@@ -5,8 +5,7 @@ import firebase from '../../../Config/Firebase';
 import {Spinner, Button, Row} from 'react-bootstrap';
 
 
-const CreateUsers = ({tipo, uid}) => {
-    
+const CreateUsers = ({subtipo, uid}) => {
     const [showAgregarUsuarios, setShowAgregarUsuarios] = useState(false);
     const [users, setUsers] = useState('EMPTY');
     const [userAuth, setUserAuth] = useState('EMPTY');
@@ -24,27 +23,35 @@ const CreateUsers = ({tipo, uid}) => {
 
 
     if(users !== 'EMPTY' && userAuth !== 'EMPTY'){
-        console.log(userAuth)
-        return (
-            <div className='dash_content'>
-                <Row>
-                    <h1>Usuarios:</h1>
+        if(subtipo === 'Admin'){
+            return (
+                <div className='dash_content'>
+                    <Row>
+                        <h1>Usuarios:</h1>
+                        {
+                        userAuth.subtipo === 'Admin' ? 
+                            <Button className='ml-auto' variant='success' onClick={() => setShowAgregarUsuarios(!showAgregarUsuarios)}>Crear Nuevo Usuario</Button>
+                        :
+                            null
+                        }
+                    </Row>
+                    <VerUsuarios users={users} userAuth={userAuth}/>
                     {
-                    userAuth.subtipo === 'Admin' ? 
-                        <Button className='ml-auto' variant='success' onClick={() => setShowAgregarUsuarios(!showAgregarUsuarios)}>Crear Nuevo Usuario</Button>
-                    :
+                        userAuth.subtipo === 'Admin' ? 
+                            <AgregarUsuarios show={showAgregarUsuarios} onHide={() => setShowAgregarUsuarios(false)} />
+                        :
                         null
                     }
-                </Row>
-                <VerUsuarios users={users} userAuth={userAuth}/>
-                {
-                    userAuth.subtipo === 'Admin' ? 
-                        <AgregarUsuarios show={showAgregarUsuarios} onHide={() => setShowAgregarUsuarios(false)} />
-                    :
-                    null
-                }
-            </div>
-        );
+                </div>
+            );
+        }else{
+			return(
+				<div className='dash_content'>
+				<br />
+					<h2>No tiene permitido ingresar a esta area.</h2>
+				</div>
+			);
+		}
     }else{
         return (
             <div className='dash_content'>

@@ -3,9 +3,9 @@ import * as firebase from "firebase";
 import { Spinner } from "react-bootstrap";
 import TableDonaciones from "./TableDonaciones";
 
-const Donaciones = () => {
+const Donaciones = ({subtipo}) => {
 	const [donaciones, setDonaciones] = useState("EMPTY");
-
+	console.log(subtipo)
 	useEffect(() => {
 		firebase
 			.database()
@@ -18,12 +18,21 @@ const Donaciones = () => {
 	}, []);
 
 	if (donaciones !== "EMPTY") {
-		return (
-			<div className="dash_content">
-				<h1>Donaciones:</h1>
-				<TableDonaciones donaciones={donaciones} />
-			</div>
-		);
+		if(subtipo === 'Admin'){
+			return (
+				<div className="dash_content">
+					<h1>Donaciones:</h1>
+					<TableDonaciones donaciones={donaciones} />
+				</div>
+			);
+		}else{
+			return(
+				<div className='dash_content'>
+				<br />
+					<h2>No tiene permitido ingresar a esta area.</h2>
+				</div>
+			);
+		}
 	} else {
 		return (
 			<div className="dash_content">

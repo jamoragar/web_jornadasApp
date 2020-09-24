@@ -235,8 +235,6 @@ const TableDonaciones = ({ donaciones }) => {
     }
   });
 
-  console.log(filter);
-
   if (filteredItems) {
     return (
       <>
