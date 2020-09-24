@@ -107,9 +107,7 @@ const AgregarUsuarios = ({show, onHide}) => {
                         <Form.Control name='rol' as="select" defaultValue="Asignar Rol">
                             <option value='0'>Seleccionar...</option>
                             <option value='User'>Usuario</option>
-                            <option value='Company'>Empresa</option>
                             <option value='Leo/Leon'>Leo/Leon</option>
-                            <option value='Externo'>Externo</option>
                         </Form.Control>
                     </Form.Group>
                 </Modal.Body>
