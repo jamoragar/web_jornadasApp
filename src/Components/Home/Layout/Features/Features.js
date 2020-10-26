@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
-
 import BonoSorteo from './BonoSorte';
 import DonacionesModal from './DonacionesModal';
 import ComingSoon from '../../../ComingSoon/ComingSoon';
@@ -30,9 +29,26 @@ const ModalTransferencia = ({show, onHide}) => {
     );
 };
 
+const ModalBingo = ({show, onHide}) => {
+    return(
+        <Modal show={show} onHide={onHide} size="xl">
+            <Modal.Header closeButton>
+                <Modal.Title>Bingo</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <img src="/img/BINGO.jpg" alt="Bingo Jornadas Magallánicas"/>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={onHide}>Cerrar</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+};
+
 const Features = () =>{
 
     const [showModalTransferencia, setShowModalTransferencia] = useState(false);
+    const [showModalBingo, setShowModalBingo] = useState(false);
     const [showModalBonoSorteo, setShowModalBonoSorteo] = useState(false);
     const [showModalDonacion, setShowModalDonacion] = useState(false);
     const [showModalCS, setShowModalCS] = useState(false);
@@ -83,7 +99,7 @@ const Features = () =>{
                         </div>
                     </div>
                     <div className="col-12 col-md-6 col-lg-3 res-margin"
-                        onClick={() => setShowModalCS(true)}>
+                        onClick={() => setShowModalBingo(true)}>
                         {/* Image Box */}
                         <div className="image-box text-center icon-1 p-5">
                             {/* Featured Image */}
@@ -92,8 +108,8 @@ const Features = () =>{
                             </div>
                             {/* Icon Text */}
                             <div className="icon-text">
-                                <h3 className="mb-2">Pronto Novedades</h3>
-                                {/* <p>Ahora tus cartones son digitales, y la forma de aportar igual, compra tu cartón y recíbelo en tu correo electrónico. La Rehabilitación no tiene límites y nuestra forma de aportar tampoco.</p> */}
+                                <h3 className="mb-2">Bingo</h3>
+                                <p>Ahora tus cartones son digitales, y la forma de aportar igual. Haz click aquí e informáte de como comprar tus bingos!.</p>
                             </div>
                         </div>
                     </div>
@@ -116,6 +132,7 @@ const Features = () =>{
             </div>
         </section>
         <ModalTransferencia show={showModalTransferencia} onHide={() => setShowModalTransferencia(false)} />
+        <ModalBingo show={showModalBingo} onHide={() => setShowModalBingo(false)} />
         <BonoSorteo show={showModalBonoSorteo} onHide={() => setShowModalBonoSorteo(false)}/>
         <DonacionesModal show={showModalDonacion} onHide={() => setShowModalDonacion(false)} />
         <ComingSoon show={showModalCS} onHide={() => setShowModalCS(false)} />

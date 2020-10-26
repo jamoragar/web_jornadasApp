@@ -1,0 +1,11 @@
+.linkBases{
+  color: black !important;
+  align-content: center;
+  text-align:center;
+  cursor: pointer;
+  padding: 5px 0 5px 0;
+  font-weight: 500;
+}
+.linkBases:hover{
+  color: rgb(254, 211, 23) !important;
+}

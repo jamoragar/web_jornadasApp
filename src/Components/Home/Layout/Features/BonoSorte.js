@@ -3,6 +3,7 @@ import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import axios from "axios";
 import firebase from "../../../../Config/Firebase";
 import moment from "moment";
+import './Features.css';
 
 const BonoSorteo = ({ show, onHide }) => {
 	const [cantidad, setCantidad] = useState(1);
@@ -195,6 +196,7 @@ const BonoSorteo = ({ show, onHide }) => {
 							</>
 						)}
 					</Button>
+					<p><a className="linkBases" href="/pdf/BASES_SORTEO_PARCELA.pdf" target="_blank">Descargar bases de sorteo aquí</a></p>
 				</Modal.Footer>
 			</Form>
 		</Modal>

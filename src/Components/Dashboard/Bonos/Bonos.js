@@ -14,6 +14,7 @@ const BonosRifa = ({subtipo}) => {
 
     if(bonosSorteo !== 'EMPTY'){
         if(subtipo === 'Admin'){
+            console.log(bonosSorteo);
             return (
                 <div className='dash_content'>
                     <Row>
