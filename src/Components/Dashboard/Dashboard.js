@@ -13,6 +13,7 @@ import BonosRifa from "./Bonos/Bonos";
 import Donaciones from "./Donaciones/Donaciones";
 import Talonarios from "./Talonarios/Talonarios";
 import Perfil from "./Perfil/Perfil";
+import VentaBonos from './VentaBonos/VentaBonos';
 import firebase, { handleLogOut } from "../../Config/Firebase";
 import { Spinner } from "react-bootstrap";
 import "./Dashboard.css";
@@ -77,6 +78,12 @@ const Dashboard = () => {
 								>
 									<i className="far fa-clipboard fa-fw fa-3x" />
 									<span className="link-text">Talonarios Entregados</span>
+								</Link>
+							</li>
+							<li className="sideNav-item">
+								<Link className="sideNav-link" to={`/Dashboard/${uid}/ventaBonos`}>
+									<i className="fas fa-store fa-fw fa-3x" />
+									<span className="link-text">Venta de Bonos Digitales</span>
 								</Link>
 							</li>
 							<li className="sideNav-item">
@@ -150,6 +157,17 @@ const Dashboard = () => {
 									<Redirect to="/not-found" />
 								) : (
 									<BonosRifa {...userData} />
+								)
+							}
+						/>
+						<Route
+							exact
+							path="/Dashboard/:uid/ventaBonos"
+							component={() =>
+								userData === "Error" ? (
+									<Redirect to="/not-found" />
+								) : (
+									<VentaBonos {...userData} />
 								)
 							}
 						/>

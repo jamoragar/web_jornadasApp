@@ -11,6 +11,7 @@ import DonarFailure from '../PayReturn/DonarFailure';
 import PagoExito from '../PayReturn/PagoExito';
 import PagoFallido from '../PayReturn/PagoFallido';
 import Terminos from '../Home/Layout/Terminos/Terminos';
+import DownloadFiles from '../Home/Layout/DownloadBonos/DownloadFiles';
 
 const Routes = (props) => {
     if(props){
@@ -22,6 +23,7 @@ const Routes = (props) => {
                     <Route path="/" exact component={Home} />
                     <Route path="/About" exact component={About} />
                     <Route path="/Contacto" exact component={Contacto} />
+                    {/* <Route path="/DescargaBonos" exact component={DownloadFiles} /> */}
                     <Route path="/Dashboard/:uid" component={() => props.authenticated ? <Dashboard /> : <Home/>} />
                     <Route path='/not-found' component={NotFound404} />
                     <Route path='/procesa-pago/' component={ProcesaPago}/>

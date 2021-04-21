@@ -212,10 +212,15 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         item.numero_orden.toLowerCase().includes(filterText.toLowerCase())
       );
     } else if (filter === "nombre") {
-      return (
-        item.nombre.toLowerCase() &&
-        item.nombre.toLowerCase().includes(filterText.toLowerCase())
-      );
+      try{
+        return (
+          item.nombre.toLowerCase() &&
+          item.nombre.toLowerCase().includes(filterText.toLowerCase())
+        );
+      }catch (error){
+        console.log(bonosSorteoToArray)
+        console.warn(error);
+      }
     } else if (filter === "email") {
       return (
         item.email.toLowerCase() &&
