@@ -49,7 +49,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => {
       <TextField
         id="search"
         type="text"
-        placeholder='Busqueda...'
+        placeholder="Busqueda..."
         aria-label="Search Input"
         value={filterText}
         onChange={onFilter}
@@ -68,7 +68,6 @@ const VerUsuarios = ({ users, userAuth }) => {
   const [showEditarEmpresa, setShowEditarEmpresa] = useState(false);
   const [userData, setUserData] = useState(null);
   let usersToArray = [];
-
 
   const handleModalAlcancias = (data) => {};
   //Declaramos las columnas que tendrá nuestra tabla
@@ -108,86 +107,81 @@ const VerUsuarios = ({ users, userAuth }) => {
       button: true,
       width: "20%",
       cell: (data) => {
-        return (
-          userAuth.subtipo === 'Admin' ?
-          (
-            <div style={{ display: "flex" }}>
-              <OverlayTrigger
-                key={"alcancias"}
-                placement={"left"}
-                overlay={
-                  <Tooltip id={"tooltip-bottom"}>
-                    <strong>Alcancías</strong>
-                  </Tooltip>
-                }
+        return userAuth.subtipo === "Admin" ? (
+          <div style={{ display: "flex" }}>
+            <OverlayTrigger
+              key={"alcancias"}
+              placement={"left"}
+              overlay={
+                <Tooltip id={"tooltip-bottom"}>
+                  <strong>Alcancías</strong>
+                </Tooltip>
+              }
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                className="text-danger"
+                onClick={() => {
+                  setShowEntregarAlcancias(true);
+                  setUserData(data);
+                }}
               >
-                <div
-                  style={{ cursor: "pointer" }}
-                  className="text-danger"
-                  onClick={() => {
-                    setShowEntregarAlcancias(true);
-                    setUserData(data);
-                  }}
-                >
-                  <i
-                    className="fas fa-fw fa-donate fa-lg"
-                    style={{ width: "35px", height: "20px" }}
-                  />
-                </div>
-              </OverlayTrigger>
-              <OverlayTrigger
-                key={"bonos"}
-                placement={"left"}
-                overlay={
-                  <Tooltip id={"tooltip-bottom"}>
-                    <strong>Talonarios</strong>
-                  </Tooltip>
-                }
+                <i
+                  className="fas fa-fw fa-donate fa-lg"
+                  style={{ width: "35px", height: "20px" }}
+                />
+              </div>
+            </OverlayTrigger>
+            <OverlayTrigger
+              key={"bonos"}
+              placement={"left"}
+              overlay={
+                <Tooltip id={"tooltip-bottom"}>
+                  <strong>Talonarios</strong>
+                </Tooltip>
+              }
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                className="text-primary"
+                onClick={() => {
+                  setShowEntregarTalonarios(true);
+                  setUserData(data);
+                }}
               >
-                <div
-                  style={{ cursor: "pointer" }}
-                  className="text-primary"
-                  onClick={() => {
-                    setShowEntregarTalonarios(true);
-                    setUserData(data);
-                  }}
-                >
-                  <i
-                    className="fas fa-fw fa-receipt fa-lg"
-                    style={{ width: "35px", height: "20px" }}
-                  />
-                </div>
-              </OverlayTrigger>
-              <OverlayTrigger
-                id={"ver"}
-                placement={"left"}
-                overlay={
-                  <Tooltip id={"tooltip-bottom"}>
-                    <strong>Ver</strong>
-                  </Tooltip>
-                }
+                <i
+                  className="fas fa-fw fa-receipt fa-lg"
+                  style={{ width: "35px", height: "20px" }}
+                />
+              </div>
+            </OverlayTrigger>
+            <OverlayTrigger
+              id={"ver"}
+              placement={"left"}
+              overlay={
+                <Tooltip id={"tooltip-bottom"}>
+                  <strong>Ver</strong>
+                </Tooltip>
+              }
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                className="text-success"
+                onClick={() => {
+                  data.tipo === "User"
+                    ? setShowEditarUsuario(true)
+                    : setShowEditarEmpresa(true);
+                  setUserData(data);
+                }}
               >
-                <div
-                  style={{ cursor: "pointer" }}
-                  className="text-success"
-                  onClick={() => {
-                    data.tipo === "User"
-                      ? setShowEditarUsuario(true)
-                      : setShowEditarEmpresa(true);
-                    setUserData(data);
-                  }}
-                >
-                  <i
-                    className="fas fa-fw fa-search fa-lg"
-                    style={{ width: "35px", height: "20px" }}
-                  />
-                </div>
-              </OverlayTrigger>
-            </div>
-          )
-          :
-          null
-        );
+                <i
+                  className="fas fa-fw fa-search fa-lg"
+                  style={{ width: "35px", height: "20px" }}
+                />
+              </div>
+            </OverlayTrigger>
+          </div>
+        ) : null;
       },
     },
   ];
@@ -208,7 +202,7 @@ const VerUsuarios = ({ users, userAuth }) => {
       <div>
         <Row>
           <Col>
-            <p className='mt-2'>Seleccione Filtro:</p>
+            <p className="mt-2">Seleccione Filtro:</p>
           </Col>
           <Form>
             <Form.Group controlId="exampleForm.ControlSelect1">
@@ -258,7 +252,7 @@ const VerUsuarios = ({ users, userAuth }) => {
         item.tipo.toLowerCase() &&
         item.tipo.toLowerCase().includes(filterText.toLowerCase())
       );
-    } 
+    }
   });
 
   if (filteredItems) {

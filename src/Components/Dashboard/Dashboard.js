@@ -23,18 +23,16 @@ const Dashboard = () => {
 	const [userData, setUserData] = useState("Empty");
 
 	useEffect(() => {
-		// const unsubscribe =
-		 firebase
+		const fbData = firebase
 			.database()
 			.ref(`/Users/${uid}`)
 			.once("value")
 			.then((snapshot) => {
 				snapshot.val() ? setUserData(snapshot.val()) : setUserData("Error");
 			});
-		// return () => {
-		// 	unsubscribe();
-		// };
-	}, [uid]);
+
+		return () => fbData;
+	}, []);
 
 	if (userData === "Empty") {
 		return (
@@ -98,7 +96,7 @@ const Dashboard = () => {
 									<span className="link-text">Bingos Digitales Vendidos</span>
 								</Link>
 							</li> */}
-							<li className="sideNav-item">
+							{/* <li className="sideNav-item">
 								<Link
 									className="sideNav-link"
 									to={`/Dashboard/${uid}/Donaciones`}
@@ -106,7 +104,7 @@ const Dashboard = () => {
 									<i className="fas fa-hand-holding-usd fa-fw fa-3x" />
 									<span className="link-text">Donaciones Digitales</span>
 								</Link>
-							</li>
+							</li> */}
 							<li className="sideNav-item" onClick={handleLogOut}>
 								<Link className="sideNav-link" to="#">
 									<i className="fas fa-door-open fa-fw fa-3x" />
@@ -171,7 +169,7 @@ const Dashboard = () => {
 								)
 							}
 						/>
-						<Route
+						{/* <Route
 							exact
 							path="/Dashboard/:uid/Donaciones"
 							component={() =>
@@ -181,7 +179,7 @@ const Dashboard = () => {
 									<Donaciones {...userData} />
 								)
 							}
-						/>
+						/> */}
 						<Route
 							exact
 							path="/Dashboard/:uid/Talonarios"

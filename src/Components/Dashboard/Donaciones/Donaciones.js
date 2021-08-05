@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import { Spinner } from "react-bootstrap";
 import TableDonaciones from "./TableDonaciones";
 

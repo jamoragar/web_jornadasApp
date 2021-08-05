@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Spinner, Alert } from "react-bootstrap";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import { handleLogOut } from "../../../Config/Firebase";
 
 export const ChangePassword = ({ show, onHide, userInfo }) => {

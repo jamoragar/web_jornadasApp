@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Modal, Alert, Spinner, Col } from "react-bootstrap";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 
 export const EditarEmpresa = ({ show, onHide, data }) => {
     const [alertShow, setAlertShow] = useState(false);

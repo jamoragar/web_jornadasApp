@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
+import DataTableExtensions from 'react-data-table-component-extensions';
+import 'react-data-table-component-extensions/dist/index.css';
+import moment from "moment";
 import {
   OverlayTrigger,
   Tooltip,
@@ -61,18 +64,25 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => {
 const TableBonosDigitales = ({ bonosSorteo }) => {
   const [showBono, setShowBono] = useState(false);
   const [bonoData, setBonoData] = useState(null);
+
+  const radios = [
+    { name: "Transbank", value: "1" },
+    { name: "Manuales", value: "2" },
+  ];
+
   let bonosSorteoToArray = [];
 
   const columns = [
     {
       name: "Orden de compra",
-      selector: "numero_orden",
+      selector: "buy_order",
       sortable: true,
-      width: "15%",
+      width: "12%",
     },
     {
       name: "Nombre",
-      selector: (bonosSorteo) => {
+      selector: "apellido",
+      cell: bonosSorteo => {
         return `${bonosSorteo.nombre} ${
           bonosSorteo.apellido ? bonosSorteo.apellido : ""
         }`;
@@ -84,43 +94,68 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Email",
       selector: "email",
       sortable: true,
-      width: "15%",
+      width: "17%",
     },
     {
       name: "Telefono",
       selector: "telefono",
       sortable: true,
-      width: "8%",
+      width: "9%",
     },
     {
       name: "Cantidad",
       selector: "cantidad",
       sortable: true,
-      width: "5%",
+      width: "4%",
     },
     {
       name: "Estado del pago",
-      selector: "estado_de_pago",
+      selector: "responseCode",
+      cell: bonosSorteo => {
+        switch (bonosSorteo.responseCode) {
+          case "0":
+            return "Aprobada";
+          case "-1":
+            return "Rechazo";
+          case "-2":
+            return "Rechazo";
+          case "-3":
+            return "Rechazo";
+          case "-4":
+            return "Rechazo";
+          case "-5":
+            return "Rechazo";
+          default:
+            return "Desconocido";
+        }
+      },
       sortable: true,
       width: "8%",
     },
     {
       name: "Plataforma",
-      selector: "plataforma",
-      sortable: true,
-      width: "5%",
-    },
-    {
-      name: "Tipo",
-      selector: "tipo",
+      selector: "sessionId",
+      cell: bonosSorteo => {
+        if (
+          bonosSorteo.sessionId === "BonoSorteoApp" ||
+          bonosSorteo.sessionId === "DonacionApp"
+        ) {
+          return "App";
+        } else {
+          return "Web";
+        }
+      },
       sortable: true,
       width: "5%",
     },
     {
       name: "Fecha",
-      selector: "fecha",
+      selector: "transactionDate",
+      cell: bonosSorteo => {
+        return moment(bonosSorteo.transactionDate).format("DD-MM-YYYY hh:mm");
+      },
       sortable: true,
-      width: "10%",
+      width: "12%",
     },
     {
       name: "Control",
@@ -174,7 +209,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       <div>
         <Row>
           <Col>
-            <p className='mt-2'>Seleccione Filtro:</p>
+            <p className="mt-2">Seleccione Filtro:</p>
           </Col>
           <Form>
             <Form.Group controlId="exampleForm.ControlSelect1">
@@ -187,7 +222,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
                 <option value="numero_orden">Orden de compra</option>
                 <option value="fecha">Fecha</option>
                 <option value="estado_de_pago">Estado de Pago</option>
-                <option value="tipo">Tipo</option>
+                {/* <option value="tipo">Tipo</option> */}
               </Form.Control>
             </Form.Group>
           </Form>
@@ -208,17 +243,17 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
   const filteredItems = bonosSorteoToArray.filter((item) => {
     if (filter === "numero_orden") {
       return (
-        item.numero_orden.toLowerCase() &&
-        item.numero_orden.toLowerCase().includes(filterText.toLowerCase())
+        item.buy_order.toLowerCase() &&
+        item.buy_order.toLowerCase().includes(filterText.toLowerCase())
       );
     } else if (filter === "nombre") {
-      try{
+      try {
         return (
           item.nombre.toLowerCase() &&
           item.nombre.toLowerCase().includes(filterText.toLowerCase())
         );
-      }catch (error){
-        console.log(bonosSorteoToArray)
+      } catch (error) {
+        console.log(bonosSorteoToArray);
         console.warn(error);
       }
     } else if (filter === "email") {
@@ -227,30 +262,31 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         item.email.toLowerCase().includes(filterText.toLowerCase())
       );
     } else if (filter === "fecha") {
+      return item.transactionDate && item.transactionDate.includes(filterText);
+    } else if (filter === "estado_de_pago") {
       return (
-        item.fecha &&
-        item.fecha.includes(filterText)
+        item.responseCode.toLowerCase() &&
+        item.responseCode.toLowerCase().includes(filterText.toLowerCase())
       );
     }
-    else if (filter === "estado_de_pago") {
-      return (
-        item.estado_de_pago.toLowerCase() &&
-        item.estado_de_pago.toLowerCase().includes(filterText.toLowerCase())
-      );
-    }
-    else if (filter === "tipo") {
-      return (
-        item.tipo &&
-        item.tipo.includes(filterText)
-      );
-    }
+    // else if (filter === "tipo") {
+    //   return (
+    //     item.tipo &&
+    //     item.tipo.includes(filterText)
+    //   );
+    // }
   });
 
   return (
     <>
+    <DataTableExtensions
+      columns={columns}
+      data={filteredItems}
+      filter={false}
+			exportHeaders={true}
+			print={false}
+      >
       <DataTable
-        columns={columns}
-        data={filteredItems}
         fixedHeader
         fixedHeaderScrollHeight="500px"
         pagination
@@ -264,7 +300,8 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         persistTableHead
         highlightOnHover
         paginationPerPage={50}
-      />
+        />
+    </DataTableExtensions>
       <InfoBono
         show={showBono}
         onHide={() => setShowBono(false)}

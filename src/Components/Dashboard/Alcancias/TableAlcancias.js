@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import "react-data-table-component-extensions/dist/index.css";
 import {
   OverlayTrigger,
   Tooltip,
@@ -9,6 +11,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { InfoAlcancia } from "./InfoAlcancia";
+import RecepcionarAlcancias from "./RecepcionarAlcancias";
 import styled from "styled-components";
 
 const TextField = styled.input`
@@ -60,6 +63,8 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => {
 
 const TableAlcancias = ({ alcancias }) => {
   const [showAlcancia, setShowAlcancia] = useState(false);
+  const [showRecepcionarAlcancias, setShowRecepcionarAlcancias] =
+    useState(false);
   const [loading, setLoading] = useState(true);
   const [alcanciasData, setAlcanciasData] = useState(null);
   let alcanciasToArray = [];
@@ -79,7 +84,8 @@ const TableAlcancias = ({ alcancias }) => {
     },
     {
       name: "Asignada",
-      selector: (alcancias) => {
+      selector: "asignada_usuario",
+      cell: (alcancias) => {
         return `${alcancias.asignada_usuario ? "Si" : "No"}`;
       },
       sortable: true,
@@ -87,7 +93,8 @@ const TableAlcancias = ({ alcancias }) => {
     },
     {
       name: "Asignada a tercero",
-      selector: (alcancias) => {
+      selector: "asignada_tercero",
+      cell: (alcancias) => {
         return `${alcancias.asignada_tercero ? "Si" : "No"}`;
       },
       sortable: true,
@@ -95,7 +102,8 @@ const TableAlcancias = ({ alcancias }) => {
     },
     {
       name: "Asignada a externo",
-      selector: (alcancias) => {
+      selector: "asignada_externo",
+      cell: (alcancias) => {
         return `${alcancias.asignada_externo ? "Si" : "No"}`;
       },
       sortable: true,
@@ -103,7 +111,8 @@ const TableAlcancias = ({ alcancias }) => {
     },
     {
       name: "Recuperada",
-      selector: (alcancias) => {
+      selector: "recuperada",
+      cell: (alcancias) => {
         return `${alcancias.recuperada ? "Si" : "No"}`;
       },
       sortable: true,
@@ -111,11 +120,23 @@ const TableAlcancias = ({ alcancias }) => {
     },
     {
       name: "Fecha",
-      selector: (alcancias) => {
-        return `${alcancias.fecha_asignacion ? alcancias.fecha_asignacion : "N.A"}`;
+      selector: "fecha_asignacion",
+      cell: (alcancias) => {
+        return `${
+          alcancias.fecha_entrega ? alcancias.fecha_entrega : "N.A"
+        }`;
       },
       sortable: true,
       width: "15%",
+    },
+    {
+      name: "Encargado(a)",
+      selector: "nombre",
+      cell: alcancias => {
+        return alcancias.usuario ? `${alcancias.usuario.nombre} ${alcancias.usuario.apellido}`: 'N.A.'
+      },
+      sortable: true,
+      width: "20%"
     },
     {
       name: "Control",
@@ -147,6 +168,28 @@ const TableAlcancias = ({ alcancias }) => {
                 />
               </div>
             </OverlayTrigger>
+            {/* <OverlayTrigger
+              id={"desasociar"}
+              placement={"right"}
+              overlay={
+                <Tooltip id={"tooltip-bottom"}>
+                  <strong>Desasociar</strong>
+                </Tooltip>
+              }
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                className="text-danger"
+                onClick={() => {
+                  console.log(data);
+                }}
+              >
+                <i
+                  className="fas fa-undo-alt fa-lg"
+                  style={{ width: "35px", height: "20px" }}
+                />
+              </div>
+            </OverlayTrigger> */}
           </div>
         );
       },
@@ -178,6 +221,7 @@ const TableAlcancias = ({ alcancias }) => {
                 onChange={(e) => setFilter(e.target.value)}
               >
                 <option value="codigo_barra">Codigo de barra</option>
+                <option value="nombre">Nombre</option>
                 {/* <option value="alcancia_numero">Numero de alcancia</option>
                 <option value="asignada_usuario">Asignada</option>
                 <option value="recuperada">Recuperada</option> */}
@@ -216,33 +260,55 @@ const TableAlcancias = ({ alcancias }) => {
       //     item.recuperada &&
       //     item.recuperada.includes(filterText)
       //   );
+    }else if(filter === "nombre"){
+      if(item.usuario){
+        return (
+          item.usuario.nombre.toLowerCase() &&
+          item.usuario.nombre.toLowerCase().includes(filterText.toLocaleLowerCase())
+        )
+      }
     }
   });
 
   return (
     <>
-      <DataTable
+      {/* <Button
+        variant="danger"
+        onClick={() => setShowRecepcionarAlcancias(true)}
+      >
+        Recepcionar Alcancías
+      </Button> */}
+      <DataTableExtensions
         columns={columns}
         data={filteredItems}
-        fixedHeader
-        loading={alcancias}
-        fixedHeaderScrollHeight="500px"
-        pagination
-        paginationRowsPerPageOptions={[50, 100, 200]}
-        paginationComponentOptions={{
-          rowsPerPageText: "Filas por página",
-          rangeSeparatorText: "de",
-        }}
-        subHeader
-        subHeaderComponent={subHeaderComponentMemo}
-        persistTableHead
-        highlightOnHover
-		paginationPerPage={50}
-      />
+        filter={false}
+        exportHeaders={true}
+        print={false}>
+        <DataTable
+          fixedHeader
+          loading={alcancias}
+          fixedHeaderScrollHeight="500px"
+          pagination
+          paginationRowsPerPageOptions={[50, 100, 200]}
+          paginationComponentOptions={{
+            rowsPerPageText: "Filas por página",
+            rangeSeparatorText: "de",
+          }}
+          subHeader
+          subHeaderComponent={subHeaderComponentMemo}
+          persistTableHead
+          highlightOnHover
+          paginationPerPage={50}
+        />
+      </DataTableExtensions>
       <InfoAlcancia
         show={showAlcancia}
         onHide={() => setShowAlcancia(false)}
         data={alcanciasData}
+      />
+      <RecepcionarAlcancias
+        show={showRecepcionarAlcancias}
+        onHide={() => setShowRecepcionarAlcancias(false)}
       />
     </>
   );

@@ -33,10 +33,10 @@ const Download = () => {
                     <div className="button-group store-buttons d-flex justify-content-center">
                         {/* <a onClick={() => setShowModalCS(true)}> */}
                         <a href='https://play.google.com/store/apps/details?id=cl.SmartApps.AppJornadasMagallanicas'>
-                        <img src={data.playImg} alt="" />
+                            <img src={data.playImg} alt="" />
                         </a>
                         <a onClick={() => setShowModalCS(true)}>
-                        <img src={data.appleImg} alt="" />
+                            <img src={data.appleImg} alt="" />
                         </a>
                     </div>
                     <span className="d-inline-block text-white fw-3 font-italic mt-3">{data.headingSlug}</span>

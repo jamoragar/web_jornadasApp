@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
+import DataTableExtensions from 'react-data-table-component-extensions';
+import 'react-data-table-component-extensions/dist/index.css';
 import {OverlayTrigger,
 	Tooltip,
 	Button,
@@ -72,38 +74,43 @@ const TableAlcancias = ({ talonarios }) => {
 		},
 		{
 			name: "Asignado",
-			selector: (talonarios) => { return `${talonarios.asignado_usuario? 'Si':'No'}`
+			selector: "asignado_usuario",
+			cell: talonarios => { return `${talonarios.asignado_usuario? "Si":"No"}`
 			},
 			sortable: true,
 			width: "10%",
 		},
 		{
 			name: "Asignado a tercero",
-			selector:  (talonarios) => { return `${talonarios.asignado_tercero? 'Si':'No'}`
+			selector: "asignado_tercero", 
+			cell: talonarios => { return `${talonarios.asignado_tercero? "Si":"No"}`
         },
 			sortable: true,
 			width: "10%",
 		},
 		{
 			name: "Asignado a externo",
-			selector:  (talonarios) => { return `${talonarios.asignado_externo? 'Si':'No'}`
+			selector:  "asignado_externo",
+			cell: talonarios => { return `${talonarios.asignado_externo? "Si":"No"}`
         },
 			sortable: true,
 			width: "10%",
 		},
 		{
 			name: "Recuperada",
-			selector: (talonarios) => { return `${talonarios.recuperado? 'Si':'No'}`
+			selector: "recuperado",
+			cell: talonarios => { return `${talonarios.recuperado? "Si":"No"}`
         },
 			sortable: true,
 			width: "10%",
 		},
 		{
 			name: "Fecha",
-			selector: (talonarios) => { return `${talonarios.fecha_asignacion? talonarios.fecha_asignacion:'N.A'}`
+			selector: "fecha_asignacion",
+			cell: talonarios => { return `${talonarios.fecha_asignacion? talonarios.fecha_asignacion:"N.A"}`
         },
 			sortable: true,
-			width: "15%",
+			width: "20%",
 		},
 		{
 			name: "Control",
@@ -208,9 +215,14 @@ const TableAlcancias = ({ talonarios }) => {
 
 	return (
 		<>
+		<DataTableExtensions
+			columns={columns}
+			data={filteredItems}
+			filter={false}
+			exportHeaders={true}
+			print={false}
+		>
 			<DataTable
-				columns={columns}
-				data={filteredItems}
 				fixedHeader
 				fixedHeaderScrollHeight="500px"
 				pagination
@@ -222,10 +234,10 @@ const TableAlcancias = ({ talonarios }) => {
 				loading={talonarios}
 				subHeader
 				subHeaderComponent={subHeaderComponentMemo}
-				persistTableHead
 				highlightOnHover
 				paginationPerPage={50}
 			/>
+		</DataTableExtensions>
 			<InfoTalonario
 				show={showTalonario}
 				onHide={() => setShowTalonario(false)}

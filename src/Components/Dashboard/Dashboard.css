@@ -54,6 +54,10 @@
 .dash_content{
     margin:8% 10vh 0 20vh;
 }
+.rdt_TableHeader{
+    z-index: -1;
+    height: 0px !important;
+}
 /* Pantallas pequeñas */
 @media only screen and (max-width: 600px){
     .sideNav{

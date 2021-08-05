@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Spinner, Alert } from "react-bootstrap";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import { ChangePassword } from "./ChangePassword";
 import { handleLogOut } from "../../../Config/Firebase";
 
