@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	useParams,
 	Link,
@@ -23,16 +23,21 @@ const Dashboard = () => {
 	const [userData, setUserData] = useState("Empty");
 
 	useEffect(() => {
-		const fbData = firebase
-			.database()
-			.ref(`/Users/${uid}`)
-			.once("value")
-			.then((snapshot) => {
-				snapshot.val() ? setUserData(snapshot.val()) : setUserData("Error");
-			});
+			(async () => {
+				// Get position list
+					await firebase
+					.database()
+					.ref(`/Users/${uid}`)
+					.once("value")
+					.then(snapshot => {
+						snapshot.val() ? setUserData(snapshot.val()) : setUserData("Error");
+					})
+				}
+			)();
 
-		return () => fbData;
-	}, []);
+
+		
+	},[]);
 
 	if (userData === "Empty") {
 		return (

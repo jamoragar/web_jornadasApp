@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import firebase from "../../../Config/Firebase";
 import DetalleUsuarioAlcancias from "./DetalleUsuarioAlcancias";
 import ActaEntregaAlcancias from "../Actas/ActaEntregaAlcancias";
-import { PDFDownloadLink, pdf } from '@react-pdf/renderer'
+import { pdf } from '@react-pdf/renderer'
 import "./Alcancias.css";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -148,9 +148,11 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
               console.log("error...");
               setCodigoError(codigo);
               setModalErrorCodigo(true);
+              setLoadingFirebaseWriting(false)
             } else if (alcancia_asignada == true) {
               setCodigoError(codigo);
               setModalCodigoYaAsignado(true);
+              setLoadingFirebaseWriting(false)
             } else {
               snapshot.forEach((childSnapshot) => {
                 alcancia_asignada = childSnapshot.val().asignada_usuario;
@@ -175,56 +177,56 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
                     email: data.email,
                     subtipo: data.subtipo ? data.subtipo : null,
                   },
-                });
-              firebase
-                .database()
-                .ref(`/Users/${data.uid}/alcancias`)
-                .once("value", snapshot => {
-                  if (snapshot.val() === null) {
-                     console.log('creando alcancías por primera vez...')
-                     firebase
-                       .database()
-                       .ref(`/Users/${data.uid}/alcancias/${i}`)
-                       .update({
-                         alcancia_numero: data_alcancia.alcancia_numero,
-                         asignada_externo: data_alcancia.asignada_externo,
-                         asignada_tercero: data_alcancia.asignada_tercero,
-                         asignada_usuario: true,
-                         codigo_barra: data_alcancia.codigo_barra,
-                         fecha_asignacion: moment().format(
-                           "MM-DD-YYYY h:mm:ss a"
-                         ),
-                         fecha_recuperacion: "",
-                         fecha_reinicio: "",
-                         monto_recaudad: "",
-                         recuperada: false,
-                         reset: false,
-                       });
-                   } else {
-                     console.log('el usuario tiene alcancias, ahora se le actualizan con las nuevas')
-                     let aux_array = [];
-                     aux_array.push(snapshot.val());
-                     aux_array = aux_array.flat();
-                     firebase
-                       .database()
-                       .ref(`/Users/${data.uid}/alcancias/${aux_array.length}`)
-                       .update({
-                         alcancia_numero: data_alcancia.alcancia_numero,
-                         asignada_externo: data_alcancia.asignada_externo,
-                         asignada_tercero: data_alcancia.asignada_tercero,
-                         asignada_usuario: true,
-                         codigo_barra: data_alcancia.codigo_barra,
-                         fecha_asignacion: moment().format(
-                           "MM-DD-YYYY h:mm:ss a"
-                         ),
-                         fecha_recuperacion: "",
-                         fecha_reinicio: "",
-                         monto_recaudad: "",
-                         recuperada: false,
-                         reset: false,
-                       });
-                   }
-                })
+                }).then(
+                  firebase
+                    .database()
+                    .ref(`/Users/${data.uid}/alcancias`)
+                    .once("value", snapshot => {
+                      if (snapshot.val() === null) {
+                         console.log('creando alcancías por primera vez...')
+                         firebase
+                           .database()
+                           .ref(`/Users/${data.uid}/alcancias/${i}`)
+                           .update({
+                             alcancia_numero: data_alcancia.alcancia_numero,
+                             asignada_externo: data_alcancia.asignada_externo,
+                             asignada_tercero: data_alcancia.asignada_tercero,
+                             asignada_usuario: true,
+                             codigo_barra: data_alcancia.codigo_barra,
+                             fecha_asignacion: moment().format(
+                               "MM-DD-YYYY h:mm:ss a"
+                             ),
+                             fecha_recuperacion: "",
+                             fecha_reinicio: "",
+                             monto_recaudad: "",
+                             recuperada: false,
+                             reset: false,
+                           });
+                       } else {
+                         console.log('el usuario tiene alcancias, ahora se le actualizan con las nuevas')
+                         let aux_array = [];
+                         aux_array.push(snapshot.val());
+                         firebase
+                           .database()
+                           .ref(`/Users/${data.uid}/alcancias/${aux_array[0].length}`)
+                           .update({
+                             alcancia_numero: data_alcancia.alcancia_numero,
+                             asignada_externo: data_alcancia.asignada_externo,
+                             asignada_tercero: data_alcancia.asignada_tercero,
+                             asignada_usuario: true,
+                             codigo_barra: data_alcancia.codigo_barra,
+                             fecha_asignacion: moment().format(
+                               "MM-DD-YYYY h:mm:ss a"
+                             ),
+                             fecha_recuperacion: "",
+                             fecha_reinicio: "",
+                             monto_recaudad: "",
+                             recuperada: false,
+                             reset: false,
+                           });
+                       }
+                    })
+                )
 
             }
             if(alcancias_validadas.length - 1 == i) {
@@ -237,11 +239,11 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
                 cancelButtonText: 'No'
               }).
                 then(result => {
-                  setLoadingFirebaseWriting(false)
                   if(result.isConfirmed){
                     generatePdfDocument(alcancias_firebase, data)
                   }
                 });
+                setLoadingFirebaseWriting(false)
             }
           })
         });
@@ -285,12 +287,14 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
       setAlertFalloShow(true);
       setTimeout(() => {
         setAlertFalloShow(false);
+        setLoadingFirebaseWriting(false)
       }, 2817);
       console.log("tiene elementos duplicados...");
     } else {
       setAlertCompletarShow(true);
       setTimeout(() => {
         setAlertCompletarShow(false);
+        setLoadingFirebaseWriting(false)
       }, 2817);
       console.log("debe completar todos los campos antes de asignar alcancias");
     }

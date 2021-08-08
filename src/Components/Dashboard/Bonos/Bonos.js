@@ -9,9 +9,10 @@ const BonosRifa = ({ subtipo }) => {
   const [bonosSorteo, setBonosSorteo] = useState("EMPTY");
   const [radioValue, setRadioValue] = useState("transbank");
 
-  // const API_TRANSBANK = 'https://www.appjornadasmagallanicas.cl/api/api/descargarPorOC';
-  const API_TRANSBANK = "http://127.0.0.1:8000/api/obtieneBonosVendidos";
-  const API_MANUAL = "http://127.0.0.1:8000/api/obtieneBonosManuales";
+  const API_TRANSBANK = 'https://www.appjornadasmagallanicas.cl/api/api/obtieneBonosVendidos';
+  const API_MANUAL = 'https://www.appjornadasmagallanicas.cl/api/api/obtieneBonosManuales';
+  // const API_TRANSBANK = "http://127.0.0.1:8000/api/obtieneBonosVendidos";
+  // const API_MANUAL = "http://127.0.0.1:8000/api/obtieneBonosManuales";
 
   useEffect(() => {
     // firebase.database().ref('/Bono_digital').on('value', snapshot => {

@@ -75,7 +75,12 @@ const Alcancias = ({ subtipo, uid }) => {
 
   // FUNCIÓN QUE DADO UN ARRAY DE ALCANCÍAS, LAS LOCALIZA Y ELIMINA EL USUARIO ASIGNADO A ESTA, LA FECHA DE ASIGNACIÓN Y EL ESTADO ASIGNADO
   // const eliminarAsignacionMala = () => {
-  //   const arrayDeAlcancias = [  
+  //   const arrayDeAlcancias = [
+  //       "9802011001042",
+  //       "9802011004029",
+  //       "9802011004074",
+  //       "9802011005569",
+  //       "9802011005781"
   //   ];
 
   //   const ref = firebase.database().ref('Alcancias')

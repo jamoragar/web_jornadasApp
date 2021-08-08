@@ -69,19 +69,23 @@ const Features = () =>{
                 </div>
                 <div className="row">
                     <div className="col-12 col-md-6 col-lg-3 res-margin"
-                        onClick={() => setShowModalDonacion(true)}>
+                        // onClick={() => setShowModalDonacion(true)}
+                        >
+                        <a href="https://www.webpay.cl/portalpagodirecto/pages/institucion.jsf?idEstablecimiento=744755">
+
                         {/* Image Box */}
-                        <div className="image-box text-center icon-1 p-5">
-                            {/* Featured Image */}
-                            <div className="featured-img mb-3">
-                                <i className="fas fa-donate fa-fw fa-3x" style={{color: '#6ca9f9'}}/>
+                            <div className="image-box text-center icon-1 p-5">
+                                {/* Featured Image */}
+                                <div className="featured-img mb-3">
+                                    <i className="fas fa-donate fa-fw fa-3x" style={{color: '#6ca9f9'}}/>
+                                </div>
+                                {/* Icon Text */}
+                                <div className="icon-text">
+                                    <h3 className="mb-2">Donación</h3>
+                                    <p>Haz click aquí! Completa el formulario y agrega tu aporte, entre más aportes recibimos, más corazones se conectan con la Rehabilitación</p>
+                                </div>
                             </div>
-                            {/* Icon Text */}
-                            <div className="icon-text">
-                                <h3 className="mb-2">Donación</h3>
-                                <p>Haz click aquí! Completa el formulario y agrega tu aporte, entre más aportes recibimos, más corazones se conectan con la Rehabilitación</p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                     <div className="col-12 col-md-6 col-lg-3 res-margin"
                         onClick={() => setShowModalBonoSorteo(true)}>

@@ -11,7 +11,7 @@ const VentaBonos = (props) => {
     const [cantidad, setCantidad] = useState(1);
     const [loading, setLoading] = useState(false);
     const [checkbox, setCheckBox] = useState('efectivo');
-    const valorBono = 500;
+    const valorBono = 1000;
     const [numeroOrden, setNumeroOrden] = useState();
     let orderToArray = [];
 
