@@ -8,8 +8,7 @@ import {
   Button,
   Col,
   Row,
-  Form,
-} from "react-bootstrap";
+  Form, } from "react-bootstrap";
 import { InfoAlcancia } from "./InfoAlcancia";
 import RecepcionarAlcancias from "./RecepcionarAlcancias";
 import styled from "styled-components";
@@ -65,7 +64,7 @@ const TableAlcancias = ({ alcancias }) => {
   const [showAlcancia, setShowAlcancia] = useState(false);
   const [showRecepcionarAlcancias, setShowRecepcionarAlcancias] =
     useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [alcanciasData, setAlcanciasData] = useState(null);
   let alcanciasToArray = [];
 
@@ -272,12 +271,12 @@ const TableAlcancias = ({ alcancias }) => {
 
   return (
     <>
-      {/* <Button
+      <Button
         variant="danger"
         onClick={() => setShowRecepcionarAlcancias(true)}
       >
         Recepcionar Alcancías
-      </Button> */}
+      </Button>
       <DataTableExtensions
         columns={columns}
         data={filteredItems}

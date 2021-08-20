@@ -40,16 +40,16 @@ const EntregaPorRango = ({ data }) => {
             //Validamos que no hayan talonarios ya asignados
             //Guardamos en un array los talonarios ya asignados
             Promise.all(promises).then((res) => {
-               res.map((childSnap, i) => {
+               res.forEach((childSnap, i) => {
                   if(childSnap.val() != null){
                      const val = childSnap.val();
                      const index = Object.keys(val);
-                     if(val[index].asignado_usuario == true){
+                     if(val[index].asignado_usuario === true){
                         talonarios_asignados.push(val[index])
                      }
                   }else{
                      setSpinner(false);
-                     return Swal.fire(
+                     Swal.fire(
                         "Atención!",
                         "El rango ingresado supera los 15000 talonarios generados para las Jornadas 2021",
                         "warning"
@@ -67,26 +67,44 @@ const EntregaPorRango = ({ data }) => {
                }else{
                   // Código para asignar alcancias una vez hechas todas las validaciones
 
-                  res.map((childSnap, i) => {
+                  res.forEach((childSnap, i) => {
                      const val = childSnap.val();
                      const index = Object.keys(val);
                      const num_talonario = parseInt(index[0]);
 
                      
-                     firebase
+                     data.apellido ? (
+                        firebase
                         .database()
                         .ref(`/Talonarios/${num_talonario}`)
                         .update({
-                           asignado_usuario: true,
-                           fecha_entrega: moment().format("MM-DD-YYYY h:mm:ss a"),
-                           usuario: {
-                           uid: data.uid,
-                           nombre: data.nombre,
-                           apellido: data.apellido,
-                           email: data.email,
-                           subtipo: data.subtipo ? data.subtipo : null,
-                           },
-                        });
+                          asignado_usuario: true,
+                          fecha_entrega: moment().format("MM-DD-YYYY h:mm:ss a"),
+                          usuario: {
+                            uid: data.uid,
+                            nombre: data.nombre,
+                            apellido: data.apellido,
+                            email: data.email,
+                            subtipo: data.subtipo ? data.subtipo : null,
+                          },
+                        })
+                      )
+                      :
+                      (
+                        firebase
+                        .database()
+                        .ref(`/Talonarios/${num_talonario}`)
+                        .update({
+                          asignado_usuario: true,
+                          fecha_entrega: moment().format("MM-DD-YYYY h:mm:ss a"),
+                          usuario: {
+                            uid: data.uid,
+                            nombre: data.nombre,
+                            email: data.email,
+                            subtipo: data.subtipo ? data.subtipo : null,
+                          },
+                        })
+                      )
                      
                      firebase
                         .database()

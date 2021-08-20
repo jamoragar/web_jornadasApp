@@ -24,11 +24,11 @@ const Donaciones = () =>{
         <Button className='ml-auto' variant='danger' onClick={() => generarPeticion()}>TransBank</Button>
         {transbank ? (
             <>
-            <form action={transbank.url} method='post' role='form' target='mi_iframe_transbank'>
+            <form action={transbank.url} method='post' target='mi_iframe_transbank'>
                 <input type='hidden' name='token_ws' value={transbank.token_ws} />
                 <button type='submit' className='btn btn-primary'>Ir a Pagar</button>
             </form>
-            <iframe name='mi_iframe_transbank'></iframe>
+            <iframe itle="Donación por Transbank" name='mi_iframe_transbank'></iframe>
             </>
         ) : null}
         </>

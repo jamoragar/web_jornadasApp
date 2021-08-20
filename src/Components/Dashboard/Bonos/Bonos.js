@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import firebase from "firebase/app";
 import { Spinner, Row, Form, FormGroup } from "react-bootstrap";
 import axios from "axios";
 import TableBonosDigitales from "./TableBonosDigitales";

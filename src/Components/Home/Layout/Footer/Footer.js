@@ -73,9 +73,9 @@ const Footer = () => {
                                         <a href='https://play.google.com/store/apps/details?id=cl.SmartApps.AppJornadasMagallanicas'>
                                             <img src='/img/google-play-black.png' alt="Jornadas Android" />
                                         </a>
-                                        <a onClick={() => setShowModalCS(true)}>
+                                        <div style={{cursor:'pointer'}} onClick={() => setShowModalCS(true)}>
                                             <img src='/img/app-store-black.png' alt="Jornadas Iphone" />
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	useParams,
 	Link,
@@ -10,7 +10,6 @@ import {
 import CreateUsers from "./Usuarios/Usuarios";
 import Alcancias from "./Alcancias/Alcancias";
 import BonosRifa from "./Bonos/Bonos";
-import Donaciones from "./Donaciones/Donaciones";
 import Talonarios from "./Talonarios/Talonarios";
 import Perfil from "./Perfil/Perfil";
 import VentaBonos from './VentaBonos/VentaBonos';
@@ -23,21 +22,17 @@ const Dashboard = () => {
 	const [userData, setUserData] = useState("Empty");
 
 	useEffect(() => {
-			(async () => {
-				// Get position list
-					await firebase
-					.database()
-					.ref(`/Users/${uid}`)
-					.once("value")
-					.then(snapshot => {
-						snapshot.val() ? setUserData(snapshot.val()) : setUserData("Error");
-					})
-				}
-			)();
-
-
+			const fbData = firebase
+				.database()
+				.ref(`/Users/${uid}`)
+				.once("value")
+				.then(snapshot => {
+					snapshot.val() ? setUserData(snapshot.val()) : setUserData("Error");
+				});
 		
-	},[]);
+		return () => fbData;
+		
+	},[uid]);
 
 	if (userData === "Empty") {
 		return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Button } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import firebase from "../../../Config/Firebase";
 import TableTalonarios from "./TableTalonarios";
 
@@ -7,7 +7,7 @@ const Talonarios = ({ subtipo, uid }) => {
   const [talonarios, setTalonarios] = useState("EMPTY");
   console.log(subtipo);
   useEffect(() => {
-    const fb = () => {firebase
+    const fb = firebase
       .database()
       .ref("/Talonarios")
       .on("value", (snapshot) => {
@@ -15,7 +15,7 @@ const Talonarios = ({ subtipo, uid }) => {
           ? setTalonarios(snapshot.val())
           : setTalonarios("NO_DATA_FOUND");
       })
-    }
+    
 
     return () => fb;
   }, []);

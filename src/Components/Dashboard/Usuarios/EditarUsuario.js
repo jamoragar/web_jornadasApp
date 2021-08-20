@@ -43,6 +43,18 @@ export const EditarUsuario = ({ show, onHide, data }) => {
 						</Modal.Header>
 						<Modal.Body>
 							<Form.Row>
+							<Form.Group as={Col}>
+									<Form.Label>UID:</Form.Label>
+									<Form.Control
+										defaultValue={data.uid}
+										name="uid"
+										type="text"
+										placeholder="UID Usuario."
+										readOnly
+									/>
+								</Form.Group>
+							</Form.Row>
+							<Form.Row>
 								<Form.Group as={Col}>
 									<Form.Label>Email:</Form.Label>
 									<Form.Control

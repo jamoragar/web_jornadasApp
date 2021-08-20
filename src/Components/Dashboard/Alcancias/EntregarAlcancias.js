@@ -16,7 +16,7 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
   const [alertExitoShow, setAlertExitoShow] = useState(false);
   const [alertFalloShow, setAlertFalloShow] = useState(false);
   const [alertCompletarShow, setAlertCompletarShow] = useState(false);
-  const [alertaCodigoErroneoShow, setAlertaCodigoErroneoShow] = useState(false);
+  // const [alertaCodigoErroneoShow, setAlertaCodigoErroneoShow] = useState(false);
   const [modalErrorCodigo, setModalErrorCodigo] = useState(false);
   const [modalCodigoYaAsignado, setModalCodigoYaAsignado] = useState(false);
   const [codigoError, setCodigoError] = useState("");
@@ -82,23 +82,23 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
     return array.length === new Set(array).size;
   };
 
-  const codigoErroneo = (codigo) => {
-    setAlertaCodigoErroneoShow(true);
-    setTimeout(() => {
-      setAlertaCodigoErroneoShow(false);
-    }, 2000);
-    return (
-      <Alert
-        style={{ width: "100%" }}
-        show={alertaCodigoErroneoShow}
-        variant={"danger"}
-        onClose={() => setAlertaCodigoErroneoShow(false)}
-        dismissible
-      >
-        El código {codigo} no existe o esta mal ingresado.
-      </Alert>
-    );
-  };
+  // const codigoErroneo = (codigo) => {
+  //   setAlertaCodigoErroneoShow(true);
+  //   setTimeout(() => {
+  //     setAlertaCodigoErroneoShow(false);
+  //   }, 2000);
+  //   return (
+  //     <Alert
+  //       style={{ width: "100%" }}
+  //       show={alertaCodigoErroneoShow}
+  //       variant={"danger"}
+  //       onClose={() => setAlertaCodigoErroneoShow(false)}
+  //       dismissible
+  //     >
+  //       El código {codigo} no existe o esta mal ingresado.
+  //     </Alert>
+  //   );
+  // };
 
   const asignarAlcancias = (e) => {
     e.preventDefault();
@@ -111,24 +111,24 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
     const alcancias_validadas = [];
     let cantidad_inputs;
 
-    Object.keys(inputEl).map((key) => {
-      inputEl[key].map((input) => {
+    Object.keys(inputEl).forEach((key) => {
+      inputEl[key].forEach((input) => {
         let input_value = input["value"];
-        if (input_value != "") {
+        if (input_value !== "") {
           alcancias_firebase.push(input_value.trim());
         }
       });
       cantidad_inputs = inputEl[key].length;
     });
-    const snapshotToArray = (snapshot) => {
-      Object.entries(snapshot).map((e) => Object.assign(e[1], { key: e[0] }));
-    };
+    // const snapshotToArray = (snapshot) => {
+    //   Object.entries(snapshot).map((e) => Object.assign(e[1], { key: e[0] }));
+    // };
 
     if (checkIfArrayIsUnique(alcancias_firebase) && alcancias_firebase.length === cantidad_inputs) {
       // Validamos que los codigos de las alcancias existan en la bd
       
       
-      alcancias_firebase.map((codigo, i) => {
+      alcancias_firebase.forEach((codigo, i) => {
         firebase
           .database()
           .ref("/Alcancias")
@@ -149,7 +149,7 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
               setCodigoError(codigo);
               setModalErrorCodigo(true);
               setLoadingFirebaseWriting(false)
-            } else if (alcancia_asignada == true) {
+            } else if (alcancia_asignada === true) {
               setCodigoError(codigo);
               setModalCodigoYaAsignado(true);
               setLoadingFirebaseWriting(false)
@@ -229,7 +229,7 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
                 )
 
             }
-            if(alcancias_validadas.length - 1 == i) {
+            if(alcancias_validadas.length - 1 === i) {
               Swal.fire({
                 icon: 'success',
                 title: 'Asignación Correcta!',
@@ -237,8 +237,7 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
                 showCancelButton: true,
                 confirmButtonText: `Si, descargar`,
                 cancelButtonText: 'No'
-              }).
-                then(result => {
+              }).then(result => {
                   if(result.isConfirmed){
                     generatePdfDocument(alcancias_firebase, data)
                   }
@@ -283,7 +282,7 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
       // setTimeout(() => {
       //     setAlertExitoShow(false);
       // }, 5479);
-    } else if (checkIfArrayIsUnique(alcancias_firebase) == false) {
+    } else if (checkIfArrayIsUnique(alcancias_firebase) === false) {
       setAlertFalloShow(true);
       setTimeout(() => {
         setAlertFalloShow(false);
@@ -348,7 +347,7 @@ const EntregarAlcancias = ({ show, onHide, data }) => {
               />
             </FormGroup>
           </Form>
-          {radioValue == 0 ? (
+          {radioValue === 0 ? (
             <Form onSubmit={asignarAlcancias} id="formEntregarAlcancias">
               <Form.Group>
                 <Form.Label>

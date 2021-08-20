@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Row, Button } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import firebase from "../../../Config/Firebase";
 import TableAlcancias from "./TableAlcancias";
 
 const Alcancias = ({ subtipo, uid }) => {
-  var usedNums = new Array(76);
   const [alcancias, setAlcancias] = useState("EMPTY");
-  let alcancias_generadas = [];
 
   useEffect(() => {
     const fbDatabase = firebase

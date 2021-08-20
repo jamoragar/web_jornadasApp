@@ -1,117 +1,91 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal, Button, Form, InputGroup, Spinner, Alert } from "react-bootstrap";
 import axios from "axios";
-import firebase from "../../../../Config/Firebase";
-import moment from "moment";
+// import firebase from "../../../../Config/Firebase";
+// import moment from "moment";
 import "./Features.css";
 
 const BonoSorteo = ({ show, onHide }) => {
   const [cantidad, setCantidad] = useState(1);
   const [loading, setLoading] = useState(false);
   const valorBono = 1000;
-  const [numeroOrden, setNumeroOrden] = useState();
+  const [showErrorRut, setShowErrorRut] = useState(false);
+  const [showErrorConexion, setShowErrorConexion] = useState(false);
 
   //Desarrollo
-  const url = "http://127.0.0.1:8000/api/transactions";
+  // const URL = "http://127.0.0.1:8000/api/transactions";
   // Producción
-  // const url = 'https://appjornadasmagallanicas.cl/api/api/transactions';
+  const URL = 'https://appjornadasmagallanicas.cl/api/api/transactions';
 
-  useEffect(() => {
-    firebase
-      .database()
-      .ref("Transbank")
-      .orderByChild("numero")
-      .limitToLast(1)
-      .on("value", (snapshot) => {
-        setNumeroOrden(snapshot.val());
-      });
-  }, []);
 
   const comprarBonos = (e) => {
-    let orderToArray = [];
     e.preventDefault();
     setLoading(true);
 
-    const { nombre, apellido, email, cantidad_bonos, telefono } =
-      e.target.elements;
+    const { nombre, apellido, rut, cantidad_bonos, telefono, email } = e.target.elements;
+      const rut_validado = validaRut.validaRut(rut.value.trim());
+      console.log(rut_validado)
+      if(rut_validado){
+        axios({
+          method: "POST",
+          url: URL,
+          data: {
+            item: "Bono Sorteo",
+            // orden_compra: "JMAGALLANICAS-" + res.data,
+            sessionID: "BonoSorteoSitioWeb",
+            monto: valorBono * cantidad_bonos.value,
+            cantidad: cantidad_bonos.value,
+            nombre: nombre.value.trim(),
+            apellido: apellido.value.trim(),
+            rut: rut.value.trim(),
+            email: email.value.trim(),
+            plataforma: "Web",
+            telefono: telefono.value.trim()
+          }
+        }).then((_res) => {
+          setLoading(false);
+          console.log(_res.data)
+          window.location.replace(
+            `${_res.data.url}?token_ws=${_res.data.token_ws}`
+          );
+          }).catch(err => {
+            console.warn(err);
+            setLoading(false);
+            setShowErrorConexion(true)
+            setTimeout(() => {
+              setShowErrorConexion(false)
+            },6000);
 
-    firebase
-      .database()
-      .ref("Transbank")
-      .orderByChild("numero")
-      .limitToLast(1)
-      .on("value", (snapshot) => {
-        setNumeroOrden(snapshot.val());
-        console.log(numeroOrden);
-      });
-    if (numeroOrden) {
-      console.log(numeroOrden);
-      Object.keys(numeroOrden).forEach((key, i) => {
-        orderToArray[i] = numeroOrden[key];
-      });
-      let key = parseInt(orderToArray[0].numero_orden.split("-")[1]) + 1;
-      console.log(key);
-      firebase
-        .database()
-        .ref()
-        .child(`Transbank/orden_${key}`)
-        .set({
-          numero: key,
-          item: "Bono",
-          cantidad: cantidad_bonos.value,
-          monto: valorBono * cantidad_bonos.value,
-          nombre: nombre.value,
-          apellido: apellido.value,
-          email: email.value,
-          fecha: moment().format("DD-MM-YYYY h:mm:ss a"),
-          numero_orden: "JMAGALLANICAS-" + key,
-          estado_de_pago: "Pendiente",
-          forma_de_pago: "Pendiente",
-          plataforma: "Web",
-          telefono: telefono.value,
-        });
-      firebase
-        .database()
-        .ref()
-        .child(`Bono_digital/${key}/`)
-        .set({
-          monto: valorBono * cantidad_bonos.value,
-          nombre: nombre.value,
-          apellido: apellido.value,
-          email: email.value,
-          cantidad: cantidad_bonos.value,
-          numero_orden: "JMAGALLANICAS-" + key,
-          fecha: moment().format("DD-MM-YYYY h:mm:ss a"),
-          id: key,
-          estado_de_pago: "Pendiente",
-          forma_de_pago: "Pendiente",
-          plataforma: "web",
-          telefono: telefono.value,
-        });
-      axios({
-        method: "post",
-        url: url,
-        data: {
-          item: "Bono Sorteo",
-          orden_compra: "JMAGALLANICAS-" + key,
-          sessionID: "BonoSorteoSitioWeb",
-          monto: valorBono * cantidad_bonos.value,
-          cantidad: cantidad_bonos.value,
-          nombre: nombre.value,
-          apellido: apellido.value,
-          email: email.value,
-          plataforma: "Web",
-          telefono: telefono.value,
-        },
-      }).then((res) => {
+          });
+        console.log("estamos llegando...");
+      }else{
         setLoading(false);
-        window.location.replace(
-          `${res.data.url}?token_ws=${res.data.token_ws}`
-        );
-      });
-      console.log("estamos llegando...");
-    }
+        setShowErrorRut(true);
+        setTimeout(() => {
+          setShowErrorRut(false)
+        },4000)
+      }
   };
+
+  //Valida RUT
+  const validaRut = {
+    // Valida el rut con su cadena completa "XXXXXXXX-X"
+    validaRut : (rutCompleto) => {
+      if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
+        return false;
+      let tmp 	= rutCompleto.split('-');
+      let digv	= tmp[1]; 
+      let rut 	= tmp[0];
+      if ( digv == 'K' ) digv = 'k' ;
+      return (validaRut.dv(rut) == digv );
+    },
+    dv: (T) => {
+      let M=0,S=1;
+      for(;T;T=Math.floor(T/10))
+        S=(S+T%10*(9-M++%6))%11;
+      return S?S-1:'k';
+    }
+  }
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -143,7 +117,18 @@ const BonoSorteo = ({ show, onHide }) => {
             <Form.Control
               name="email"
               type="email"
-              placeholder="Ingrese su e-mail"
+              placeholder="Ingrese su correo electrónico"
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+          <Form.Label>Rut:</Form.Label>
+          <br />
+          <Form.Label style={{fontSize: '11px'}}>(ejemplo: 12345678-9)</Form.Label>
+            <Form.Control
+              name="rut"
+              type="text"
+              placeholder="Ingrese su rut"
               required
             />
           </Form.Group>
@@ -179,7 +164,7 @@ const BonoSorteo = ({ show, onHide }) => {
               <InputGroup.Append>
                 <Button
                   variant="outline-success"
-                  onClick={() => setCantidad(cantidad + 1)}
+                  onClick={() => setCantidad(cantidad === 100 ? cantidad : cantidad + 1)}
                 >
                   +
                 </Button>
@@ -207,6 +192,20 @@ const BonoSorteo = ({ show, onHide }) => {
             </a>
           </p>
         </Modal.Footer>
+        <Alert  show={showErrorRut}
+                variant="warning"
+                dismissible
+                onClose={() => setShowErrorRut(false)}
+                >
+           Rut inválido, por favor verifique que el rut este ingresado correctamente, <b>sin puntos y con guión</b>, e intente nuevamente.         
+        </Alert>
+        <Alert  show={showErrorConexion}
+                variant="danger"
+                dismissible
+                onClose={() => setShowErrorConexion(false)}
+                >
+           Problemas de conexión con el servidor. Si el problema persisite, por favor contactar al administrador del sistema.         
+        </Alert>
       </Form>
     </Modal>
   );

@@ -24,7 +24,7 @@ const CreateUsers = ({ subtipo, uid }) => {
           ? setUserAuth(snapshot.val())
           : setUserAuth("NO_USER_FOUND");
       });
-  }, []);
+  }, [uid]);
 
   if (users !== "EMPTY" && userAuth !== "EMPTY") {
     if (subtipo === "Admin") {

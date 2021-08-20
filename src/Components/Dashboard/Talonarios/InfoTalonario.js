@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form,  Modal } from "react-bootstrap";
 
 export const InfoTalonario = ({ show, onHide, data }) => {
@@ -37,7 +37,7 @@ export const InfoTalonario = ({ show, onHide, data }) => {
 					<Form.Group>
 					  <Form.Label>asignada a usuario:</Form.Label>
 					  <Form.Control
-						defaultValue={`${data.usuario.nombre} ${data.usuario.apellido} `}
+						defaultValue={`${data.usuario.nombre} ${data.usuario.apellido ? data.usuario.apellido : ''} `}
 						name="email"
 						type="email"
 						placeholder="no hay datos registrados."

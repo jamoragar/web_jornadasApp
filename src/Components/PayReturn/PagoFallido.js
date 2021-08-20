@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import firebase from '../../Config/Firebase';
+// import firebase from '../../Config/Firebase';
 import Header from "../NavBar/NavBar";
 import Footer from "../Home/Layout/Footer/Footer";
 
 const PagoFallido = (props) => {
 	const [data, setData] = useState([]);
-	const [fbData, setFbData] = useState(null);
+	// const [fbData, setFbData] = useState(null);
 
 	useEffect(() => {
 		const querystring = window.location.search;
@@ -26,33 +26,33 @@ const PagoFallido = (props) => {
 				splitted_data[3],
 				splitted_data[4],
 				splitted_data[5]]);
-		firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).once('value').then(snapshot => snapshot.val()).then(estado => {
-			if(estado.estado_de_pago === 'Pendiente'){
-				firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).update({
-					estado_de_pago: 'Rechazado',
-					transbank_data: {
-						token_ws: splitted_data[4],
-						cod_respuesta:splitted_data[1],
-						fecha_transaccion: splitted_data[5],
-						cod_autorizacion: 'NA'
-					}
-				})
-				firebase.database().ref((estado.item === 'Aporte' ? 'Donaciones' : 'Bono_digital') + '/' + splitted_data[2].split('-')[1]).update({
-					estado_de_pago: 'Rechazado',
-					transbank_data: {
-						token_ws: splitted_data[4],
-						cod_respuesta:splitted_data[1],
-						fecha_transaccion: splitted_data[5],
-						cod_autorizacion: 'NA'
-					}
-				})
-				if(splitted_data[7].length >= 20){
-					firebase.database().ref(`Users/${splitted_data[7]}/aportes/${splitted_data[2].split('-')[1]}`).update({
-						estado_de_pago: 'Rechazado'
-					})
-				}
-			}
-		});
+		// firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).once('value').then(snapshot => snapshot.val()).then(estado => {
+		// 	if(estado.estado_de_pago === 'Pendiente'){
+		// 		firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).update({
+		// 			estado_de_pago: 'Rechazado',
+		// 			transbank_data: {
+		// 				token_ws: splitted_data[4],
+		// 				cod_respuesta:splitted_data[1],
+		// 				fecha_transaccion: splitted_data[5],
+		// 				cod_autorizacion: 'NA'
+		// 			}
+		// 		})
+		// 		firebase.database().ref((estado.item === 'Aporte' ? 'Donaciones' : 'Bono_digital') + '/' + splitted_data[2].split('-')[1]).update({
+		// 			estado_de_pago: 'Rechazado',
+		// 			transbank_data: {
+		// 				token_ws: splitted_data[4],
+		// 				cod_respuesta:splitted_data[1],
+		// 				fecha_transaccion: splitted_data[5],
+		// 				cod_autorizacion: 'NA'
+		// 			}
+		// 		})
+		// 		if(splitted_data[7].length >= 20){
+		// 			firebase.database().ref(`Users/${splitted_data[7]}/aportes/${splitted_data[2].split('-')[1]}`).update({
+		// 				estado_de_pago: 'Rechazado'
+		// 			})
+		// 		}
+		// 	}
+		// });
 	}, []);
 
 
@@ -66,7 +66,7 @@ const PagoFallido = (props) => {
 	let mensaje;
 
 	if(data[0]){
-		console.log(data);
+		// console.log(data);
 		switch(data[0]){
 			case '-1':
 				error = 'Rechazo de transacción.';
@@ -107,12 +107,7 @@ const PagoFallido = (props) => {
 								<div className="col-12 col-md-8">
 									<div className="welcome-intro">
 										<h1 className="text-danger">{initData.state} - {error}</h1>
-										{
-											data[2] ? (<h3 className="text-white">{`${initData.heading1} $ ${data[2]} ${initData.heading2}`}</h3>)
-											:
-											(<h3 className="text-white">La Orden de Compra: {data[1]} no pudo ser llevada a cabo</h3>)
-										}
-										
+										<h3 className="text-white">La transacción no se pudo llevar a cabo, por favor reintente. Si el problema persiste, pongase en contacto con su banco.</h3>
 										<p className="text-white my-4">{mensaje}</p>
 										<a href="/" className="btn sApp-btn text-uppercase">
 											{initData.btnText}
@@ -129,7 +124,7 @@ const PagoFallido = (props) => {
 	}else{
 		console.log('loading...')
 		return(
-			<h2>Loading...</h2>
+			<h2>Cargando...</h2>
 		)
 	}
 };

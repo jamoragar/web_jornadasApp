@@ -1,14 +1,20 @@
 import React, {useEffect, useState} from "react";
-import firebase from '../../Config/Firebase';
+// import firebase from '../../Config/Firebase';
 import Header from "../NavBar/NavBar";
 import Footer from "../Home/Layout/Footer/Footer";
+import Logo from '../../imgs/logo.png'
+import axios from 'axios';
 
 const PagoExito = (props) => {
 	const [data, setData] = useState(null);
-	const [fbData, setFbData] = useState(null);
+	const [dataApi, setDataApi] = useState(null);
+	const url = 'https://appjornadasmagallanicas.cl/api/api/pago';
 	useEffect(() => {
 		const querystring = window.location.search;
 		const splitted_data = querystring.split('?');
+		if(!splitted_data[1]){
+			window.location.href = "http://localhost:3000"; 
+		};
 		/*
 		0; ''
 		1: token_ws
@@ -19,47 +25,57 @@ const PagoExito = (props) => {
 		6: uid
 		*/
 		setData([splitted_data[1],
-			splitted_data[2],
-			splitted_data[3],
-			splitted_data[4],
-			splitted_data[5],
-			splitted_data[6]]);
-		console.log(splitted_data[6])
-			firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).update({
-				estado_de_pago: 'Aprobado'
-			}).then(
-				firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).once('value').then(snapshot => {
-					setFbData(snapshot.val())
-					firebase.database().ref((snapshot.val().item === 'Aporte' ? 'Donaciones' : 'Bono_digital') + '/' + splitted_data[2].split('-')[1]).update({
-						estado_de_pago: 'Aprobado',
-						transbank: {
-							token_ws: splitted_data[1],
-							cod_autorizacion: splitted_data[4],
-							cod_respuesta: '0',
-							fecha_transaccion: splitted_data[3]
-						}
-					})
-					if(splitted_data[6].length >= 19){
-						firebase.database().ref(`Users/${splitted_data[6]}/${(snapshot.val().item === 'Aporte' ? 'aportes' : 'bonos')}/${splitted_data[2].split('-')[1]}`).update({
-							apellido: snapshot.val().apellido ? snapshot.val().apellido : null,
-							aporte: splitted_data[5],
-							email: snapshot.val().email,
-							estado_de_pago: 'Aprobado',
-							fecha: splitted_data[3],
-							nombre: snapshot.val().nombre,
-							numero_orden: splitted_data[2]
-						})
-					}
-				})
-			)
+			// splitted_data[2],
+			// splitted_data[3],
+			// splitted_data[4],
+			// splitted_data[5],
+			// splitted_data[6]
+		]);
+			axios({
+				method: 'GET',
+				url: `${url}/${splitted_data[1]}`
+			}).then(res => {
+				console.log(res.data)
+				setDataApi(res.data[0])
+
+			});
+			// firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).update({
+			// 	estado_de_pago: 'Aprobado'
+			// }).then(
+			// 	firebase.database().ref(`Transbank/orden_${splitted_data[2].split('-')[1]}`).once('value').then(snapshot => {
+			// 		setFbData(snapshot.val())
+			// 		firebase.database().ref((snapshot.val().item === 'Aporte' ? 'Donaciones' : 'Bono_digital') + '/' + splitted_data[2].split('-')[1]).update({
+			// 			estado_de_pago: 'Aprobado',
+			// 			transbank: {
+			// 				token_ws: splitted_data[1],
+			// 				cod_autorizacion: splitted_data[4],
+			// 				cod_respuesta: '0',
+			// 				fecha_transaccion: splitted_data[3]
+			// 			}
+			// 		})
+			// 		if(splitted_data[6].length >= 19){
+			// 			firebase.database().ref(`Users/${splitted_data[6]}/${(snapshot.val().item === 'Aporte' ? 'aportes' : 'bonos')}/${splitted_data[2].split('-')[1]}`).update({
+			// 				apellido: snapshot.val().apellido ? snapshot.val().apellido : null,
+			// 				aporte: splitted_data[5],
+			// 				email: snapshot.val().email,
+			// 				estado_de_pago: 'Aprobado',
+			// 				fecha: splitted_data[3],
+			// 				nombre: snapshot.val().nombre,
+			// 				numero_orden: splitted_data[2]
+			// 			})
+			// 		}
+			// 	})
+			// )
+			console.log(splitted_data[1])
+
+
 	}, []);
 
-	if(data && fbData){
-		console.log(fbData)
+	if(data && dataApi){
 		const initData = {
 			state: "Transacción realizada con éxito.",
-			heading1: `Su pago por "${fbData.item}" ha sido procesado exitosamente.`,
-			content: "Gracias por colaborar con esta noble causa.",
+			heading1: `Su pago por "$${dataApi.amount}" ha sido procesado exitosamente. En unos minutos le llegará un e-mail con un link para poder descargar sus bonos de sorteo.`,
+			content: `De cualquier modo, puede ingresar a "Descarga de Bonos" y con su número de orden de compra (${dataApi.buy_order}) y el correo electrónico que ingresó, podrá ver y descargar sus bonos`,
 			btnText: "Volver al inicio",
 		};
 		return (
@@ -80,7 +96,7 @@ const PagoExito = (props) => {
 									<div className="single-price-plan text-center px-5 py-3">
 										<div className="plan-thumb">
 											<img
-												src={require("../../imgs/logo.png")}
+												src={Logo}
 												alt="cruz de malta"
 											/>
 										</div>
@@ -91,40 +107,12 @@ const PagoExito = (props) => {
 											<tbody>
 												<tr>
 													<th>Orden de compra</th>
-													<td>{fbData.numero_orden}</td>
+													<td>{dataApi.buy_order}</td>
 												</tr>
-												<tr>
-													<th>Nombre</th>
-													<td>{fbData.nombre}</td>
-												</tr>
-												{
-													fbData.apellido ? (
-														<tr>
-															<th>Apellido</th>
-															<td>{fbData.apellido}</td>
-														</tr>
-													)
-													:
-													null
-												}
-												<tr>
-												
+												<tr>				
 													<th>Monto</th>
-													<td>${fbData.monto ? fbData.monto : fbData.aporte}</td>
-												</tr>
-												{
-													fbData.item === 'Bono' ? (
-														<tr>
-															<th>Cantidad</th>
-															<td>{fbData.cantidad}</td>
-														</tr>
-														)
-													:
-													(
-														null	
-													)
-												}
-												
+													<td>${dataApi.amount ? dataApi.amount : dataApi.aporte}</td>
+												</tr>			
 											</tbody>
 										</table>
 										<div className="plan-button">

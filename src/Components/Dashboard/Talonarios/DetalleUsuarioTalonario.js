@@ -9,7 +9,7 @@ const DetalleUsuarioTalonario = ({ data }) => {
 
   return talonarios ? (
     <>
-      <h3>Cantidad de alcancías: {talonarios.length}</h3>
+      <h3>Cantidad de talonarios: {talonarios.length}</h3>
       <Table striped bordered hover>
         <thead>
           <tr>

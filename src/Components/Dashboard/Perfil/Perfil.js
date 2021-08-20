@@ -13,7 +13,7 @@ const Perfil = ({ type, uid }) => {
 			.once("value", (snapshot) => {
 				setUserInfo(snapshot.val());
 			});
-	}, []);
+	}, [uid]);
 
 	if (userInfo) {
 		return (

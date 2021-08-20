@@ -32,9 +32,9 @@ const HeroSection = () => {
                                 <a href='https://play.google.com/store/apps/details?id=cl.SmartApps.AppJornadasMagallanicas'>
                                 <img src={data.playImg} alt="" />
                                 </a>
-                                <a onClick={() => setShowModalCS(true)}>
-                                <img src={data.appleImg} alt="" />
-                                </a>
+                                <div style={{cursor:"pointer"}} onClick={() => setShowModalCS(true)}>
+                                    <img src={data.appleImg} alt="" />
+                                </div>
                             </div>
                             <span className="d-inline-block text-white fw-3 font-italic mt-3">{data.headingSlug}</span>
                         </div>

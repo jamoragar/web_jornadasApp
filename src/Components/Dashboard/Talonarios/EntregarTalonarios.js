@@ -75,10 +75,10 @@ const EntregarTalonarios = ({ show, onHide, data }) => {
     const talonarios_validados = [];
     let cantidad_inputs;
 
-    Object.keys(inputEl).map((key) => {
-      inputEl[key].map((input) => {
+    Object.keys(inputEl).forEach((key) => {
+      inputEl[key].forEach((input) => {
         let input_value = input["value"];
-        if (input_value != "") {
+        if (input_value !== "") {
           talonarios_firebase.push(input_value.trim());
         }
       });
@@ -122,8 +122,8 @@ const EntregarTalonarios = ({ show, onHide, data }) => {
               talonarios_validados.push(
                 snapshot.val()[Object.keys(snapshot.val())]
               );
-
-              firebase
+              data.apellido ? (
+                firebase
                 .database()
                 .ref(`/Talonarios/${num_talonario}`)
                 .update({
@@ -136,7 +136,25 @@ const EntregarTalonarios = ({ show, onHide, data }) => {
                     email: data.email,
                     subtipo: data.subtipo ? data.subtipo : null,
                   },
-                });
+                })
+              )
+              :
+              (
+                firebase
+                .database()
+                .ref(`/Talonarios/${num_talonario}`)
+                .update({
+                  asignado_usuario: true,
+                  fecha_entrega: moment().format("MM-DD-YYYY h:mm:ss a"),
+                  usuario: {
+                    uid: data.uid,
+                    nombre: data.nombre,
+                    email: data.email,
+                    subtipo: data.subtipo ? data.subtipo : null,
+                  },
+                })
+              )
+              
               firebase
                 .database()
                 .ref(`/Users/${data.uid}/talonarios`)
@@ -199,7 +217,7 @@ const EntregarTalonarios = ({ show, onHide, data }) => {
             }
           });
       });
-    } else if (checkIfArrayIsUnique(talonarios_firebase) == false) {
+    } else if (checkIfArrayIsUnique(talonarios_firebase) === false) {
       setAlertFalloShow(true);
       setTimeout(() => {
         setAlertFalloShow(false);
@@ -278,7 +296,7 @@ const EntregarTalonarios = ({ show, onHide, data }) => {
             </FormGroup>
           </Form>
           {(() => {
-            if (radioValue == 0) {
+            if (radioValue === 0) {
               return(<Form onSubmit={asignarTalonario}>
                 <Form.Group>
                   <Form.Label>
@@ -353,10 +371,10 @@ const EntregarTalonarios = ({ show, onHide, data }) => {
                 </Alert>
               </Form>);
             }
-            if (radioValue == 1) {
+            if (radioValue === 1) {
               return <EntregaPorRango data={data} />;
             }
-            if (radioValue == 2) {
+            if (radioValue === 2) {
                 return <DetalleUsuarioTalonario data={data} />
             }
           })()}

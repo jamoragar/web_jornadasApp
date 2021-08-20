@@ -65,10 +65,10 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
   const [showBono, setShowBono] = useState(false);
   const [bonoData, setBonoData] = useState(null);
 
-  const radios = [
-    { name: "Transbank", value: "1" },
-    { name: "Manuales", value: "2" },
-  ];
+  // const radios = [
+  //   { name: "Transbank", value: "1" },
+  //   { name: "Manuales", value: "2" },
+  // ];
 
   let bonosSorteoToArray = [];
 

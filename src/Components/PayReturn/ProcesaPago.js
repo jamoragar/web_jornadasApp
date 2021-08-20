@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import firebase from '../../Config/Firebase';
+// import firebase from '../../Config/Firebase';
 
 const ProcesaPago = (props) => {
 	const [data, setData] = useState([]);
-	const [numeroBonoDigital, setNumeroBonoDigital] = useState();
+	// const [numeroBonoDigital, setNumeroBonoDigital] = useState();
 	
 	useEffect(() => {
 		const querystring = window.location.search;
@@ -38,16 +38,16 @@ const ProcesaPago = (props) => {
 				]);
 
 
-		firebase.database().ref(`Transbank/orden_${splitted_data[6].split('-')[1]}`).update({
-			estado_de_pago: 'Aprobado',
-			numero_orden: splitted_data[6],
-			transbank_data:{
-				token_ws: splitted_data[2],
-				cod_autorizacion: splitted_data[3],
-				cod_respuesta: splitted_data[5],
-				fecha_transaccion: splitted_data[7]
-			}
-		})
+		// firebase.database().ref(`Transbank/orden_${splitted_data[6].split('-')[1]}`).update({
+		// 	estado_de_pago: 'Aprobado',
+		// 	numero_orden: splitted_data[6],
+		// 	transbank_data:{
+		// 		token_ws: splitted_data[2],
+		// 		cod_autorizacion: splitted_data[3],
+		// 		cod_respuesta: splitted_data[5],
+		// 		fecha_transaccion: splitted_data[7]
+		// 	}
+		// })
 	}, [])
 
 	if(data[0]){

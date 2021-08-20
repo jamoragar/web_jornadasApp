@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
-import Donaciones from '../Doanciones/Donaciones';
+// import Donaciones from '../Doanciones/Donaciones';
 import HeroSection from '../Home/Layout/HeroSection/HeroSection';
 import Features from '../Home/Layout/Features/Features';
 import Discover from '../Home/Layout/Discover/Discover';

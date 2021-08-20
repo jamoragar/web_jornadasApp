@@ -69,14 +69,14 @@ const VerUsuarios = ({ users, userAuth }) => {
   const [userData, setUserData] = useState(null);
   let usersToArray = [];
 
-  const handleModalAlcancias = (data) => {};
+  // const handleModalAlcancias = (data) => {};
   //Declaramos las columnas que tendrá nuestra tabla
   const columns = [
-    {
-      name: "UID",
-      selector: "uid",
-      sortable: false,
-    },
+    // {
+    //   name: "UID",
+    //   selector: "uid",
+    //   sortable: false,
+    // },
     {
       name: "Nombre",
       selector: (user) => {
@@ -84,11 +84,13 @@ const VerUsuarios = ({ users, userAuth }) => {
         return `${user.nombre} ${user.apellido ? user.apellido : ""}`;
       },
       sortable: true,
+      width:"20%"
     },
     {
       name: "Email",
       selector: "email",
       sortable: true,
+      width:"25%"
     },
     {
       name: "Tipo",
@@ -100,12 +102,12 @@ const VerUsuarios = ({ users, userAuth }) => {
       name: "SubTipo",
       selector: "subtipo",
       sortable: true,
-      width: "10%",
+      width: "15%",
     },
     {
       name: "Control",
       button: true,
-      width: "20%",
+      width: "10%",
       cell: (data) => {
         return userAuth.subtipo === "Admin" ? (
           <div style={{ display: "flex" }}>
@@ -212,7 +214,7 @@ const VerUsuarios = ({ users, userAuth }) => {
               >
                 <option value="nombre">Nombre</option>
                 <option value="email">Email</option>
-                <option value="uid">Uid</option>
+                {/* <option value="uid">Uid</option> */}
                 <option value="tipo">Tipo</option>
               </Form.Control>
             </Form.Group>
@@ -232,12 +234,13 @@ const VerUsuarios = ({ users, userAuth }) => {
   const [filter, setFilter] = useState("nombre");
 
   const filteredItems = usersToArray.filter((item) => {
-    if (filter === "uid") {
-      return (
-        item.uid.toLowerCase() &&
-        item.uid.toLowerCase().includes(filterText.toLowerCase())
-      );
-    } else if (filter === "nombre") {
+    // if (filter === "uid") {
+    //   return (
+    //     item.uid.toLowerCase() &&
+    //     item.uid.toLowerCase().includes(filterText.toLowerCase())
+    //   );
+    // } else 
+    if (filter === "nombre") {
       return (
         item.nombre.toLowerCase() &&
         item.nombre.toLowerCase().includes(filterText.toLowerCase())

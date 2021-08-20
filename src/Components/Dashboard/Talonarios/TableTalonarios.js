@@ -2,7 +2,8 @@ import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
-import {OverlayTrigger,
+import {
+	OverlayTrigger,
 	Tooltip,
 	Button,
 	Col,
@@ -70,7 +71,7 @@ const TableAlcancias = ({ talonarios }) => {
 			name: "Correlativo",
 			selector: "correlativo",
 			sortable: true,
-			width: "10%",
+			width: "8%",
 		},
 		{
 			name: "Asignado",
@@ -78,7 +79,7 @@ const TableAlcancias = ({ talonarios }) => {
 			cell: talonarios => { return `${talonarios.asignado_usuario? "Si":"No"}`
 			},
 			sortable: true,
-			width: "10%",
+			width: "8%",
 		},
 		{
 			name: "Asignado a tercero",
@@ -110,12 +111,21 @@ const TableAlcancias = ({ talonarios }) => {
 			cell: talonarios => { return `${talonarios.fecha_asignacion? talonarios.fecha_asignacion:"N.A"}`
         },
 			sortable: true,
-			width: "20%",
+			width: "15%",
 		},
+		{
+			name: "Encargado(a)",
+			selector: "nombre",
+			cell: alcancias => {
+			  return alcancias.usuario ? `${alcancias.usuario.nombre} ${alcancias.usuario.apellido ? alcancias.usuario.apellido : ''}`: 'N.A.'
+			},
+			sortable: true,
+			width: "20%"
+		 },
 		{
 			name: "Control",
 			button: true,
-			width: "5%",
+			width: "10%",
 			cell: (data) => {
 				return (
 					<div style={{ display: "flex" }}>
@@ -171,7 +181,9 @@ const TableAlcancias = ({ talonarios }) => {
 					as="select"
 					onChange={(e) => setFilter(e.target.value)}
 				>
-					<option value="codigo_barra">Correlativo</option>
+					<option value="todos">Todos</option>
+					<option value="talonario_numero">Número Talonario</option>
+					<option value="nombre">Nombre</option>
 					{/* <option value="alcancia_numero">Numero de alcancia</option>
 					<option value="asignada_usuario">Asignada</option>
 					<option value="recuperada">Recuperada</option> */}
@@ -190,13 +202,13 @@ const TableAlcancias = ({ talonarios }) => {
     );
   }, [filterText]);
 
-  const [filter, setFilter] = useState("correlativo");
+  const [filter, setFilter] = useState("todos");
 
   const filteredItems = talonariosToArray.filter((item) => {
-    if (filter === "correlativo") {
+    if (filter === "talonario_numero") {
       return (
-        item.correlativo.toLowerCase() &&
-        item.correlativo.toLowerCase().includes(filterText.toLowerCase())
+        item.talonario_numero.toString().toLowerCase() &&
+        item.talonario_numero.toString() === filterText ? true : false
       );
       // } else if (filter === "alcancia_numero") {
       //   return item.alcancia_numero;
@@ -210,7 +222,16 @@ const TableAlcancias = ({ talonarios }) => {
       //     item.recuperada &&
       //     item.recuperada.includes(filterText)
       //   );
-    }
+    }else if(filter === 'nombre'){
+		 if(item.usuario){
+			 return (
+				item.usuario.nombre.toLowerCase() &&
+				item.usuario.nombre.toLowerCase().includes(filterText.toLocaleLowerCase())
+			 )
+		 }
+	 }else if(filter === "todos"){
+		 return item;
+	 }
   });
 
 	return (

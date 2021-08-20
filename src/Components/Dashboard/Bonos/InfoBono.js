@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Button, Modal, Alert, Spinner, Col } from "react-bootstrap";
+import React from "react";
+import { Form, Modal } from "react-bootstrap";
 
 export const InfoBono = ({ show, onHide, data }) => {
   if (data) {
