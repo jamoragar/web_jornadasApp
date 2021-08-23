@@ -1,7 +1,9 @@
 import React from "react";
 import { Form, Modal } from "react-bootstrap";
+import moment from 'moment';
 
 export const InfoBono = ({ show, onHide, data }) => {
+  const date = moment(data.transactionDate).format("DD-MM-YYYY hh:mm");
   if (data) {
     return (
       <div>
@@ -14,7 +16,7 @@ export const InfoBono = ({ show, onHide, data }) => {
               <Form.Group>
                 <Form.Label>Numero de orden:</Form.Label>
                 <Form.Control
-                  defaultValue={data.numero_orden}
+                  defaultValue={data.buy_order}
                   name="Numero De Orden"
                   type="text"
                   placeholder="no hay datos registrados."
@@ -54,7 +56,7 @@ export const InfoBono = ({ show, onHide, data }) => {
               <Form.Group>
                 <Form.Label>Estado del pago:</Form.Label>
                 <Form.Control
-                  defaultValue={data.estado_de_pago}
+                  defaultValue={data.responseCode}
                   name="Estado De Pago"
                   type="text"
                   placeholder="no hay datos registrados."
@@ -64,7 +66,7 @@ export const InfoBono = ({ show, onHide, data }) => {
               <Form.Group>
                 <Form.Label>Fecha:</Form.Label>
                 <Form.Control
-                  defaultValue={data.fecha}
+                  defaultValue={date}
                   name="Fecha"
                   type="text"
                   placeholder="no hay datos registrados."

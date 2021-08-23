@@ -70,7 +70,7 @@ const TableAlcancias = ({ alcancias }) => {
 
   const columns = [
     {
-      name: "Número de alcancía",
+      name: "Número",
       selector: "alcancia_numero",
       sortable: true,
       width: "7.5%",
@@ -79,7 +79,7 @@ const TableAlcancias = ({ alcancias }) => {
       name: "Código de barra",
       selector: "codigo_barra",
       sortable: true,
-      width: "18%",
+      width: "12%",
     },
     {
       name: "Asignada",
@@ -88,7 +88,7 @@ const TableAlcancias = ({ alcancias }) => {
         return `${alcancias.asignada_usuario ? "Si" : "No"}`;
       },
       sortable: true,
-      width: "10%",
+      width: "8%",
     },
     {
       name: "Asignada a tercero",
@@ -97,7 +97,7 @@ const TableAlcancias = ({ alcancias }) => {
         return `${alcancias.asignada_tercero ? "Si" : "No"}`;
       },
       sortable: true,
-      width: "10%",
+      width: "8%",
     },
     {
       name: "Asignada a externo",
@@ -106,7 +106,7 @@ const TableAlcancias = ({ alcancias }) => {
         return `${alcancias.asignada_externo ? "Si" : "No"}`;
       },
       sortable: true,
-      width: "10%",
+      width: "8%",
     },
     {
       name: "Recuperada",
@@ -115,7 +115,14 @@ const TableAlcancias = ({ alcancias }) => {
         return `${alcancias.recuperada ? "Si" : "No"}`;
       },
       sortable: true,
-      width: "10%",
+      width: "8%",
+    },
+    {
+      name: "Recepción Encargado",
+      selector: 'recepcionado',
+      cell : (alcancias) => {
+        return `${alcancias.recepcionado ? "Si" : "No"}`
+      }
     },
     {
       name: "Fecha",
@@ -135,12 +142,12 @@ const TableAlcancias = ({ alcancias }) => {
         return alcancias.usuario ? `${alcancias.usuario.nombre} ${alcancias.usuario.apellido}`: 'N.A.'
       },
       sortable: true,
-      width: "20%"
+      width: "15%"
     },
     {
       name: "Control",
       button: true,
-      width: "10%",
+      width: "5%",
       cell: (data) => {
         return (
           <div style={{ display: "flex" }}>

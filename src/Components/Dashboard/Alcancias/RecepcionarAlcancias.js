@@ -6,12 +6,13 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
   //Hooks
   const [alertErrorCodigo, setAlertErrorCodigo] = useState(false);
   const [alertRecepcionado, setAlertRecepcionado] = useState(false);
+  const [alertExito, setAlertExito] = useState(false);
+
   const handleAlcancia = (e, value, key) => {
      e.preventDefault();
 
      const input_value = value.trim();
      const enter = key === "Enter" ? true : false;
-     console.log('handling alcancía...');
      if(enter){
         firebase
          .database()
@@ -21,7 +22,8 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
          .once('value')
          .then(snapshot => {
            if(snapshot.val() !== null){
-            if(snapshot.val()[0].recepcionado === true){
+             const snap_value = snapshot.val();
+            if(snap_value.recepcionado && snap_value.recepcionado === true){
               console.log('ya recepcionado')
               setAlertRecepcionado(true);
               setTimeout(() => {
@@ -31,10 +33,20 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
                const num_alcancia = Object.getOwnPropertyNames(snapshot.val())[0];
                console.log(snapshot.val())
                console.log('número:', num_alcancia)
-               //
-               // Actualizar la alcancía en firebase con el estado recepcionado:true
-               //
-             }
+
+               firebase.database()
+                .ref('Alcancias')
+                .child(`${num_alcancia}/recepcionado`)
+                .set(true)
+                .then(res => {
+                  setAlertExito(true);
+                  setTimeout(() => {
+                    setAlertExito(false);
+                  }, 1000);
+
+                  document.getElementById("recepcion_form").reset();
+                });
+             };
            }else{
              console.log('error');
              setAlertErrorCodigo(true);
@@ -52,13 +64,13 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
         <Modal.Title>Recepción de Alcancías</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form id="recepcion_form">
           <Form.Group>
             <Form.Label>
               Ingrese el código de barra de las alcancías que desee recepcionar.
             </Form.Label>
             <Form.Control
-              name="cant_alcancias"
+              name="cod_barra"
               type="text"
               placeholder="Código de barra de alcancía."
               onKeyPress={(e) => handleAlcancia(e, e.target.value, e.key)}
@@ -77,6 +89,12 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
               onClose={() => setAlertRecepcionado(false)}
               dismissible>
         El código que ingreso ya <b>ha sido recepcionado.</b>
+      </Alert>
+      <Alert  variant='success'
+              show={alertExito}
+              onClose={() => setAlertExito(false)}
+              dismissible>
+        Alcacía recepcionada de forma <b>exitosa!.</b>
       </Alert>
     </Modal>
   );

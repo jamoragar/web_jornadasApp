@@ -77,7 +77,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
       name: "Orden de compra",
       selector: "buy_order",
       sortable: true,
-      width: "12%",
+      width: "14%",
     },
     {
       name: "Nombre",
@@ -88,19 +88,19 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         }`;
       },
       sortable: true,
-      width: "15%",
+      width: "12%",
     },
     {
       name: "Email",
       selector: "email",
       sortable: true,
-      width: "15%",
+      width: "16%",
     },
     {
       name: "Telefono",
       selector: "telefono",
       sortable: true,
-      width: "9%",
+      width: "10%",
     },
     {
       name: "Cantidad",
@@ -130,7 +130,7 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         }
       },
       sortable: true,
-      width: "9%",
+      width: "8%",
     },
     {
       name: "Plataforma",
@@ -146,12 +146,12 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         }
       },
       sortable: true,
-      width: "8%",
+      width: "6%",
     },
     {
       name: "Metodo",
       selector: "paymentType",
-      width: "6%"
+      width: "5%"
     },
     {
       name: "Fecha",
@@ -160,12 +160,12 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         return moment(bonosSorteo.transactionDate).format("DD-MM-YYYY hh:mm");
       },
       sortable: true,
-      width: "10%",
+      width: "12%",
     },
     {
       name: "Control",
       button: true,
-      width: "5%",
+      width: "3%",
       cell: (data) => {
         return (
           <div style={{ display: "flex" }}>
