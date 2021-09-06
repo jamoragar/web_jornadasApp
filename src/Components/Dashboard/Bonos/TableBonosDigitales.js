@@ -307,11 +307,15 @@ const TableBonosDigitales = ({ bonosSorteo }) => {
         paginationPerPage={50}
         />
     </DataTableExtensions>
-      <InfoBono
-        show={showBono}
-        onHide={() => setShowBono(false)}
-        data={bonoData}
-      />
+      {bonoData ? 
+        <InfoBono
+          show={showBono}
+          onHide={() => setShowBono(false)}
+          data={bonoData}
+        />
+        :
+        null
+      }
     </>
   );
 };

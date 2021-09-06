@@ -9,8 +9,59 @@ const TableBonosManuales = ({bonosSorteo}) => {
         name: "Orden de compra",
         selector: "orden_compra",
         sortable: true,
-        width: "15%",
+        width: "14%",
       },
+      {
+        name: 'Número Boucher',
+        selector: 'cod_boucher',
+        sortable: true,
+        width: '7%'
+      },
+      {
+        name: 'Tipo de Pago',
+        selector: 'tipo_pago',
+        sortable: true,
+        width: '10%'
+      },
+      {
+        name: 'Fecha Venta',
+        selector: 'fecha_venta',
+        sortable: true,
+        width: '13%'
+      },
+      {
+        name: 'Cantidad Bonos',
+        selector: 'cant_bonos',
+        sortable: true,
+        width: '7%'
+      },
+      {
+        name: 'Participante',
+        selector: 'nombre',
+        cell: bonosSorteo => {
+          return `${bonosSorteo.nombre} ${bonosSorteo.apellido}`;
+        },
+        width: '14%'
+      },
+      {
+        name: 'Rut',
+        selector: 'rut',
+        width: '9%'
+      },
+      {
+        name: 'Teléfono',
+        selector: 'telefono',
+        width: '11%'
+      },
+      {
+        name: 'Vendedor',
+        selector: 'nombre_vendedor',
+        cell: bonosSorteo => {
+          return `${bonosSorteo.nombre_vendedor} ${bonosSorteo.apellido_vendedor}`;
+        },
+        sortable: true,
+        width: '13%'
+      }
       
    ];
    console.log(bonosSorteo);

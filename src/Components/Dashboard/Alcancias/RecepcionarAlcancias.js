@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useRef} from "react";
 import { Form, Modal, Alert } from "react-bootstrap";
 import firebase from '../../../Config/Firebase';
 
@@ -7,9 +7,10 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
   const [alertErrorCodigo, setAlertErrorCodigo] = useState(false);
   const [alertRecepcionado, setAlertRecepcionado] = useState(false);
   const [alertExito, setAlertExito] = useState(false);
+  let inputEl = useRef([]);
 
-  const handleAlcancia = (e, value, key) => {
-     e.preventDefault();
+  const handleAlcancia = (value, key) => {
+    //  e.preventDefault();
 
      const input_value = value.trim();
      const enter = key === "Enter" ? true : false;
@@ -72,8 +73,13 @@ const RecepcionarAlcancias = ({ show, onHide }) => {
             <Form.Control
               name="cod_barra"
               type="text"
+              ref={el => (inputEl.current[0] = el)}
               placeholder="Código de barra de alcancía."
-              onKeyPress={(e) => handleAlcancia(e, e.target.value, e.key)}
+              onKeyPress={(e) => {
+                handleAlcancia(e.target.value, e.key);
+                e.key === "Enter" && e.preventDefault();
+                }
+              }
             />
           </Form.Group>
         </Form>
